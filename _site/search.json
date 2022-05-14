@@ -6,15 +6,15 @@
       "description": "Some additional details about the website",
       "author": [],
       "contents": "\r\n\r\n\r\n\r\n",
-      "last_modified": "2022-05-11T18:55:09+08:00"
+      "last_modified": "2022-05-14T17:12:02+08:00"
     },
     {
       "path": "index.html",
       "title": "ISS608 VA Project",
       "description": "Welcome to Our Group Project Blog!\n",
       "author": [],
-      "contents": "\r\ntesting123\r\n\r\n\r\n\r\n",
-      "last_modified": "2022-05-11T18:56:06+08:00"
+      "contents": "\r\ntesting123 testing 456\r\n\r\n\r\n\r\n",
+      "last_modified": "2022-05-14T17:14:53+08:00"
     }
   ],
   "collections": []
