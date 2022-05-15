@@ -200,6 +200,61 @@ Over the period covered by the dataset, which businesses appear to be
 more prosperous? Which appear to be struggling? Describe your rationale
 for your answers.
 
+Upon clicking on the 'Business' tab, the following default view will be 
+displayed.
+
+![Business Tab Visualization Default](C3Q1D1.png)
+
+The 4 features in which users can play around with are 
+
++------------+-----------------------------------------+
+| Feature    |  Function                               |
++============+=========================================+
+| Category   |  User has the option to view either     |
+| (Radio     |  restaurants or pubs.                   |
+| button)    |                                         |
+|            |                                         |
++------------+-----------------------------------------+
+| Scenario   |  User can select the type of scenario   |
+| (Dropdown) |  they would like to visualize.          |
+|            |  Select 'Top 5' or 'Top 10' to view     |
+|            |  the top 5 or top 10 businesses to see  |
+|            |  which companies are prospering.        |
++------------+-----------------------------------------+
+| Date       | User has the ability to scope to the    |
+| (Range     | target range date.                      |
+| Slider)    |                                         |
++------------+-----------------------------------------+
+
+When the user clicked on a particular bar chart, the corresponding line chart to
+its right will be highlighted. This action of clicking on the bar chart will also
+result in 2 more charts to appear, a boxplot and a heatmap.
+
+![Business Tab Visualization Expansion](C3Q1D2.png)
+
+### Rationale
+
+**Total Sales**
+![Total Sales Chart(Default View)](C3Q1Chart1.png)
+
+
+The main objective of the first question in challenge 3 is to identify which businesses are prospering or struggling. As there is no sales and expense data found on the `Restaurants.csv` and `Pubs.csv`, the only way to obtain sales volume is to compute via the customer’s spending on these businesses. Prosperous businesses will refer to companies that are making more sales whereas struggling businesses will refer to companies that have lower sales. As the sales volume fluctuates sporadically day-to-day, to determine the top 5 companies, the total overall sales are calculated and the 5 companies with the most sales are selected.
+
+**Monthly Sales**
+![Monthly Sales CHart(Default View)](C3Q1Chart2.png)
+
+As the **Total Sales Chart** only compares at the overall sales volume, it provides no insights on how the businesses are performing overtime. Therefore, the Monthly Sales chart visualizes how the companies are performing at a monthly basis. We see that in general, there is a sharp decline in sales from March 2022 to April 2022. Businesses continues to dip till June 2022 after which the sales fluctuates.
+
+**Average Spending of Customers**
+![Average Spending of Customers Chart](C3Q1Chart3.png)
+
+To give insights to users on the weekday sales of the selected businesses. Are customers spending more on the weekday or the weekends?
+
+**Occupancy heatmap**
+![Occupancy Heatmap Chart](C3Q1Chart4.png)
+The Occupancy Heatmap provides vizualisation on the average occupancy rate for the selected company across the weekdays at hourly intervals.
+Users are able to see which are the peak and non-peak periods.
+
 ### Sub-Question 2
 
 ![Resident Tab Visualisation Solution](question2solution.png)
