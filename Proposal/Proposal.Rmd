@@ -369,7 +369,7 @@ displayed.
 
 
  
-The 6 features within this tab:  
+There are 6 features within this tab:  
 
 +------------+-----------------------------------------------------------------------------+
 | Feature    |  Function                                                                   |
@@ -379,7 +379,7 @@ The 6 features within this tab:
 | Entity View| User see more information (employer ID, job ID) within each building ID.    |
 +------------+-----------------------------------------------------------------------------+
 | City Map   | User will be able to see turnover rate and number of employees for each     |
-|            | employer in each buliding.                                                  |
+|            | employer in each building.                                                  |
 +------------+-----------------------------------------------------------------------------+
 | Control    | User filter through the options to different scenario.                      |
 | Panel      |                                                                             |
@@ -387,8 +387,8 @@ The 6 features within this tab:
 | Timeline   | User has the ability to scope to the target range date, there will also be  |
 |            | a function to auto play and see the changes over time.                      |
 +------------+-----------------------------------------------------------------------------+
-| Multiple   | User can select maximium 5 employers to see change in their number of       |
-| Employers  | employeess over time.                                                       |
+| Multiple   | User can select maximum 5 employers to see change in their number of        |
+| Employers  | employees over time.                                                        |
 +------------+-----------------------------------------------------------------------------+
 
 
@@ -405,7 +405,7 @@ There are 4 charts for the users to explore, each will have tooltip when hover o
 +------------+-----------------------------------------------------------------------------+
 | Boxplot    | Wage Distribution for Different Education Level                             |
 +------------+-----------------------------------------------------------------------------+
-| Heatmap    | Age of Employees by Employer and Education Level                            |
+| Heatmap    | Each cube = Employer, Size = No. of Employee, Color = Age of Employees      |
 +------------+-----------------------------------------------------------------------------+
 
 The above aims to address: 
