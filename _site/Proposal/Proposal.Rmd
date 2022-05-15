@@ -2,7 +2,7 @@
 title: "Project Proposal for Visual Analytics Project"
 description: |
 author:
-  - name: Group 4 (Hulwana Binte Saifulzaman, Lee Xiao Qi. Yeo Kim Siang)
+  - name: Group 4 (Hulwana Binte Saifulzaman, Lee Xiao Qi, Yeo Kim Siang)
     affiliation: SMU
 date: "`r Sys.Date()`"
 output: distill::distill_article
@@ -45,9 +45,9 @@ In general, there are 13 datasets.
 +------------+----------------+--------------------------------------+
 |            | Dataset        | Description                          |
 +============+================+======================================+
-| 1          | Pa             | A collection of 72 Comma-Separated   |
-|            | rtici          | Values (CSV) files, each containing  |
-|            | pantStatusLogs | information about all participants'  |
+| 1          | Participant    | A collection of 72 Comma-Separated   |
+|            | StatusLogs     | Values (CSV) files, each containing  |
+|            |                | information about all participants'  |
 |            |                | day-to-day activities. Each CSV file |
 |            |                | contains information about the       |
 |            |                | participant's current location,      |
@@ -96,8 +96,8 @@ In general, there are 13 datasets.
 |            |                | participants check into different    |
 |            |                | venues in Engagement.                |
 +------------+----------------+--------------------------------------+
-| 11         | Fi             | Information about the time and       |
-|            | nancialJournal | amount participants spend on certain |
+| 11         | Financial      | Information about the time and       |
+|            | Journal        | amount participants spend on certain |
 |            |                | types of items (ie Education, Food,  |
 |            |                | Recreation, Rent Adjustment, Shelter |
 |            |                | and Wage)                            |
@@ -106,7 +106,7 @@ In general, there are 13 datasets.
 |            |                | between 2 participants in            |
 |            |                | Engagement.                          |
 +------------+----------------+--------------------------------------+
-| 13         | Trave lJournal | Information about the all travel     |
+| 13         | TravelJournal  | Information about the all travel     |
 |            |                | start and end time and duration,     |
 |            |                | their purpose, the check-in and      |
 |            |                | check-out timing associated with     |
@@ -188,11 +188,13 @@ knowledge, he or she can check out the relationship between employee and
 employer (or business) to develop a full understanding of Engagement's
 economy.
 
-![Example of dashboard tab layout](overviewsolution.png)
+### Overview
 
-### Overarching Question
+This will be the landing page for all users where they find out more about the Vast Challange 3 and user instructions to navigate through the shiny app application.
 
-*Design still pending discussion with team.*
+We will also include short profile of each member. 
+
+![Example of dashboard tab layout](Overview.png)
 
 ### Sub-Question 1
 
@@ -205,7 +207,7 @@ displayed.
 
 ![Business Tab Visualization Default](C3Q1D1.png)
 
-The 4 features in which users can play around with are 
+The 3 features in which users can play around with are 
 
 +------------+-----------------------------------------+
 | Feature    |  Function                               |
@@ -256,6 +258,9 @@ The Occupancy Heatmap provides vizualisation on the average occupancy rate for t
 Users are able to see which are the peak and non-peak periods.
 
 ### Sub-Question 2
+
+Upon clicking on the 'Resident' tab, the following default view will be 
+displayed.
 
 ![Resident Tab Visualisation Solution](question2solution.png)
 
@@ -357,6 +362,66 @@ Describe the health of the various employers within the city limits.
 What employment patterns do you observe? Do you notice any areas of
 particularly high or low turnover?
 
+Upon clicking on the 'Employer-Employee' tab, the following default view will be 
+displayed.
+
+![Employer-Employee Tab Visualisation Chart](Q3_Map.png)
+
+
+ 
+The 6 features within this tab:  
+
++------------+-----------------------------------------------------------------------------+
+| Feature    |  Function                                                                   |
++============+=============================================================================+
+| Map/Chart  | User has the option to choose between map or chart view.                    |
++------------+-----------------------------------------------------------------------------+
+| Entity View| User see more information (employer ID, job ID) within each building ID.    |
++------------+-----------------------------------------------------------------------------+
+| City Map   | User will be able to see turnover rate and number of employees for each     |
+|            | employer in each buliding.                                                  |
++------------+-----------------------------------------------------------------------------+
+| Control    | User filter through the options to different scenario.                      |
+| Panel      |                                                                             |
++------------+-----------------------------------------------------------------------------+
+| Timeline   | User has the ability to scope to the target range date, there will also be  |
+|            | a function to auto play and see the changes over time.                      |
++------------+-----------------------------------------------------------------------------+
+| Multiple   | User can select maximium 5 employers to see change in their number of       |
+| Employers  | employeess over time.                                                       |
++------------+-----------------------------------------------------------------------------+
+
+
+![Employer-Employee Tab Visualisation Chart](Q3_Chart.png)
+
+There are 4 charts for the users to explore, each will have tooltip when hover over:  
+
++------------+-----------------------------------------------------------------------------+
+| Feature    |  Function                                                                   |
++============+=============================================================================+
+| Line Chart1| Percentage % Change of Employees For Each Work Week                         |
++------------+-----------------------------------------------------------------------------+
+| Line Chart2| Number of Employees For Each Work Week                                      |
++------------+-----------------------------------------------------------------------------+
+| Boxplot    | Wage Distribution for Different Education Level                             |
++------------+-----------------------------------------------------------------------------+
+| Heatmap    | Age of Employees by Employer and Education Level                            |
++------------+-----------------------------------------------------------------------------+
+
+The above aims to address: 
+
+[*Pointer 1: Describe the health of the various employers within the city limits."*]{.underline}
+
+The map gives an overview on the location of employers and also the number of their employees over time.  
+
+[*Pointer 2: "What employment patterns do you observe?*]{.underline}
+
+The wage and age distribution under the chart view give hints on possible patterns. 
+
+[*Pointer 3: "Do you notice any areas of particularly high or low turnover?*]{.underline}
+
+The different color intensity of turnover rate gives user a sensing across all employers with accompanying line charts for more statistical information.
+
 ### Proposed Packages
 
 These are the R packages we are planning on using. This is subject to
@@ -386,10 +451,10 @@ change as the requirements of the project from our end might change.
 |                         | from each other and away from the data  |
 |                         | points that they label.                 |
 +-------------------------+-----------------------------------------+
-| lubridate               | To make it easier to work with dates    |
+| lubridate, zoo          | To make it easier to work with dates    |
 |                         | and times.                              |
 +-------------------------+-----------------------------------------+
-| gapminder               | \                                       |
+| gapminder               | For data wrangling and visualization    |
 +-------------------------+-----------------------------------------+
 | gganimate               | To create animated ggplots.             |
 +-------------------------+-----------------------------------------+

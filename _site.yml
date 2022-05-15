@@ -9,16 +9,10 @@ navbar:
       menu: 
       - text: "Proposal"
         href: "Proposal/Proposal.html"
-    - text: "Take-Home Exercise"
+    - text: "Shiny Application"
       menu: 
-      - text: "Take-Home Exercise 1"
-        href: "TakeHomeEx/th_ex1.html"
-      - text: "Take-Home Exercise 2"
-        href: "TakeHomeEx/th_ex2.html"
-    - text: "DataVis Makeover"
-      menu:
-      - text: "DataVis Makeover 1"
-        href: index.html
+      - text: "Coming Soon!"
+        href: "index.html"
   right:
     - text: "Home"
       href: index.html

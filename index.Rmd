@@ -2,5 +2,8 @@
 title: "ISS608 VA Project"
 description: |
   Welcome to Our Group Project Blog!
+  
+  We are Group 4 - Hulwana Binte Saifulzaman, Lee Xiao Qi & Yeo Kim Siang.
+  
 site: distill::distill_website
 ---
