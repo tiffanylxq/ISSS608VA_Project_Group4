@@ -412,7 +412,7 @@ The above aims to address:
 
 [*Pointer 1: Describe the health of the various employers within the city limits."*]{.underline}
 
-The map gives an overview on the location of employers and also the number of their employees over time.  
+This refers to the general state of each employer which is described by the employment pattern and turnover rate from the chart and map view respectively.  
 
 [*Pointer 2: "What employment patterns do you observe?*]{.underline}
 
