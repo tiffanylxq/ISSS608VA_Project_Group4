@@ -9,6 +9,14 @@ navbar:
       menu: 
       - text: "Proposal"
         href: "Proposal/Proposal.html"
+    - text: "Work in Progress"
+      menu: 
+      - text: "Q1"
+        href: "index.html"
+      - text: "Q2"
+        href: "index.html"
+      - text: "Q3"
+        href: "Q3/th_ex3_Final.html"
     - text: "Shiny Application"
       menu: 
       - text: "Coming Soon!"
