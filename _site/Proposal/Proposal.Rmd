@@ -365,62 +365,68 @@ particularly high or low turnover?
 Upon clicking on the 'Employer-Employee' tab, the following default view will be 
 displayed.
 
-![Employer-Employee Tab Visualisation Chart](Q3_Map.png)
+![Employer-Employee Tab Visualisation Chart](map.png)
 
-
- 
-There are 6 features within this tab:  
+There are 5 features within this tab:  
 
 +------------+-----------------------------------------------------------------------------+
 | Feature    |  Function                                                                   |
 +============+=============================================================================+
-| Map/Chart  | User has the option to choose between map or chart view.                    |
+| 3 panels   | User has the option to choose toggle among the 3 panels.                    |
 +------------+-----------------------------------------------------------------------------+
-| Entity View| User see more information (employer ID, job ID) within each building ID.    |
+| Map        | Time lapse on how the number/percentage change of employees for             |
+|            | each employer in each building.                                             |
 +------------+-----------------------------------------------------------------------------+
-| City Map   | User will be able to see turnover rate and number of employees for each     |
-|            | employer in each building.                                                  |
+| Timeline   | Time lapse over 50 weeks (15 months period)                                 |
 +------------+-----------------------------------------------------------------------------+
-| Control    | User filter through the options to different scenario.                      |
-| Panel      |                                                                             |
+| Entities   | Shows a maximum of 5 results.                                               |
+| Table      |                                                                             |
 +------------+-----------------------------------------------------------------------------+
-| Timeline   | User has the ability to scope to the target range date, there will also be  |
-|            | a function to auto play and see the changes over time.                      |
-+------------+-----------------------------------------------------------------------------+
-| Multiple   | User can select maximum 5 employers to see change in their number of        |
-| Employers  | employees over time.                                                        |
+| Control    | User can select maximum 5 employers based on Building Id, Employer Id,      |
+| Panel      | No. of Jobs and average pay offered by each employer.                       |
 +------------+-----------------------------------------------------------------------------+
 
+![Employer-Employee Tab Visualisation Chart](turnover.png)
 
-![Employer-Employee Tab Visualisation Chart](Q3_Chart.png)
-
-There are 4 charts for the users to explore, each will have tooltip when hover over:  
+There are 2 charts for the users to explore:  
 
 +------------+-----------------------------------------------------------------------------+
 | Feature    |  Function                                                                   |
 +============+=============================================================================+
-| Line Chart1| Percentage % Change of Employees For Each Work Week                         |
+| Facet Chart| Showing participants by education level that changed jobs during this 15    |
+|            | months period. User can select to see further details of the participants.  |
 +------------+-----------------------------------------------------------------------------+
-| Line Chart2| Number of Employees For Each Work Week                                      |
+| Chart      | User can select the week (1 to 50) to see the percentage change in          |
+|            | employees for all employers.                                                 |
 +------------+-----------------------------------------------------------------------------+
-| Boxplot    | Wage Distribution for Different Education Level                             |
+
+![Employer-Employee Tab Visualisation Chart](more_info.png)
+There are 3 charts for the users to explore:  
+
 +------------+-----------------------------------------------------------------------------+
-| Heatmap    | Each cube = Employer, Size = No. of Employee, Color = Age of Employees      |
+| Feature    |  Function                                                                   |
++============+=============================================================================+
+| Heatmap    | Group = Typical no. of Employees Size = Average Hourly Pay                  |
+|            | Color = Average Age of Employees                                            |
++------------+-----------------------------------------------------------------------------+
+| Boxplot    | Wage Distributions for Different Education Level                            |
++------------+-----------------------------------------------------------------------------+
+| Trelliscope| No. of Employees over time by Each Employer                                 |
 +------------+-----------------------------------------------------------------------------+
 
 The above aims to address: 
 
 [*Pointer 1: Describe the health of the various employers within the city limits."*]{.underline}
 
-This refers to the general state of each employer which is described by the employment pattern and turnover rate from the chart and map view respectively.  
+This refers to the general state of each employer which is described by the employment pattern and turnover rate.  
 
 [*Pointer 2: "What employment patterns do you observe?*]{.underline}
 
-The wage and age distribution under the chart view give hints on possible patterns. 
+The wage and age distribution give hints on possible patterns. 
 
 [*Pointer 3: "Do you notice any areas of particularly high or low turnover?*]{.underline}
 
-The different color intensity of turnover rate gives user a sensing across all employers with accompanying line charts for more statistical information.
+The turnover rate tab gives user a sensing across of change jobs for participants and employers.
 
 ### Proposed Packages
 
@@ -447,16 +453,24 @@ change as the requirements of the project from our end might change.
 | treemap                 | To display hierarchical data as a set   |
 |                         | of nested rectangles.                   |
 +-------------------------+-----------------------------------------+
+| d3treeR                 | To create dynamic treemap               |
++-------------------------+-----------------------------------------+
 | ggrepel                 | To repel overlapping text labels away   |
 |                         | from each other and away from the data  |
 |                         | points that they label.                 |
 +-------------------------+-----------------------------------------+
-| lubridate, zoo          | To make it easier to work with dates    |
-|                         | and times.                              |
+| lubridate, zoo, clock,  | To make it easier to work with dates    |
+| sftime                  | and times.                              |
 +-------------------------+-----------------------------------------+
 | gapminder               | For data wrangling and visualization    |
 +-------------------------+-----------------------------------------+
-| gganimate               | To create animated ggplots.             |
+| gganimate, plotly       | To create animated ggplots.             |
 +-------------------------+-----------------------------------------+
 | ggiraph                 | To create dynamic ggplot graphs.        |
++-------------------------+-----------------------------------------+
+| tmap, sf                | To create dynamic map.                  |
++-------------------------+-----------------------------------------+
+| trelliscopejs           | To create trellis plot.                 |
++-------------------------+-----------------------------------------+
+| data.table              | To create data table.                   |
 +-------------------------+-----------------------------------------+

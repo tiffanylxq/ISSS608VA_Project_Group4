@@ -391,6 +391,8 @@ There are 5 features within this tab:
 There are 2 charts for the users to explore:  
 
 +------------+-----------------------------------------------------------------------------+
+| Feature    |  Function                                                                   |
++============+=============================================================================+
 | Facet Chart| Showing participants by education level that changed jobs during this 15    |
 |            | months period. User can select to see further details of the participants.  |
 +------------+-----------------------------------------------------------------------------+
