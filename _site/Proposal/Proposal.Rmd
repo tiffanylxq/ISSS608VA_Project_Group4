@@ -211,7 +211,7 @@ for your answers.
 Upon clicking on the 'Business' tab, the following default view will be
 displayed.
 
-![Business Tab Visualization Default](C3Q1D1.png)
+![Business Tab Visualization Default](C3Q1D1v2.png)
 
 The 3 features in which users can play around with are
 
@@ -219,7 +219,7 @@ The 3 features in which users can play around with are
 | Feature      | Function                             |
 +==============+======================================+
 | Category     | User has the option to view either   |
-| (Radio       | restaurants or pubs.                 |
+| (Radio       | pubs, restaurants or workplaces.     |
 | button)      |                                      |
 +--------------+--------------------------------------+
 | Scenario     | User can select the type of scenario |
@@ -234,11 +234,13 @@ The 3 features in which users can play around with are
 
 When the user clicked on a particular bar chart, the corresponding line
 chart to its right will be highlighted. This action of clicking on the
-bar chart will also result in 2 more charts to appear, a boxplot and a
-heatmap.
+bar chart (only for pubs and restaurants) will also result in 2 more charts to 
+appear, a boxplot and a heatmap.
 
-![Business Tab Visualization Expansion](C3Q1D2.png)
+![Business Tab Visualization Expansion](C3Q1D2v2.png)
+When 'Workplaces' is selected as the 'Category', three charts will appear.
 
+![Workplaces](C3Q1D3.png)
 ### Rationale
 
 **Total Sales** ![Total Sales Chart(Default View)](C3Q1Chart1.png)
@@ -268,10 +270,19 @@ Chart](C3Q1Chart3.png)
 To give insights to users on the weekday sales of the selected
 businesses. Are customers spending more on the weekday or the weekends?
 
-**Occupancy heatmap** ![Occupancy Heatmap Chart](C3Q1Chart4.png) The
-Occupancy Heatmap provides vizualisation on the average occupancy rate
+**Occupancy Heatmap** ![Occupancy Heatmap Chart](C3Q1Chart4.png) 
+
+The occupancy heatmap provides visualization on the average occupancy rate
 for the selected company across the weekdays at hourly intervals. Users
 are able to see which are the peak and non-peak periods.
+
+**Wage Distribution by Employers** ![Wage Distribution by Employers Chart](C3Q1Chart5.png)
+
+As we are limited to the wages data for employers, the performing employers will
+be considered based on the total wages paid. Since the wages are fixed for each 
+employee, a box plot to show how the wages are distributed among the employees 
+is plotted. This box plot provide details on the number of employees hired for 
+each education level.
 
 ### Sub-Question 2
 
