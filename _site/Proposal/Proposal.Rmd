@@ -42,78 +42,82 @@ are given information from *2022-03-01T00:00:00Z* to
 
 In general, there are 13 datasets.
 
-+------------+----------------+--------------------------------------+
-|            | Dataset        | Description                          |
-+============+================+======================================+
-| 1          | Participant    | A collection of 72 Comma-Separated   |
-|            | StatusLogs     | Values (CSV) files, each containing  |
-|            |                | information about all participants'  |
-|            |                | day-to-day activities. Each CSV file |
-|            |                | contains information about the       |
-|            |                | participant's current location,      |
-|            |                | hunger status, sleep status,         |
-|            |                | apartment, available balance, job,   |
-|            |                | financial status, daily food budget  |
-|            |                | and extra weekly budget.             |
-+------------+----------------+--------------------------------------+
-| 2          | Apartments     | Information about the rental cost,   |
-|            |                | max occupancy, number of rooms, and  |
-|            |                | location of buildings in             |
-|            |                | Engagement.                          |
-+------------+----------------+--------------------------------------+
-| 3          | Buildings      | Information about the location,      |
-|            |                | types and maximum occupancy of       |
-|            |                | buildings in Engagement.             |
-+------------+----------------+--------------------------------------+
-| 4          | Employers      | Information about the location of    |
-|            |                | employers in Engagement.             |
-+------------+----------------+--------------------------------------+
-| 5          | Jobs           | Information about employers, hourly  |
-|            |                | rate, start time, end time, days to  |
-|            |                | work and education requirements that |
-|            |                | employees in Engagement have to      |
-|            |                | meet.                                |
-+------------+----------------+--------------------------------------+
-| 6          | Participants   | Overarching information about each   |
-|            |                | participant, including household     |
-|            |                | size, whether they have kids, age,   |
-|            |                | education levels, interest groups    |
-|            |                | and joviality.                       |
-+------------+----------------+--------------------------------------+
-| 7          | Pubs           | Information about the hourly cost of |
-|            |                | operation, mac occupancy and         |
-|            |                | location of pubs in Engagement.      |
-+------------+----------------+--------------------------------------+
-| 8          | Restaurants    | Information about the cost of food,  |
-|            |                | maximum occupancy and location of    |
-|            |                | restaurants in Engagement.           |
-+------------+----------------+--------------------------------------+
-| 9          | Schools        | Information about the monthly costs, |
-|            |                | maximum enrollment and location of   |
-|            |                | schools in Engagement.               |
-+------------+----------------+--------------------------------------+
-| 10         | CheckinJournal | Information about the time           |
-|            |                | participants check into different    |
-|            |                | venues in Engagement.                |
-+------------+----------------+--------------------------------------+
-| 11         | Financial      | Information about the time and       |
-|            | Journal        | amount participants spend on certain |
-|            |                | types of items (ie Education, Food,  |
-|            |                | Recreation, Rent Adjustment, Shelter |
-|            |                | and Wage)                            |
-+------------+----------------+--------------------------------------+
-| 12         | SocialNetwork  | Information about the interaction    |
-|            |                | between 2 participants in            |
-|            |                | Engagement.                          |
-+------------+----------------+--------------------------------------+
-| 13         | TravelJournal  | Information about the all travel     |
-|            |                | start and end time and duration,     |
-|            |                | their purpose, the check-in and      |
-|            |                | check-out timing associated with     |
-|            |                | such travel, and the amount a        |
-|            |                | participant starts and ends off with |
-|            |                | during such travel.                  |
-+------------+----------------+--------------------------------------+
++--------------+--------------+-----------------------------------+
+|              | Dataset      | Description                       |
++==============+==============+===================================+
+| 1            | Participant  | A collection of 72                |
+|              | StatusLogs   | Comma-Separated Values (CSV)      |
+|              |              | files, each containing            |
+|              |              | information about all             |
+|              |              | participants' day-to-day          |
+|              |              | activities. Each CSV file         |
+|              |              | contains information about the    |
+|              |              | participant's current location,   |
+|              |              | hunger status, sleep status,      |
+|              |              | apartment, available balance,     |
+|              |              | job, financial status, daily food |
+|              |              | budget and extra weekly budget.   |
++--------------+--------------+-----------------------------------+
+| 2            | Apartments   | Information about the rental      |
+|              |              | cost, max occupancy, number of    |
+|              |              | rooms, and location of buildings  |
+|              |              | in Engagement.                    |
++--------------+--------------+-----------------------------------+
+| 3            | Buildings    | Information about the location,   |
+|              |              | types and maximum occupancy of    |
+|              |              | buildings in Engagement.          |
++--------------+--------------+-----------------------------------+
+| 4            | Employers    | Information about the location of |
+|              |              | employers in Engagement.          |
++--------------+--------------+-----------------------------------+
+| 5            | Jobs         | Information about employers,      |
+|              |              | hourly rate, start time, end      |
+|              |              | time, days to work and education  |
+|              |              | requirements that employees in    |
+|              |              | Engagement have to meet.          |
++--------------+--------------+-----------------------------------+
+| 6            | Participants | Overarching information about     |
+|              |              | each participant, including       |
+|              |              | household size, whether they have |
+|              |              | kids, age, education levels,      |
+|              |              | interest groups and joviality.    |
++--------------+--------------+-----------------------------------+
+| 7            | Pubs         | Information about the hourly cost |
+|              |              | of operation, mac occupancy and   |
+|              |              | location of pubs in Engagement.   |
++--------------+--------------+-----------------------------------+
+| 8            | Restaurants  | Information about the cost of     |
+|              |              | food, maximum occupancy and       |
+|              |              | location of restaurants in        |
+|              |              | Engagement.                       |
++--------------+--------------+-----------------------------------+
+| 9            | Schools      | Information about the monthly     |
+|              |              | costs, maximum enrollment and     |
+|              |              | location of schools in            |
+|              |              | Engagement.                       |
++--------------+--------------+-----------------------------------+
+| 10           | Ch           | Information about the time        |
+|              | eckinJournal | participants check into different |
+|              |              | venues in Engagement.             |
++--------------+--------------+-----------------------------------+
+| 11           | Financial    | Information about the time and    |
+|              | Journal      | amount participants spend on      |
+|              |              | certain types of items (ie        |
+|              |              | Education, Food, Recreation, Rent |
+|              |              | Adjustment, Shelter and Wage)     |
++--------------+--------------+-----------------------------------+
+| 12           | S            | Information about the interaction |
+|              | ocialNetwork | between 2 participants in         |
+|              |              | Engagement.                       |
++--------------+--------------+-----------------------------------+
+| 13           | T            | Information about the all travel  |
+|              | ravelJournal | start and end time and duration,  |
+|              |              | their purpose, the check-in and   |
+|              |              | check-out timing associated with  |
+|              |              | such travel, and the amount a     |
+|              |              | participant starts and ends off   |
+|              |              | with during such travel.          |
++--------------+--------------+-----------------------------------+
 
 ## Challenges
 
@@ -136,37 +140,37 @@ They are:
 
 We chose Challenge 3 (Economics), and its accompanying sub-questions.
 
-+--------------+-----------------------------------------------------+
-| Overarching  |                                                     |
-| Question     |                                                     |
-+==============+=====================================================+
-| \            | Over time, are businesses growing or shrinking? How |
-|              | are people changing jobs? Are standards of living   |
-|              | improving or declining over time?                   |
-+--------------+-----------------------------------------------------+
-| **Sub        | \                                                   |
-| -Questions** |                                                     |
-+--------------+-----------------------------------------------------+
-| 1            | Over the period covered by the dataset, which       |
-|              | businesses appear to be more prosperous? Which      |
-|              | appear to be struggling? Describe your rationale    |
-|              | for your answers. Limit your response to 10 images  |
-|              | and 500 words.                                      |
-+--------------+-----------------------------------------------------+
-| 2            | How does the financial health of the residents      |
-|              | change over the period covered by the dataset? How  |
-|              | do wages compare to the overall cost of living in   |
-|              | Engagement? Are there groups that appear to exhibit |
-|              | similar patterns? Describe your rationale for your  |
-|              | answers. Limit your response to 10 images and 500   |
-|              | words.                                              |
-+--------------+-----------------------------------------------------+
-| 3            | Describe the health of the various employers within |
-|              | the city limits. What employment patterns do you    |
-|              | observe? Do you notice any areas of particularly    |
-|              | high or low turnover? Limit your response to 10     |
-|              | images and 500 words.                               |
-+--------------+-----------------------------------------------------+
++---------------+---------------------------------------------------+
+| Overarching   |                                                   |
+| Question      |                                                   |
++===============+===================================================+
+| \             | Over time, are businesses growing or shrinking?   |
+|               | How are people changing jobs? Are standards of    |
+|               | living improving or declining over time?          |
++---------------+---------------------------------------------------+
+| **Sub         | \                                                 |
+| -Questions**  |                                                   |
++---------------+---------------------------------------------------+
+| 1             | Over the period covered by the dataset, which     |
+|               | businesses appear to be more prosperous? Which    |
+|               | appear to be struggling? Describe your rationale  |
+|               | for your answers. Limit your response to 10       |
+|               | images and 500 words.                             |
++---------------+---------------------------------------------------+
+| 2             | How does the financial health of the residents    |
+|               | change over the period covered by the dataset?    |
+|               | How do wages compare to the overall cost of       |
+|               | living in Engagement? Are there groups that       |
+|               | appear to exhibit similar patterns? Describe your |
+|               | rationale for your answers. Limit your response   |
+|               | to 10 images and 500 words.                       |
++---------------+---------------------------------------------------+
+| 3             | Describe the health of the various employers      |
+|               | within the city limits. What employment patterns  |
+|               | do you observe? Do you notice any areas of        |
+|               | particularly high or low turnover? Limit your     |
+|               | response to 10 images and 500 words.              |
++---------------+---------------------------------------------------+
 
 ## Visualisation Solution
 
@@ -190,9 +194,11 @@ economy.
 
 ### Overview
 
-This will be the landing page for all users where they find out more about the Vast Challange 3 and user instructions to navigate through the shiny app application.
+This will be the landing page for all users where they find out more
+about the Vast Challange 3 and user instructions to navigate through the
+shiny app application.
 
-We will also include short profile of each member. 
+We will also include short profile of each member.
 
 ![Example of dashboard tab layout](Overview.png)
 
@@ -202,136 +208,161 @@ Over the period covered by the dataset, which businesses appear to be
 more prosperous? Which appear to be struggling? Describe your rationale
 for your answers.
 
-Upon clicking on the 'Business' tab, the following default view will be 
+Upon clicking on the 'Business' tab, the following default view will be
 displayed.
 
-![Business Tab Visualization Default](C3Q1D1.png)
+![Business Tab Visualization Default](C3Q1D1v2.png)
 
-The 3 features in which users can play around with are 
+The 3 features in which users can play around with are
 
-+------------+-----------------------------------------+
-| Feature    |  Function                               |
-+============+=========================================+
-| Category   |  User has the option to view either     |
-| (Radio     |  restaurants or pubs.                   |
-| button)    |                                         |
-|            |                                         |
-+------------+-----------------------------------------+
-| Scenario   |  User can select the type of scenario   |
-| (Dropdown) |  they would like to visualize.          |
-|            |  Select 'Top 5' or 'Top 10' to view     |
-|            |  the top 5 or top 10 businesses to see  |
-|            |  which companies are prospering.        |
-+------------+-----------------------------------------+
-| Date       | User has the ability to scope to the    |
-| (Range     | target range date.                      |
-| Slider)    |                                         |
-+------------+-----------------------------------------+
++--------------+--------------------------------------+
+| Feature      | Function                             |
++==============+======================================+
+| Category     | User has the option to view either   |
+| (Radio       | pubs, restaurants or workplaces.     |
+| button)      |                                      |
++--------------+--------------------------------------+
+| Scenario     | User can select the type of scenario |
+| (Dropdown)   | they would like to visualize. Select |
+|              | 'Top 5' or 'Top 10' to view the top  |
+|              | 5 or top 10 businesses to see which  |
+|              | companies are prospering.            |
++--------------+--------------------------------------+
+| Date (Range  | User has the ability to scope to the |
+| Slider)      | target range date.                   |
++--------------+--------------------------------------+
 
-When the user clicked on a particular bar chart, the corresponding line chart to
-its right will be highlighted. This action of clicking on the bar chart will also
-result in 2 more charts to appear, a boxplot and a heatmap.
+When the user clicked on a particular bar chart, the corresponding line
+chart to its right will be highlighted. This action of clicking on the
+bar chart (only for pubs and restaurants) will also result in 2 more charts to 
+appear, a boxplot and a heatmap.
 
-![Business Tab Visualization Expansion](C3Q1D2.png)
+![Business Tab Visualization Expansion](C3Q1D2v2.png)
+When 'Workplaces' is selected as the 'Category', three charts will appear.
 
+![Workplaces](C3Q1D3.png)
 ### Rationale
 
-**Total Sales**
-![Total Sales Chart(Default View)](C3Q1Chart1.png)
+**Total Sales** ![Total Sales Chart(Default View)](C3Q1Chart1.png)
 
+The main objective of the first question in challenge 3 is to identify
+which businesses are prospering or struggling. As there is no sales and
+expense data found on the `Restaurants.csv` and `Pubs.csv`, the only way
+to obtain sales volume is to compute via the customer's spending on
+these businesses. Prosperous businesses will refer to companies that are
+making more sales whereas struggling businesses will refer to companies
+that have lower sales. As the sales volume fluctuates sporadically
+day-to-day, to determine the top 5 companies, the total overall sales
+are calculated and the 5 companies with the most sales are selected.
 
-The main objective of the first question in challenge 3 is to identify which businesses are prospering or struggling. As there is no sales and expense data found on the `Restaurants.csv` and `Pubs.csv`, the only way to obtain sales volume is to compute via the customer’s spending on these businesses. Prosperous businesses will refer to companies that are making more sales whereas struggling businesses will refer to companies that have lower sales. As the sales volume fluctuates sporadically day-to-day, to determine the top 5 companies, the total overall sales are calculated and the 5 companies with the most sales are selected.
+**Monthly Sales** ![Monthly Sales CHart(Default View)](C3Q1Chart2.png)
 
-**Monthly Sales**
-![Monthly Sales CHart(Default View)](C3Q1Chart2.png)
+As the **Total Sales Chart** only compares at the overall sales volume,
+it provides no insights on how the businesses are performing overtime.
+Therefore, the Monthly Sales chart visualizes how the companies are
+performing at a monthly basis. We see that in general, there is a sharp
+decline in sales from March 2022 to April 2022. Businesses continues to
+dip till June 2022 after which the sales fluctuates.
 
-As the **Total Sales Chart** only compares at the overall sales volume, it provides no insights on how the businesses are performing overtime. Therefore, the Monthly Sales chart visualizes how the companies are performing at a monthly basis. We see that in general, there is a sharp decline in sales from March 2022 to April 2022. Businesses continues to dip till June 2022 after which the sales fluctuates.
+**Average Spending of Customers** ![Average Spending of Customers
+Chart](C3Q1Chart3.png)
 
-**Average Spending of Customers**
-![Average Spending of Customers Chart](C3Q1Chart3.png)
+To give insights to users on the weekday sales of the selected
+businesses. Are customers spending more on the weekday or the weekends?
 
-To give insights to users on the weekday sales of the selected businesses. Are customers spending more on the weekday or the weekends?
+**Occupancy Heatmap** ![Occupancy Heatmap Chart](C3Q1Chart4.png) 
 
-**Occupancy heatmap**
-![Occupancy Heatmap Chart](C3Q1Chart4.png)
-The Occupancy Heatmap provides vizualisation on the average occupancy rate for the selected company across the weekdays at hourly intervals.
-Users are able to see which are the peak and non-peak periods.
+The occupancy heatmap provides visualization on the average occupancy rate
+for the selected company across the weekdays at hourly intervals. Users
+are able to see which are the peak and non-peak periods.
+
+**Wage Distribution by Employers** ![Wage Distribution by Employers Chart](C3Q1Chart5.png)
+
+As we are limited to the wages data for employers, the performing employers will
+be considered based on the total wages paid. Since the wages are fixed for each 
+employee, a box plot to show how the wages are distributed among the employees 
+is plotted. This box plot provide details on the number of employees hired for 
+each education level.
 
 ### Sub-Question 2
 
-Upon clicking on the 'Resident' tab, the following default view will be 
+Upon clicking on the 'Resident' tab, the following default view will be
 displayed.
 
 ![Resident Tab Visualisation Solution](question2solution.png)
 
 Our visualisation solution for Sub-Question 2 is made up of 4 parts:
 
-+------------+---------------+----------------------------------------+
-| Colour     | Name          | Function                               |
-+============+===============+========================================+
-| Grey       | Heat Map      | Each row in the heat map represents a  |
-|            |               | participant. Each column in the heat   |
-|            |               | map represents a time period. To       |
-|            |               | adjust the number of participants in   |
-|            |               | the heat map, we can use the "Top X    |
-|            |               | filter" in the Heat Map Controller.    |
-|            |               |                                        |
-|            |               | More importantly, the magnitude of the |
-|            |               | colour is representative of the amount |
-|            |               | of balance or debt. For example, a     |
-|            |               | participant with more debt in a        |
-|            |               | certain time period will have a denser |
-|            |               | red-coloured grid than a user with     |
-|            |               | less debt.                             |
-|            |               |                                        |
-|            |               | By hovering over the participant tab,  |
-|            |               | the user can get more information      |
-|            |               | about each user that goes beyond the   |
-|            |               | scope of this question.                |
-+------------+---------------+----------------------------------------+
-| Blue       | R             | While the heat map is great, it does   |
-|            | epresentative | not encapsulate any statistical        |
-|            | Violin Plot   | information.                           |
-|            | and Box Plot  |                                        |
-|            |               | We gather such information for the     |
-|            |               | total, average and customised (based   |
-|            |               | on chosen customers) values of income  |
-|            |               | and cost of living.                    |
-|            |               |                                        |
-|            |               | To represent the distribution of both  |
-|            |               | income and cost of living, we use a    |
-|            |               | violin plot represented by 2 coloured  |
-|            |               | rectangles --- one for each.           |
-|            |               |                                        |
-|            |               | We also layer a boxplot over in order  |
-|            |               | to catch the mea, variable, maximum    |
-|            |               | and minimum values within each set     |
-|            |               | up.                                    |
-+------------+---------------+----------------------------------------+
-| Green      | Filter        | Our controls provide the user with     |
-|            |               | more flexibility when it comes to      |
-|            |               | manipulating Engagement's economic     |
-|            |               | data.                                  |
-|            |               |                                        |
-|            |               | The user inputs the "Category" he or   |
-|            |               | she wants, and then chooses a range of |
-|            |               | values wanted. He or she can also      |
-|            |               | choose to look at particular periods   |
-|            |               | of time by setting the start time and  |
-|            |               | end time of analysis using the time    |
-|            |               | scrub.                                 |
-+------------+---------------+----------------------------------------+
-| Orange     | Heat Map      | Patterns are easier when we sort the   |
-|            | Controller    | participants according to their        |
-|            |               | similarities. In order to determine    |
-|            |               | the closest similarity between 2       |
-|            |               | participants, we use a leaf sort. On   |
-|            |               | top of that, the user can also control |
-|            |               | the heatmap using the "Top X filter"   |
-|            |               | and "Time filter" as mentioned in the  |
-|            |               | "Representative Violin Plot and Box    |
-|            |               | Plot" part of this paper.              |
-+------------+---------------+----------------------------------------+
++--------------+--------------+-------------------------------------+
+| Colour       | Name         | Function                            |
++==============+==============+=====================================+
+| Grey         | Heat Map     | Each row in the heat map represents |
+|              |              | a participant. Each column in the   |
+|              |              | heat map represents a time period.  |
+|              |              | To adjust the number of             |
+|              |              | participants in the heat map, we    |
+|              |              | can use the "Top X filter" in the   |
+|              |              | Heat Map Controller.                |
+|              |              |                                     |
+|              |              | More importantly, the magnitude of  |
+|              |              | the colour is representative of the |
+|              |              | amount of balance or debt. For      |
+|              |              | example, a participant with more    |
+|              |              | debt in a certain time period will  |
+|              |              | have a denser red-coloured grid     |
+|              |              | than a user with less debt.         |
+|              |              |                                     |
+|              |              | By hovering over the participant    |
+|              |              | tab, the user can get more          |
+|              |              | information about each user that    |
+|              |              | goes beyond the scope of this       |
+|              |              | question.                           |
++--------------+--------------+-------------------------------------+
+| Blue         | R            | While the heat map is great, it     |
+|              | e            | does not encapsulate any            |
+|              | presentative | statistical information.            |
+|              | Violin Plot  |                                     |
+|              | and Box      | We gather such information for the  |
+|              | Plot         | total, average and customised       |
+|              |              | (based on chosen customers) values  |
+|              |              | of income and cost of living.       |
+|              |              |                                     |
+|              |              | To represent the distribution of    |
+|              |              | both income and cost of living, we  |
+|              |              | use a violin plot represented by 2  |
+|              |              | coloured rectangles --- one for     |
+|              |              | each.                               |
+|              |              |                                     |
+|              |              | We also layer a boxplot over in     |
+|              |              | order to catch the mea, variable,   |
+|              |              | maximum and minimum values within   |
+|              |              | each set up.                        |
++--------------+--------------+-------------------------------------+
+| Green        | Filter       | Our controls provide the user with  |
+|              |              | more flexibility when it comes to   |
+|              |              | manipulating Engagement's economic  |
+|              |              | data.                               |
+|              |              |                                     |
+|              |              | The user inputs the "Category" he   |
+|              |              | or she wants, and then chooses a    |
+|              |              | range of values wanted. He or she   |
+|              |              | can also choose to look at          |
+|              |              | particular periods of time by       |
+|              |              | setting the start time and end time |
+|              |              | of analysis using the time scrub.   |
++--------------+--------------+-------------------------------------+
+| Orange       | Heat Map     | Patterns are easier when we sort    |
+|              | Controller   | the participants according to their |
+|              |              | similarities. In order to determine |
+|              |              | the closest similarity between 2    |
+|              |              | participants, we use a leaf sort.   |
+|              |              | On top of that, the user can also   |
+|              |              | control the heatmap using the "Top  |
+|              |              | X filter" and "Time filter" as      |
+|              |              | mentioned in the "Representative    |
+|              |              | Violin Plot and Box Plot" part of   |
+|              |              | this paper.                         |
++--------------+--------------+-------------------------------------+
 
 Let's see how this visualisation solution can be used to solve the 3
 pointers.
@@ -356,121 +387,139 @@ makes any patterns very obvious. With the ranking algorithm, we get to
 pull groups of participants that are similar in one way or another close
 to one another, making it easier for us to check if there is an issue.
 
+#### Additional Considerations
+
+While the currently proposed view answers all 3 questions, it is not the
+most intuitive way to perceive time-series events. While the group is
+still undecided, we believe that a simple line graph would help. To do
+that, we can add a *toggle view* button that allows the user to toggle
+between the heat map and a line graph that plots the income, costs and
+constituent costs over the time defined by the time scrub.
+
+![Potential additional view](images/second%20view.PNG)
+
 ### Sub-Question 3
 
 Describe the health of the various employers within the city limits.
 What employment patterns do you observe? Do you notice any areas of
 particularly high or low turnover?
 
-Upon clicking on the 'Employer-Employee' tab, the following default view will be 
-displayed.
+Upon clicking on the 'Employer-Employee' tab, the following default view
+will be displayed.
 
 ![Employer-Employee Tab Visualisation Chart](map.png)
 
-There are 5 features within this tab:  
+There are 5 features within this tab:
 
-+------------+-----------------------------------------------------------------------------+
-| Feature    |  Function                                                                   |
-+============+=============================================================================+
-| 3 panels   | User has the option to choose toggle among the 3 panels.                    |
-+------------+-----------------------------------------------------------------------------+
-| Map        | Time lapse on how the number/percentage change of employees for             |
-|            | each employer in each building.                                             |
-+------------+-----------------------------------------------------------------------------+
-| Timeline   | Time lapse over 50 weeks (15 months period)                                 |
-+------------+-----------------------------------------------------------------------------+
-| Entities   | Shows a maximum of 5 results.                                               |
-| Table      |                                                                             |
-+------------+-----------------------------------------------------------------------------+
-| Control    | User can select maximum 5 employers based on Building Id, Employer Id,      |
-| Panel      | No. of Jobs and average pay offered by each employer.                       |
-+------------+-----------------------------------------------------------------------------+
++-------------+--------------------------------------------------------+
+| Feature     | Function                                               |
++=============+========================================================+
+| 3 panels    | User has the option to choose toggle among the 3       |
+|             | panels.                                                |
++-------------+--------------------------------------------------------+
+| Map         | Time lapse on how the number/percentage change of      |
+|             | employees for each employer in each building.          |
++-------------+--------------------------------------------------------+
+| Timeline    | Time lapse over 50 weeks (15 months period)            |
++-------------+--------------------------------------------------------+
+| Entities    | Shows a maximum of 5 results.                          |
+| Table       |                                                        |
++-------------+--------------------------------------------------------+
+| Control     | User can select maximum 5 employers based on Building  |
+| Panel       | Id, Employer Id, No. of Jobs and average pay offered   |
+|             | by each employer.                                      |
++-------------+--------------------------------------------------------+
 
 ![Employer-Employee Tab Visualisation Chart](turnover.png)
 
-There are 2 charts for the users to explore:  
+There are 2 charts for the users to explore:
 
-+------------+-----------------------------------------------------------------------------+
-| Feature    |  Function                                                                   |
-+============+=============================================================================+
-| Facet Chart| Showing participants by education level that changed jobs during this 15    |
-|            | months period. User can select to see further details of the participants.  |
-+------------+-----------------------------------------------------------------------------+
-| Chart      | User can select the week (1 to 50) to see the percentage change in          |
-|            | employees for all employers.                                                 |
-+------------+-----------------------------------------------------------------------------+
++-------------+--------------------------------------------------------+
+| Feature     | Function                                               |
++=============+========================================================+
+| Facet Chart | Showing participants by education level that changed   |
+|             | jobs during this 15 months period. User can select to  |
+|             | see further details of the participants.               |
++-------------+--------------------------------------------------------+
+| Chart       | User can select the week (1 to 50) to see the          |
+|             | percentage change in employees for all employers.      |
++-------------+--------------------------------------------------------+
 
-![Employer-Employee Tab Visualisation Chart](more_info.png)
-There are 3 charts for the users to explore:  
+![Employer-Employee Tab Visualisation Chart](more_info.png) There are 3
+charts for the users to explore:
 
-+------------+-----------------------------------------------------------------------------+
-| Feature    |  Function                                                                   |
-+============+=============================================================================+
-| Heatmap    | Group = Typical no. of Employees Size = Average Hourly Pay                  |
-|            | Color = Average Age of Employees                                            |
-+------------+-----------------------------------------------------------------------------+
-| Boxplot    | Wage Distributions for Different Education Level                            |
-+------------+-----------------------------------------------------------------------------+
-| Trelliscope| No. of Employees over time by Each Employer                                 |
-+------------+-----------------------------------------------------------------------------+
++-------------+--------------------------------------------------------+
+| Feature     | Function                                               |
++=============+========================================================+
+| Heatmap     | Group = Typical no. of Employees Size = Average Hourly |
+|             | Pay Color = Average Age of Employees                   |
++-------------+--------------------------------------------------------+
+| Boxplot     | Wage Distributions for Different Education Level       |
++-------------+--------------------------------------------------------+
+| Trelliscope | No. of Employees over time by Each Employer            |
++-------------+--------------------------------------------------------+
 
-The above aims to address: 
+The above aims to address:
 
-[*Pointer 1: Describe the health of the various employers within the city limits."*]{.underline}
+[*Pointer 1: Describe the health of the various employers within the
+city limits."*]{.underline}
 
-This refers to the general state of each employer which is described by the employment pattern and turnover rate.  
+This refers to the general state of each employer which is described by
+the employment pattern and turnover rate.
 
 [*Pointer 2: "What employment patterns do you observe?*]{.underline}
 
-The wage and age distribution give hints on possible patterns. 
+The wage and age distribution give hints on possible patterns.
 
-[*Pointer 3: "Do you notice any areas of particularly high or low turnover?*]{.underline}
+[*Pointer 3: "Do you notice any areas of particularly high or low
+turnover?*]{.underline}
 
-The turnover rate tab gives user a sensing across of change jobs for participants and employers.
+The turnover rate tab gives user a sensing across of change jobs for
+participants and employers.
 
 ### Proposed Packages
 
 These are the R packages we are planning on using. This is subject to
 change as the requirements of the project from our end might change.
 
-+-------------------------+-----------------------------------------+
-| Package Name            | Use                                     |
-+=========================+=========================================+
-| shiny and shiny         | To build an interactive web             |
-| dashboard               | visualisation.                          |
-+-------------------------+-----------------------------------------+
-| shinythemes             | To make our shiny website more          |
-|                         | aesthetic.                              |
-+-------------------------+-----------------------------------------+
-| tidyverse               | A must-have for data manipulation and   |
-|                         | exploration.                            |
-+-------------------------+-----------------------------------------+
-| plotly                  | To create all bar charts and graphs.    |
-+-------------------------+-----------------------------------------+
-| ggplot2                 | To plot our visualisations and conduct  |
-|                         | Exploratory Data Analysis.              |
-+-------------------------+-----------------------------------------+
-| treemap                 | To display hierarchical data as a set   |
-|                         | of nested rectangles.                   |
-+-------------------------+-----------------------------------------+
-| d3treeR                 | To create dynamic treemap               |
-+-------------------------+-----------------------------------------+
-| ggrepel                 | To repel overlapping text labels away   |
-|                         | from each other and away from the data  |
-|                         | points that they label.                 |
-+-------------------------+-----------------------------------------+
-| lubridate, zoo, clock,  | To make it easier to work with dates    |
-| sftime                  | and times.                              |
-+-------------------------+-----------------------------------------+
-| gapminder               | For data wrangling and visualization    |
-+-------------------------+-----------------------------------------+
-| gganimate, plotly       | To create animated ggplots.             |
-+-------------------------+-----------------------------------------+
-| ggiraph                 | To create dynamic ggplot graphs.        |
-+-------------------------+-----------------------------------------+
-| tmap, sf                | To create dynamic map.                  |
-+-------------------------+-----------------------------------------+
-| trelliscopejs           | To create trellis plot.                 |
-+-------------------------+-----------------------------------------+
-| data.table              | To create data table.                   |
-+-------------------------+-----------------------------------------+
++------------------------+----------------------------------------+
+| Package Name           | Use                                    |
++========================+========================================+
+| shiny and shiny        | To build an interactive web            |
+| dashboard              | visualisation.                         |
++------------------------+----------------------------------------+
+| shinythemes            | To make our shiny website more         |
+|                        | aesthetic.                             |
++------------------------+----------------------------------------+
+| tidyverse              | A must-have for data manipulation and  |
+|                        | exploration.                           |
++------------------------+----------------------------------------+
+| plotly                 | To create all bar charts and graphs.   |
++------------------------+----------------------------------------+
+| ggplot2                | To plot our visualisations and conduct |
+|                        | Exploratory Data Analysis.             |
++------------------------+----------------------------------------+
+| treemap                | To display hierarchical data as a set  |
+|                        | of nested rectangles.                  |
++------------------------+----------------------------------------+
+| d3treeR                | To create dynamic treemap              |
++------------------------+----------------------------------------+
+| ggrepel                | To repel overlapping text labels away  |
+|                        | from each other and away from the data |
+|                        | points that they label.                |
++------------------------+----------------------------------------+
+| lubridate, zoo, clock, | To make it easier to work with dates   |
+| sftime                 | and times.                             |
++------------------------+----------------------------------------+
+| gapminder              | For data wrangling and visualization   |
++------------------------+----------------------------------------+
+| gganimate, plotly      | To create animated ggplots.            |
++------------------------+----------------------------------------+
+| ggiraph                | To create dynamic ggplot graphs.       |
++------------------------+----------------------------------------+
+| tmap, sf               | To create dynamic map.                 |
++------------------------+----------------------------------------+
+| trelliscopejs          | To create trellis plot.                |
++------------------------+----------------------------------------+
+| data.table             | To create data table.                  |
++------------------------+----------------------------------------+
