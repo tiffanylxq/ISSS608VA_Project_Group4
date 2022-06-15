@@ -1,0 +1,38 @@
+---
+title: "Untitled"
+description: |
+  A new article created using the Distill format.
+author:
+  - name: Nora Jones 
+    url: https://example.com/norajones
+    affiliation: Spacely Sprockets
+    affiliation_url: https://example.com/spacelysprokets
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r}
+```
+
+```{r}
+
+```
+
+Reference: 
+https://shiny.rstudio.com/gallery/nz-trade-dash.html
+
+https://shiny.rstudio.com/gallery/retirement-simulation.html
+
+https://r-graph-gallery.com/streamgraph.html
+
+https://r-graph-gallery.com/interactive-charts.html
+
+Reference (boxplot): 
+https://stackoverflow.com/questions/47868453/make-a-boxplot-interactive-using-shiny
+
+https://stackoverflow.com/questions/56034287/plotly-barplot-in-shiny
+ --> shows renderPlotly()

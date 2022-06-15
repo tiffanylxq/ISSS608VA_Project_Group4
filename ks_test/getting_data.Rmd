@@ -1,0 +1,390 @@
+---
+title: "Take-Home Exercise 3"
+description: |
+  Analysis and display of Engagement's economy.
+author:
+  - name: Yeo Kim Siang
+    url: https://www.linkedin.com/in/kim-siang-yeo-b42317134/
+    affiliation: Singapore Management University
+    affiliation_url: https://scis.smu.edu.sg/master-it-business
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE, message = FALSE, warning = FALSE)
+```
+
+#Getting Packages and Data
+
+```{r}
+packages = c('tidyverse', 'trelliscopejs', 'ggplot2', 'gapminder', 'lubridate', 'dplyr', 'plotly', 'ggdist', 'reshape', 
+             'circlize', 'ComplexHeatmap', 'InteractiveComplexHeatmap', 'shiny')
+for(p in packages){
+  if(!require(p,character.only = T)){
+    install.packages(p)
+  }
+  library(p,character.only = T)
+}
+
+library(circlize)
+library(ComplexHeatmap)
+
+financialJournal <- read_csv("data/FinancialJournal.csv")
+glimpse(financialJournal)
+
+saveRDS(financialJournal, 'data/financialJournal.rds')
+financialJournal <- readRDS('data/financialJournal.rds')
+
+# Creating sub-dataset for the category "Education"
+educationExpense <- filter(financialJournal, category == 'Education')
+
+# Creating sub-dataset for the category "Food"
+foodExpense <- filter(financialJournal, category == 'Food')
+
+# Creating sub-dataset for the category "Recreation"
+recreationExpense <- filter(financialJournal, category == 'Recreation')
+
+# Creating sub-dataset for the category "Shelter"
+shelterExpense <- filter(financialJournal, category == 'Shelter')
+
+# Creating sub-dataset for the category "Wage"
+wageIncome <- filter(financialJournal, category == 'Wage')
+
+# Get all expense related data
+allExpense <- filter(financialJournal, !(category == 'Wage'))
+
+# Create a new data.frame with the newly formatted date field
+allExpense <- allExpense %>%
+  mutate(timestamp = as.Date(timestamp, format = "%m/%d/%y"))
+
+allExpense <- allExpense %>%
+  group_by(participantId, timestamp) %>%
+  summarise(amount = sum(amount, na.rm = TRUE))
+
+# Create a new data.frame with the newly formatted date field
+wageIncome <- wageIncome %>%
+  mutate(timestamp = as.Date(timestamp, format = "%m/%d/%y"))
+
+colnames(wageIncome) <- c('participantId','timestamp','income', 'incomeAmount')
+
+colnames(allExpense) <- c('participantId','timestamp','expenseAmount')
+
+nrow(wageIncome)
+nrow(allExpense)
+
+# Create a new data.frame with the newly formatted date field
+wageIncome <- wageIncome %>%
+  group_by(participantId, timestamp) %>%
+  summarise(incomeAmount = sum(incomeAmount, na.rm = TRUE)) 
+
+# Given that wageIncome has more rows, we left-join into that
+
+incomeAndExpenseTable <- merge(x = wageIncome, y = allExpense, c("participantId", "timestamp"), all.x = TRUE)
+
+incomeAndExpenseTable <- incomeAndExpenseTable %>% 
+  mutate(balance = incomeAmount + expenseAmount)
+
+# Get all balance related data
+allBalance <- data.frame(incomeAndExpenseTable$participantId, incomeAndExpenseTable$timestamp, incomeAndExpenseTable$balance)
+head(allBalance)
+
+# Creating data frame for total income against time
+totalIncome <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(totalIncome = sum(incomeAmount, na.rm = TRUE))
+
+# Creating data frame for total expense against time
+totalExpense <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(totalExpense = sum(expenseAmount, na.rm = TRUE))
+
+# Creating data frame for total balance against time
+totalBalance <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(totalBalance = sum(balance, na.rm = TRUE))
+
+#I also merge the dataframes because I will like to use the plotly *add_trace* function to plot all 3 dataframes on the same plotly graph.
+
+#First we multiply totalExpense by -1 to get the absolute value. This will make comparison in the plotly graph easier.
+
+totalExpense$totalExpense <- totalExpense$totalExpense * -1
+
+completeDataframe <- merge(x = totalIncome, y = totalExpense, c("timestamp"), all.x = TRUE)
+
+completeDataframeFinal <- merge(x = completeDataframe, y = totalBalance, c("timestamp"), all.x = TRUE)
+
+# Creating plotly graph for average
+
+avgIncome <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(avgIncome = mean(incomeAmount, na.rm = TRUE))
+# head(avgIncome)
+
+avgExpense <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(avgExpense = mean(expenseAmount, na.rm = TRUE))
+# head(avgExpense)
+
+avgBalance <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(avgBalance = mean(balance, na.rm = TRUE))
+# head(avgBalance)
+
+avgExpense$avgExpense <- avgExpense$avgExpense * -1
+# head(avgExpense)
+
+completeDataframeAvg <- merge(x = avgIncome, y = avgExpense, c("timestamp"), all.x = TRUE)
+
+completeDataframeAvgFinal <- merge(x = completeDataframeAvg, y = avgBalance, c("timestamp"), all.x = TRUE)
+
+# Creating plotly graph for maximum
+
+maxIncome <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(maxIncome = max(incomeAmount, na.rm = TRUE))
+# head(maxIncome)
+
+maxExpense <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(maxExpense = max(expenseAmount, na.rm = TRUE))
+# head(maxExpense)
+
+maxBalance <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(maxBalance = max(balance, na.rm = TRUE))
+# head(maxBalance)
+
+maxExpense$maxExpense <- maxExpense$maxExpense * -1
+# head(maxExpense)
+
+completeDataframemax <- merge(x = maxIncome, y = maxExpense, c("timestamp"), all.x = TRUE)
+
+completeDataframemaxFinal <- merge(x = completeDataframemax, y = maxBalance, c("timestamp"), all.x = TRUE)
+
+# Creating plotly graph for minimum
+minIncome <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(minIncome = min(incomeAmount, na.rm = TRUE))
+# head(minIncome)
+
+minExpense <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(minExpense = min(expenseAmount, na.rm = TRUE))
+# head(minExpense)
+
+minBalance <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(minBalance = min(balance, na.rm = TRUE))
+# head(minBalance)
+
+minExpense$minExpense <- minExpense$minExpense * -1
+# head(minExpense)
+
+completeDataframemin <- merge(x = minIncome, y = minExpense, c("timestamp"), all.x = TRUE)
+
+completeDataframeminFinal <- merge(x = completeDataframemin, y = minBalance, c("timestamp"), all.x = TRUE)
+```
+
+#Footnote
+
+Just need to focus on using *completeDataframeFinal* and *incomeAndExpenseTable*. 
+
+#Starting to graph
+
+Downloading the packages needed for ComplexHeatMap and InteractiveHeatMap
+
+```{r, echo=FALSE}
+#Ok this kinda works. Cleaned it in excel. 
+
+names(allBalance) <- c('participantId', 'timestamp', 'balance')
+
+#Now we want to manipulate the shape of the allBalance table by making the timestamps the columns, the participants the row and the 
+#balance the data
+allBalancePivotWider <- allBalance %>% 
+  pivot_wider(names_from = participantId, values_from = balance)
+
+#Export to manually clean it
+#This one we are removing days where there are too many NAs
+write_csv(allBalancePivotWider, "data/allBalancePivotWider.csv")
+
+#Import cleaned balance
+cleaned_balance <- read_csv("data/all_balance_removed_nas.csv")
+
+#Now we transpose it
+allBalancePivotWider_transpose = t(cleaned_balance)
+
+#Let's export this and manipulate it from there
+#write_csv(allBalancePivotWider_transpose, "data/allBalancePivotWider_transpose.csv")
+
+#This one we are using to remove accounts that have too many NAs
+write.csv(allBalancePivotWider_transpose,"data/allBalancePivotWider_transpose.csv", row.names = FALSE)
+```
+
+```{r}
+participant_balance_without_participant_id <- read_csv("data/usethis_balance_without_participant_id_v3.csv")
+#participant_balance <- read_csv("data/usethis_balance.csv")
+
+#Converting it into a matrix
+#participant_balance_without_participant_id_mat = data.matrix(participant_balance_without_participant_id)
+```
+
+Now we start graphing. 
+
+```{r}
+ht2 = Heatmap(participant_balance_without_participant_id_mat, name = "mat",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = FALSE, column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+
+ht2
+```
+
+```{r}
+ht2 = Heatmap(participant_balance_without_participant_id, name = "mat",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = TRUE, cluster_columns = FALSE, 
+    column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+ht2 = draw(ht2)
+
+ui = fluidPage(
+    h3("The first heatmap"),
+    InteractiveComplexHeatmapOutput("heatmap_1"),
+    hr()
+)
+
+server = function(input, output, session) {
+    makeInteractiveComplexHeatmap(input, output, session, ht2, "heatmap_1")
+}
+shinyApp(ui, server)
+```
+
+ok it works, now let's get the rest of the variations. 
+Sum, average, min, max
+1 day, 2 day... 7 days
+Weekday, weekend
+
+```{r}
+usethis_balance_without_participant_id_v3 <- read_csv("data/usethis_balance_without_participant_id_v3.csv")
+usethis_balance_without_participant_id_2_day_window <- read_csv("data/usethis_balance_without_participant_id_2_day_window.csv")
+usethis_balance_without_participant_id_3_day_window <- read_csv("data/usethis_balance_without_participant_id_3_day_window.csv")
+usethis_balance_without_participant_id_4_day_window <- read_csv("data/usethis_balance_without_participant_id_4_day_window.csv")
+usethis_balance_without_participant_id_5_day_window <- read_csv("data/usethis_balance_without_participant_id_5_day_window.csv")
+usethis_balance_without_participant_id_6_day_window <- read_csv("data/usethis_balance_without_participant_id_6_day_window.csv")
+usethis_balance_without_participant_id_7_day_window <- read_csv("data/usethis_balance_without_participant_id_7_day_window.csv")
+usethis_balance_without_participant_id_15_day_window <- read_csv("data/usethis_balance_without_participant_id_15_day_window.csv")
+usethis_balance_without_participant_id_25_day_window <- read_csv("data/usethis_balance_without_participant_id_25_day_window.csv")
+```
+
+```{r, echo=FALSE}
+#Keeping some code here
+#usethis_balance_without_participant_id_v3
+ht1 = Heatmap(usethis_balance_without_participant_id_v3, name = "balance",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = TRUE, cluster_columns = FALSE, 
+    column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+ht1 = draw(ht1)
+
+h3("The first heatmap"),
+    InteractiveComplexHeatmapOutput("heatmap_1"),
+    
+#makeInteractiveComplexHeatmap(input, output, session, ht1, "heatmap_1")
+```
+
+```{r}
+#usethis_balance_without_participant_id_2_day_window
+ht2 = Heatmap(usethis_balance_without_participant_id_2_day_window, name = "balance",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = TRUE, cluster_columns = FALSE, 
+    column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+ht2 = draw(ht2)
+
+#usethis_balance_without_participant_id_3_day_window
+ht3 = Heatmap(usethis_balance_without_participant_id_3_day_window, name = "balance",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = TRUE, cluster_columns = FALSE, 
+    column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+ht3 = draw(ht3)
+
+#usethis_balance_without_participant_id_4_day_window
+ht4 = Heatmap(usethis_balance_without_participant_id_4_day_window, name = "balance",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = TRUE, cluster_columns = FALSE, 
+    column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+ht4 = draw(ht4)
+
+#usethis_balance_without_participant_id_5_day_window
+ht5 = Heatmap(usethis_balance_without_participant_id_5_day_window, name = "balance",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = TRUE, cluster_columns = FALSE, 
+    column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+ht5 = draw(ht5)
+
+#usethis_balance_without_participant_id_6_day_window
+ht6 = Heatmap(usethis_balance_without_participant_id_6_day_window, name = "balance",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = TRUE, cluster_columns = FALSE, 
+    column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+ht6 = draw(ht6)
+
+#usethis_balance_without_participant_id_7_day_window
+ht7 = Heatmap(usethis_balance_without_participant_id_7_day_window, name = "balance",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = TRUE, cluster_columns = FALSE, 
+    column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+ht7 = draw(ht7)
+
+#usethis_balance_without_participant_id_15_day_window
+ht15 = Heatmap(usethis_balance_without_participant_id_15_day_window, name = "balance",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = TRUE, cluster_columns = FALSE, 
+    column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+ht15 = draw(ht15)
+
+#usethis_balance_without_participant_id_25_day_window
+ht25 = Heatmap(usethis_balance_without_participant_id_25_day_window, name = "balance",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = TRUE, cluster_columns = FALSE, 
+    column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+ht25 = draw(ht25)
+
+ui = fluidPage(
+    h3("heatmap_2"),
+    InteractiveComplexHeatmapOutput("heatmap_2"), 
+    h3("heatmap_3"),
+    InteractiveComplexHeatmapOutput("heatmap_3"), 
+    h3("heatmap_4"),
+    InteractiveComplexHeatmapOutput("heatmap_4"), 
+    h3("heatmap_5"),
+    InteractiveComplexHeatmapOutput("heatmap_5"), 
+    h3("heatmap_6"),
+    InteractiveComplexHeatmapOutput("heatmap_6"), 
+    h3("heatmap_7"),
+    InteractiveComplexHeatmapOutput("heatmap_7"), 
+    h3("heatmap_15"),
+    InteractiveComplexHeatmapOutput("heatmap_15"), 
+    h3("heatmap_25"),
+    InteractiveComplexHeatmapOutput("heatmap_25"), 
+)
+server = function(input, output, session) {
+    makeInteractiveComplexHeatmap(input, output, session, ht2, "heatmap_2")
+    makeInteractiveComplexHeatmap(input, output, session, ht3, "heatmap_3")
+    makeInteractiveComplexHeatmap(input, output, session, ht4, "heatmap_4")
+    makeInteractiveComplexHeatmap(input, output, session, ht5, "heatmap_5")
+    makeInteractiveComplexHeatmap(input, output, session, ht6, "heatmap_6")
+    makeInteractiveComplexHeatmap(input, output, session, ht7, "heatmap_7")
+    makeInteractiveComplexHeatmap(input, output, session, ht15, "heatmap_15")
+    makeInteractiveComplexHeatmap(input, output, session, ht25, "heatmap_25")
+}
+shinyApp(ui, server)
+```

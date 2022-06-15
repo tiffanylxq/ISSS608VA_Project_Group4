@@ -1,0 +1,822 @@
+---
+title: "Take-Home Exercise 3"
+description: |
+  Analysis and display of Engagement's economy.
+author:
+  - name: Yeo Kim Siang
+    url: https://www.linkedin.com/in/kim-siang-yeo-b42317134/
+    affiliation: Singapore Management University
+    affiliation_url: https://scis.smu.edu.sg/master-it-business
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE, message = FALSE, warning = FALSE)
+```
+
+# The Task
+
+This [takehome exercise](https://isss608-ay2021-22april.netlify.app/th_ex/th_ex03) aims to sharpen the skill of building data visualisation programmatically using appropriate tidyverse family of packages and the preparation of statistical graphics using ggplot2 and its extensions. The specific requirements can be found in the screenshot below.
+
+![](images/paste-94A350AA.png)
+
+You can find the links to then datasets [here](https://vast-challenge.github.io/2022/).
+
+# Chosen Question
+
+My analysis will focus on the Question 2.
+
+*"How does the financial health of the residents change over the period covered by the dataset? How do wages compare to the overall cost of living in Engagement? Are there groups that appear to exhibit similar patterns? Describe your rationale for your answers. Limit your response to 10 images and 500 words."*
+
+# Approach
+
+I will focus on the dataset *FinancialJournal* since it contains all the information I need.
+
+To guide my exploration, I will remove all ambiguity by defining what financial health means.
+
+Financial health is defined as a state of
+
+1.  A steady flow of income To determine this, we can use the "Category" called "Wage" from the dataset *FinancialJournal.*
+
+2.  Rare changes in expenses To determine this, we can use the "Category" called "Education", "Food", "Recreation" and "Shelter" from the dataset *FinancialJournal.*
+
+3.  A cash balance that is growing. To determine this, we can use the difference between income and the different types of costs in the dataset *FinancialJournal.*
+
+I will use Trellisplotjs to survey the data and pick out on certain peculiarties.
+
+Based on the insights discovered, I will try to create a unifying visualisation solution.
+
+# Basic Exploration
+
+Having locked down our approach, we use it as a guide to explore the data using [R for Data Science](https://r4ds.had.co.nz/exploratory-data-analysis.html) as a guide.
+
+## Initialisation
+
+### Getting Packages
+
+The packages required are tidyverse, trelliscopejs, ggplot2, and gapminder.
+
+The code chunk below is used to install and load the required packages onto RStudio.
+
+```{r}
+packages = c('tidyverse', 'trelliscopejs', 'ggplot2', 'gapminder', 'lubridate', 'dplyr', 'plotly', 'ggdist', 'reshape')
+for(p in packages){
+  if(!require(p,character.only = T)){
+    install.packages(p)
+  }
+  library(p,character.only = T)
+}
+```
+
+### Getting Data
+
+The main dataset used is *FinancialJournal.* We use the read_csv() of the readr package is used to import the data.
+
+```{r}
+financialJournal <- read_csv("data/FinancialJournal.csv")
+glimpse(financialJournal)
+```
+
+We also convert the data into RDS format since it exceeded Git's recommended memory limits.
+
+```{r}
+saveRDS(financialJournal, 'data/financialJournal.rds')
+financialJournal <- readRDS('data/financialJournal.rds')
+head(financialJournal)
+```
+
+## Getting Trelliscopejs
+
+Instead of going through the trouble of mutating data and creating facet plots, we use Trelliscopejs.
+
+```{r, eval = FALSE}
+qplot(timestamp, amount, data = financialJournal) +
+  theme_bw() +
+  facet_trelliscope(~ participantId, 
+                    nrow = 2, 
+                    ncol = 5, 
+                    path = "trellis/", 
+                    self_contained = TRUE)
+```
+
+![](images/paste-58D5F246.png)
+
+The Trelliscopejs result from using the dataset *FinancialJournal* in full yielded a result that was not useful. That was because all categories were clunked together. Also, a quick look at the original CSV file shows that there were duplicate values.
+
+Instead, I manually cleaned the CSV file. Next, I created datasets for each category using the code chunk below.
+
+```{r}
+# Creating sub-dataset for the category "Education"
+educationExpense <- filter(financialJournal, category == 'Education')
+head(educationExpense)
+
+# Creating sub-dataset for the category "Food"
+foodExpense <- filter(financialJournal, category == 'Food')
+head(foodExpense)
+
+# Creating sub-dataset for the category "Recreation"
+recreationExpense <- filter(financialJournal, category == 'Recreation')
+head(recreationExpense)
+
+# Creating sub-dataset for the category "Shelter"
+shelterExpense <- filter(financialJournal, category == 'Shelter')
+head(shelterExpense)
+
+# Creating sub-dataset for the category "Wage"
+wageIncome <- filter(financialJournal, category == 'Wage')
+head(wageIncome)
+```
+
+```{r}
+# Adding this for quick run
+wageIncome <- filter(financialJournal, category == 'Wage')
+head(wageIncome)
+```
+
+Lastly, I create individual Trelliscopejs plots for each category using the follow code chunks. I run them individually to make it easier to see which is which.
+
+```{r, eval = FALSE}
+# For education expense
+qplot(timestamp, amount, data = educationExpense) +
+  theme_bw() +
+  facet_trelliscope(~ participantId, 
+                    nrow = 2, 
+                    ncol = 5, 
+                    path = "trellisedu/", 
+                    self_contained = TRUE)
+```
+
+```{r, eval = FALSE}
+# For food expense
+qplot(timestamp, amount, data = foodExpense) +
+  theme_bw() +
+  facet_trelliscope(~ participantId, 
+                    nrow = 2, 
+                    ncol = 5, 
+                    path = "trellisfd/", 
+                    self_contained = TRUE)
+```
+
+```{r, eval = FALSE}
+# For recreation expense
+qplot(timestamp, amount, data = recreationExpense) +
+  theme_bw() +
+  facet_trelliscope(~ participantId, 
+                    nrow = 2, 
+                    ncol = 5, 
+                    path = "trellisrec/", 
+                    self_contained = TRUE)
+```
+
+```{r, eval = FALSE}
+# For shelter expense
+qplot(timestamp, amount, data = shelterExpense) +
+  theme_bw() +
+  facet_trelliscope(~ participantId, 
+                    nrow = 2, 
+                    ncol = 5, 
+                    path = "trellisshel/", 
+                    self_contained = TRUE)
+```
+
+```{r, eval = FALSE}
+# For wage income
+qplot(timestamp, amount, data = wageIncome) +
+  theme_bw() +
+  facet_trelliscope(~ participantId, 
+                    nrow = 2, 
+                    ncol = 5, 
+                    path = "trelliswage/", 
+                    self_contained = TRUE)
+```
+
+I noticed that I was missing something huge. I did not calculate the sum of the expense of all participants in Engagement.
+
+First, I filter away all income data using the code chunk below.
+
+```{r}
+# Get all expense related data
+allExpense <- filter(financialJournal, !(category == 'Wage'))
+head(allExpense)
+```
+
+Then, I convert the timestamps into months using the code chunk below.
+
+```{r}
+# Create a new data.frame with the newly formatted date field
+allExpense <- allExpense %>%
+  mutate(timestamp = as.Date(timestamp, format = "%m/%d/%y"))
+head(allExpense)
+```
+
+Now, we sum all values in the *category* column.
+
+```{r}
+allExpense <- allExpense %>%
+  group_by(participantId, timestamp) %>%
+  summarise(amount = sum(amount, na.rm = TRUE))
+head(allExpense)
+```
+
+Lastly, I create a Trelliscopejs plot for that this too.
+
+```{r, eval = FALSE}
+# For total expense
+qplot(timestamp, amount, data = allExpense) +
+  theme_bw() +
+  facet_trelliscope(~ participantId, 
+                    nrow = 2, 
+                    ncol = 5, 
+                    path = "trellisexp/", 
+                    self_contained = TRUE)
+```
+
+# Insights
+
+## Income
+
+![](images/paste-C5B24B61.png)
+
+Wage seems to largely follow a uniform distribution on a per-participant basis.
+
+![](images/paste-0659A885.png)
+
+![](images/paste-6108EF14.png)
+
+Most cases that are contributing to variance seem to be one-off changes in wages.
+
+![](images/paste-47600A96.png)
+
+However, there are also cases where the change in income is more constant.
+
+In general, the maximum income earned was \$4096.52 and the least amount earned was \$0.83.
+
+## Expense
+
+![](images/paste-47BA315B.png)
+
+![](images/paste-A937C3A5.png)
+
+Combining the expenses shows that in general, there is a baseline amount spent each day by the participants, punctured by high amounts of spending.
+
+![](images/paste-9B41A246.png)
+
+This supported by the overall average breakdown. Where each household spends at least some sort of money of value more than zero. We can tell this from the \*amount_max\* table because expense values are negative.
+
+Overall, the largest expense is \$1637.71 and the smallest expense is \$9.92 on average.
+
+### Education
+
+![](images/paste-D6B51B91.png)
+
+It looks like education expense follows a uniform distribution per participant.
+
+![](images/paste-F5C4C48F.png)
+
+And that it is always part of a participant's expense. A closer look show that it ranges from \$12.81 to \$91.14 on average.
+
+![](images/paste-3B29DA90.png)
+
+Lastly, it seems to be a one-time expense for certain users.
+
+### Food
+
+![](images/paste-85D0E649.png)
+
+It would be premature for me to determine any form of distribution here based on Trelliscopejs plot.
+
+![](images/paste-C1EB139F.png)
+
+That being said, it seems to centre around \$4.75 and have minimal variance. Also, the most spent on food is \$14.84 and the least spent is \$4.22 on average.
+
+![](images/paste-DAC18BE9.png)
+
+It is also interesting to note that food is a one-time expense for some participants.
+
+### Recreation
+
+![](images/paste-0B53B4CD.png)
+
+It would be premature for me to determine any form of distribution here based on Trelliscopejs plot.
+
+![](images/paste-1E0103D6.png)
+
+That being said, it seems to have 2 peaks and might follow a bimodal distribution. In this case, we can hypothesize that recreation is both a daily necessity as well as a once-in-awhile splurge for most participants. The largest amount spent on recreation is \$36.53 and the smallest amount spent is \$0.53 on average.
+
+![](images/paste-96180796.png)
+
+In addition, there are instances of participants where recreation is a one-time expense.
+
+### Shelter
+
+![](images/paste-43F6EB2E.png)
+
+In general, shelter seems to follow a uniform distribution per participant as well.
+
+![](images/paste-E336081B.png)
+
+That being said, it seems to have some sort of variance.
+
+![](images/paste-50C32482.png)
+
+Upon closer inspection, it seems to be because of a one-time upgrade by certain participants.
+
+![](images/paste-4713FE5A.png)
+
+However, there are also cases where there is more than one change in shelter expense. These participants could be renters. However, it is also to be noted that they are the minority.
+
+![](images/paste-E2C25D3B.png)
+
+In general, shelter expense seems to follow a normal distribution with the maximum expense being \$1556.36 and the minimum expense being \$231.71.
+
+## Basic Conclusion and Steps Moving Forward
+
+We now have an understanding of the income and expenses of participants in Engagmement.
+
+1.  There seem to be "dud" values where the participant just trails off and does not have any income or expense information over some period of time. And in most cases, once the participant trails off, no new data will be found. In the case of income, it could mean that the participant has stopped working. In the case of expense, a stop in recreation expense is fine. However, it is difficult to account for a stop in shelter, education and especially food expense.
+
+2.  Income is constant for almost all participants. So is education expense and shelter expense. Hence, most volatility in a participant's available balance will be due to changes in other expenses.
+
+3.  The exploration so far does not investigate the relationship between income and expense.
+
+# More Exploration
+
+I focus on evaluating the difference between income and expense here.
+
+## Getting Data
+
+The goal here is to create a dataframe with expense, income and balance.
+
+First, we convert the *wageIncome* dataframe so that it uses the same timestamps as the *allExpense* dataframe using the code chunk below.
+
+```{r}
+# Create a new data.frame with the newly formatted date field
+wageIncome <- wageIncome %>%
+  mutate(timestamp = as.Date(timestamp, format = "%m/%d/%y"))
+head(wageIncome)
+```
+
+We change the column names too with the following code chunk. Also, we need to find out if they have the same number of rows
+
+```{r}
+colnames(wageIncome) <- c('participantId','timestamp','income', 'incomeAmount')
+
+colnames(allExpense) <- c('participantId','timestamp','expenseAmount')
+
+nrow(wageIncome)
+nrow(allExpense)
+```
+
+We also group all wages so that there is at most 1 wage datapoint for each timestamp.
+
+```{r}
+# Create a new data.frame with the newly formatted date field
+wageIncome <- wageIncome %>%
+  group_by(participantId, timestamp) %>%
+  summarise(incomeAmount = sum(incomeAmount, na.rm = TRUE)) 
+```
+
+Now we create a completely new dataframe using the *wageIncome* and *allExpense* dataframes with the code chunk below.
+
+```{r}
+# Given that wageIncome has more rows, we left-join into that
+
+incomeAndExpenseTable <- merge(x = wageIncome, y = allExpense, c("participantId", "timestamp"), all.x = TRUE)
+head(incomeAndExpenseTable)
+```
+
+Lastly, we add a balance column to the datafame.
+
+```{r}
+incomeAndExpenseTable <- incomeAndExpenseTable %>% 
+  mutate(balance = incomeAmount + expenseAmount)
+head(incomeAndExpenseTable)
+```
+
+To create a Trelliscopejs plot for each participant's balance, we first create a dataet for balance
+
+```{r}
+# Get all balance related data
+allBalance <- data.frame(incomeAndExpenseTable$participantId, incomeAndExpenseTable$timestamp, incomeAndExpenseTable$balance)
+head(allBalance)
+```
+
+Now, we create the Trelliscopejs plot.
+
+```{r, eval=FALSE}
+# For total expense
+qplot(incomeAndExpenseTable.timestamp, incomeAndExpenseTable.balance, data = allBalance) +
+  theme_bw() +
+  facet_trelliscope(~ incomeAndExpenseTable.participantId, 
+                    nrow = 2, 
+                    ncol = 5, 
+                    path = "trellisbal/", 
+                    self_contained = TRUE)
+```
+
+# More Insights
+
+## Balance
+
+![](images/paste-6A4C90AA.png)
+
+Balance seems to have a uniform distribution for each participant.
+
+![](images/paste-6FA28F10.png)
+
+This backed up by the low variance as variance tends to center around 0.
+
+![](images/paste-3104691A.png)
+
+Also, most variance seems to come from occasional changes in balance.
+
+![](images/paste-BE1B6A66.png)
+
+While i cannot tell as much from these tables, it is important to note that some people do go into debt. The lowest balance is \$-1335.67 while the highest balance is \$4081.58.
+
+# Visual Solutioning
+
+To recap the 3 questions again, they are:
+
+*1. How does the financial health of the residents change over the period covered by the dataset?*
+
+*2. How do wages compare to the overall cost of living in Engagement?*
+
+*3. Are there groups that appear to exhibit similar patterns? Describe your rationale for your answers.*
+
+## Graph Creation
+
+### Questions 1 and 2
+
+Questions 1 and 2 seem to be the most straightforward, and can be quickly visualised with a multi-line plot using the dataframe *incomeAndExpenseTable* and its variants.
+
+Let us create 3 plots, one for income, expense and balance, using the code chunks below.
+
+```{r}
+# Dynamic plot for income
+
+plot_ly(
+  data = incomeAndExpenseTable, 
+  x = ~timestamp, 
+  y = ~incomeAmount,  
+  type = "scatter", 
+  mode = "lines", 
+  color = ~participantId) %>%
+  layout(title = 'Income for all Participants in Engagememt over time', 
+         xaxis = list(
+    range = c(as.numeric(as.POSIXct("2022-03-01", format="%Y-%m-%d"))*1000, as.numeric(as.POSIXct("2022-11-05", format="%Y-%m-%d"))*1000),
+    type = "date"))
+```
+
+*Note: Adding the static screenshot as I was facing memory issues during knit*
+
+![](images/paste-F097C399.png)
+
+```{r}
+# Dynamic plot for expense
+
+plot_ly(
+  data = incomeAndExpenseTable, 
+  x = ~timestamp, 
+  y = ~expenseAmount,  
+  type = "scatter", 
+  mode = "lines", 
+  color = ~participantId) %>%
+  layout(title = 'Expense for all Participants in Engagememt over time', 
+         xaxis = list(
+    range = c(as.numeric(as.POSIXct("2022-03-01", format="%Y-%m-%d"))*1000, as.numeric(as.POSIXct("2022-11-05", format="%Y-%m-%d"))*1000),
+    type = "date"))
+```
+
+*Note: Adding the static screenshot as I was facing memory issues during knit*
+
+![](images/paste-DFCDB005.png)
+
+```{r}
+# Dynamic plot for balance 
+
+plot_ly(
+  data = incomeAndExpenseTable, 
+  x = ~timestamp, 
+  y = ~balance,  
+  type = "scatter", 
+  mode = "lines", 
+  color = ~participantId) %>%
+  layout(title = 'Balance for all Participants in Engagememt over time', 
+         xaxis = list(
+    range = c(as.numeric(as.POSIXct("2022-03-01", format="%Y-%m-%d"))*1000, as.numeric(as.POSIXct("2022-11-05", format="%Y-%m-%d"))*1000),
+    type = "date"))
+```
+
+*Note: Adding the static screenshot as I was facing memory issues during knit*
+
+![](images/paste-16B77A97.png)
+
+Honestly, there are too many data points and this is just a hot mess. I try to aggregrate and plot the average, minimum, maximum and total value for each over time by first creating new datasets with the code chunk below.
+
+```{r}
+# Creating data frame for total income against time
+totalIncome <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(totalIncome = sum(incomeAmount, na.rm = TRUE))
+head(totalIncome)
+
+# Creating data frame for total expense against time
+totalExpense <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(totalExpense = sum(expenseAmount, na.rm = TRUE))
+head(totalExpense)
+
+# Creating data frame for total balance against time
+totalBalance <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(totalBalance = sum(balance, na.rm = TRUE))
+head(totalBalance)
+```
+
+I also merge the dataframes because I will like to use the plotly *add_trace* function to plot all 3 dataframes on the same plotly graph.
+
+```{r}
+#First we multiply totalExpense by -1 to get the absolute value. This will make comparison in the plotly graph easier.
+
+totalExpense$totalExpense <- totalExpense$totalExpense * -1
+head(totalExpense)
+
+completeDataframe <- merge(x = totalIncome, y = totalExpense, c("timestamp"), all.x = TRUE)
+
+completeDataframeFinal <- merge(x = completeDataframe, y = totalBalance, c("timestamp"), all.x = TRUE)
+
+head(completeDataframeFinal)
+```
+
+Now, we create an interactive multi-line plot for *completeDataframeFinal*
+
+```{r}
+plot_ly(
+  data = completeDataframeFinal, 
+  x = ~timestamp, 
+  y = ~totalIncome, 
+  name = 'totalIncome',
+  type = "scatter", 
+  mode = "lines"
+) %>% 
+  add_trace(y = ~totalExpense, 
+            name = 'totalExpense') %>% 
+  add_trace(y = ~totalBalance, 
+            name = 'totalBalance') %>%
+  layout(title = 'Total for all Participants in Engagememt over time', 
+         yaxis = list(title = 'Amount'))
+```
+
+*Note: Adding the static screenshot as I was facing memory issues during knit*
+
+![](images/paste-7063B0C2.png)
+
+Let us do the same for average, maximum and minimum values using the code chunks below.
+
+```{r}
+# Creating plotly graph for average
+
+avgIncome <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(avgIncome = mean(incomeAmount, na.rm = TRUE))
+# head(avgIncome)
+
+avgExpense <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(avgExpense = mean(expenseAmount, na.rm = TRUE))
+# head(avgExpense)
+
+avgBalance <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(avgBalance = mean(balance, na.rm = TRUE))
+# head(avgBalance)
+
+avgExpense$avgExpense <- avgExpense$avgExpense * -1
+# head(avgExpense)
+
+completeDataframeAvg <- merge(x = avgIncome, y = avgExpense, c("timestamp"), all.x = TRUE)
+
+completeDataframeAvgFinal <- merge(x = completeDataframeAvg, y = avgBalance, c("timestamp"), all.x = TRUE)
+
+# head(completeDataframeAvgFinal)
+
+plot_ly(
+  data = completeDataframeAvgFinal, 
+  x = ~timestamp, 
+  y = ~avgIncome, 
+  name = 'avgIncome',
+  type = "scatter", 
+  mode = "lines"
+) %>% 
+  add_trace(y = ~avgExpense, 
+            name = 'avgExpense') %>% 
+  add_trace(y = ~avgBalance, 
+            name = 'avgBalance') %>%
+  layout(title = 'Average for all Participants in Engagememt over time', 
+         yaxis = list(title = 'Amount'))
+```
+
+*Note: Adding the static screenshot as I was facing memory issues during knit*
+
+![](images/paste-4225EA4B.png)
+
+```{r}
+# Creating plotly graph for maximum
+
+maxIncome <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(maxIncome = max(incomeAmount, na.rm = TRUE))
+# head(maxIncome)
+
+maxExpense <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(maxExpense = max(expenseAmount, na.rm = TRUE))
+# head(maxExpense)
+
+maxBalance <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(maxBalance = max(balance, na.rm = TRUE))
+# head(maxBalance)
+
+maxExpense$maxExpense <- maxExpense$maxExpense * -1
+# head(maxExpense)
+
+completeDataframemax <- merge(x = maxIncome, y = maxExpense, c("timestamp"), all.x = TRUE)
+
+completeDataframemaxFinal <- merge(x = completeDataframemax, y = maxBalance, c("timestamp"), all.x = TRUE)
+
+# head(completeDataframemaxFinal)
+
+plot_ly(
+  data = completeDataframemaxFinal, 
+  x = ~timestamp, 
+  y = ~maxIncome, 
+  name = 'maxIncome',
+  type = "scatter", 
+  mode = "lines"
+) %>% 
+  add_trace(y = ~maxExpense, 
+            name = 'maxExpense') %>% 
+  add_trace(y = ~maxBalance, 
+            name = 'maxBalance') %>%
+  layout(title = 'Max for all Participants in Engagememt over time', 
+         yaxis = list(title = 'Amount'))
+```
+
+*Note: Adding the static screenshot as I was facing memory issues during knit*
+
+![](images/paste-049E6ED4.png)
+
+```{r}
+# Creating plotly graph for minimum
+minIncome <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(minIncome = min(incomeAmount, na.rm = TRUE))
+# head(minIncome)
+
+minExpense <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(minExpense = min(expenseAmount, na.rm = TRUE))
+# head(minExpense)
+
+minBalance <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(minBalance = min(balance, na.rm = TRUE))
+# head(minBalance)
+
+minExpense$minExpense <- minExpense$minExpense * -1
+# head(minExpense)
+
+completeDataframemin <- merge(x = minIncome, y = minExpense, c("timestamp"), all.x = TRUE)
+
+completeDataframeminFinal <- merge(x = completeDataframemin, y = minBalance, c("timestamp"), all.x = TRUE)
+
+# head(completeDataframeminFinal)
+
+plot_ly(
+  data = completeDataframeminFinal, 
+  x = ~timestamp, 
+  y = ~minIncome, 
+  name = 'minIncome',
+  type = "scatter", 
+  mode = "lines"
+) %>% 
+  add_trace(y = ~minExpense, 
+            name = 'minExpense') %>% 
+  add_trace(y = ~minBalance, 
+            name = 'minBalance') %>%
+  layout(title = 'Minimum for all Participants in Engagememt over time', 
+         yaxis = list(title = 'Amount'))
+
+```
+
+*Note: Adding the static screenshot as I was facing memory issues during knit*
+
+![](images/paste-78A2AE8D.png)
+
+Next up, I will like to get the summary statistics for total, average, maximum and minimum income, expense and balance. We do that using the code chunks below.
+
+```{r}
+# Getting summary statistics for total
+summary(completeDataframeFinal)
+```
+
+![](images/paste-42B793D8.png)
+
+```{r}
+# Getting summary statistics for average
+summary(completeDataframeAvgFinal)
+```
+
+![](images/paste-06D32CAF.png)
+
+```{r}
+# Getting summary statistics for max
+summary(completeDataframemaxFinal)
+```
+
+![](images/paste-A480F79F.png)
+
+```{r}
+# Getting summary statistics for min
+summary(completeDataframeminFinal)
+```
+
+![](images/paste-65061714.png)
+
+### Questions 3
+
+To identify a pattern, we have to base the data on a solid basis of comparison. Since the crux of this question lies in a participant's financial health, I will like to use each participant's balance over time. To make it easier for me to see any form of pattern, I will use a heatmap.
+
+We start by renaming the columns of *allBalance* using the code chunk below.
+
+```{r}
+names(allBalance) <- c('participantId', 'timestamp', 'balance')
+```
+
+Then we build a heat map for each partipant overtime using the code chunk below, by taking reference from the official [RPubs guidelines](https://rpubs.com/ab604/98032)
+
+```{r}
+ggplot(allBalance, 
+              aes(timestamp, participantId)) +            
+  geom_tile(aes(fill = balance))
+
+balanceHeatMap    
+
+ggsave("heatmap.png")
+```
+
+![](images/paste-3C859EEE.png)
+
+## Addressing Questions
+
+### Question 1 and 2
+
+Just to recap, these are the questions.
+
+*1. How does the financial health of the residents change over the period covered by the dataset?*
+
+*2. How do wages compare to the overall cost of living in Engagement?*
+
+![](images/paste-AF5B3453.png)
+
+*Answering Question 1*
+
+On average, participant financial health is consistently positive and subject to the frequent drop because of a spike in expense.
+
+*Answering Question 2*
+
+On average, wage is higher than overall expense. Also, wage is more consistent and expense is more volatile. This is attributed to all expenses other than education expense and shelter expense, as these 2 expenses are also rather steady for every participant.
+
+![](images/paste-049E6ED4.png)
+
+*Answering Question 1*
+
+If we assume that the richest participants have both the highest income and highest expense, then the graph above can be a reflection of the richest participants. In general, the richest participants never face a loss, and know how to minimise their expense spikes.
+
+*Answering Question 2*
+
+The richer participants know how to keep their income high while moderating the volatility that is commonly associated with expense.
+
+![](images/paste-78A2AE8D.png)
+
+*Answering Question 1*
+
+If we assume that the poorest participants have the lowest income and expense, then we see that they are consistently earning bare minimum or in debt. In addition, they are hit harder than the average during the spikes in expense.
+
+*Answering Question 2*
+
+The poorer participants earn lower wages and incur more expense. This could keep them in a poverty cycle.
+
+### Question 3
+
+*Are there groups that appear to exhibit similar patterns?*
+
+![](images/paste-216C31FA.png)
+
+Admittedly, the current heatmap does not solve the problem. **A lot more** has to be done, and I will continue to work on this over time. More specifically, I will like to
+
+1.  Use clustering algorithms to group the participants.
+2.  Make the heatmap interactive (which I tried to with *d3heatmap* but there was once again a memory error) so that the user can zoom in and and out, as well as change the number of participants to compare.
