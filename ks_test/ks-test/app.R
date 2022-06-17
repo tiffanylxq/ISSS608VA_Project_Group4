@@ -445,6 +445,9 @@ server <- function(input, output, session) {
     #Allowing for date division
     if (input$dateDivHeatmap == "daily") {
       df <- df
+      
+      print("daily")
+      print(df)
     }
     
     if (input$dateDivHeatmap == "monthly") {
@@ -452,11 +455,11 @@ server <- function(input, output, session) {
       df$timestamp <- format(as.Date(df$timestamp), "%Y-%m")
       
       df <- df %>%
-        group_by(timestamp) %>%
+        group_by(timestamp, participantId) %>%
         summarise(across(everything(), list(sum)))
       
-      names(df)[names(df) == 'participantId_1'] <- "participantId"
-      names(df)[names(df) == 'balance_1'] <- "balance"
+      print("monthly")
+      print(df)
     }
     
     if (input$dateDivHeatmap == "yearly") {
@@ -464,8 +467,11 @@ server <- function(input, output, session) {
       df$timestamp <- format(as.Date(df$timestamp), "%Y")
       
       df <- df %>%
-        group_by(timestamp) %>%
+        group_by(timestamp, participantId) %>%
         summarise(across(everything(), list(sum)))
+      
+      print("yearly")
+      print(df)
     }
     
     names(df)[names(df) == 'participantId_1'] <- "participantId"
