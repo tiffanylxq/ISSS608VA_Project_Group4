@@ -1,0 +1,951 @@
+---
+title: "Take-Home Exercise 3"
+description: |
+  Analysis and display of Engagement's economy.
+author:
+  - name: Yeo Kim Siang
+    url: https://www.linkedin.com/in/kim-siang-yeo-b42317134/
+    affiliation: Singapore Management University
+    affiliation_url: https://scis.smu.edu.sg/master-it-business
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE, message = FALSE, warning = FALSE)
+```
+
+#Getting Packages and Data
+
+```{r}
+packages = c('tidyverse', 'trelliscopejs', 'ggplot2', 'gapminder', 'lubridate', 'dplyr', 'plotly', 'ggdist', 'reshape', 
+             'circlize', 'ComplexHeatmap', 'InteractiveComplexHeatmap', 'shiny', 'reshape2')
+for(p in packages){
+  if(!require(p,character.only = T)){
+    install.packages(p)
+  }
+  library(p,character.only = T)
+}
+
+library(circlize)
+library(ComplexHeatmap)
+```
+
+```{r}
+# Create Data
+data <- data.frame(
+  group=LETTERS[1:5],
+  value=c(13,7,9,21,2)
+)
+
+print(data)
+
+# Basic piechart
+ggplot(data, aes(x="", y=value, fill=group)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0)
+```
+
+```{r}
+# Barplot
+ggplot(data, aes(x=name, y=value)) + 
+  geom_bar(stat = "identity")
+```
+
+```{r}
+participantData <- read_csv("data/facet/Participants_test.csv")
+
+joviality_df <- subset(participantData, select = c(joviality))
+
+ggplot(joviality_df, aes(x=joviality)) + 
+  geom_histogram(binwidth=1)
+
+
+```
+
+```{r}
+# library
+library(ggplot2)
+ 
+# dataset:
+data=data.frame(value=rnorm(100))
+
+print(data)
+
+# basic histogram
+ggplot(data, aes(x=value)) + 
+  geom_histogram()
+```
+
+```{r}
+educationLevel <- table(participantData['joviality'])
+
+print(educationLevel)
+
+educationLevel_df <- data.frame(rbind(educationLevel))
+educationLevel_df_transposed <- t(educationLevel_df)
+
+educationLevel_df_transposed <- cbind(factor = rownames(educationLevel_df_transposed), educationLevel_df_transposed)
+rownames(educationLevel_df_transposed) <- 1:nrow(educationLevel_df_transposed)
+
+test2 <- data.frame(educationLevel_df_transposed)
+
+names(test2) <- c('Count', 'Factor')
+
+print(test2)
+
+
+```
+
+ggplot(mtcars, aes(x=wt, y=mpg)) +
+  geom_point(size=2, shape=23)
+
+```{r}
+participantData <- read_csv("data/facet/Participants_test.csv")
+
+educationLevel <- table(participantData['educationLevel'])
+educationLevel_df <- data.frame(rbind(educationLevel))
+educationLevel_df_transposed <- t(educationLevel_df)
+
+educationLevel_df_transposed <- cbind(Factor = rownames(educationLevel_df_transposed), educationLevel_df_transposed)
+rownames(educationLevel_df_transposed) <- 1:nrow(educationLevel_df_transposed)
+
+test2 <- data.frame(educationLevel_df_transposed)
+
+ggplot(test2, aes(x=factor, y=educationLevel)) + 
+  geom_bar(stat = "identity")
+```
+
+```{r}
+ggplot(test2, aes(x="", y=educationLevel, fill=Factor)) +
+  geom_col(color = "black") +
+  geom_text(aes(label = educationLevel),
+            position = position_stack(vjust = 0.5)) +
+  coord_polar("y", start=0) + 
+  scale_fill_brewer() +
+  theme_void()
+
+str(test2)
+```
+
+ggplot(educationLevel_df_transposed, aes(x="", y=educationLevel, fill=test)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0)
+
+```{r}
+# Library
+library(ggplot2)
+
+# Dummy data
+x <- LETTERS[1:20]
+y <- paste0("var", seq(1,20))
+
+print(x)
+print(y)
+
+data <- expand.grid(X=x, Y=y)
+data$Z <- runif(400, 0, 5)
+
+print(data)
+ 
+# Heatmap 
+ggplot(data, aes(X, Y, fill= Z)) + 
+  geom_tile()
+```
+
+```{r}
+library("viridis")  
+
+use_this_for_balance <- read_csv("data/heatmap/balance_heatmap.csv")
+
+na.omit(use_this_for_balance)
+
+# Heatmap 
+p <- ggplot(use_this_for_balance, aes(
+      use_this_for_balance$timestamp, 
+      use_this_for_balance$participantId,
+      fill = use_this_for_balance$balance
+    )) + 
+      geom_tile() +
+  scale_fill_gradientn(colors = hcl.colors(20, "viridis")) +
+      theme(axis.ticks.x = element_blank(),
+            axis.text.x = element_blank())
+    
+ggplotly(p)
+```
+
+```{r}
+use_this_for_balance_2 <- read_csv("data/heatmap/balance_heatmap_3.csv")
+#use_this_for_balance_2$balance <- as.character(use_this_for_balance_2$balance)
+#use_this_for_balance_2_ordered <- use_this_for_balance_2[order(use_this_for_balance_2$balance, decreasing = TRUE),]
+
+#use_this_for_balance_2_ordered_grouped <- use_this_for_balance_2_ordered %>% group_by(participantId)
+
+use_this_for_balance_2_1 <- subset(use_this_for_balance_2, select = c(participantId, balance))
+
+use_this_for_balance_2_grouped <- use_this_for_balance_2_1 %>%
+  group_by(participantId) %>%
+        summarise(across(everything(), list(sum)))
+
+merged_dataframe <- merge(use_this_for_balance_2, use_this_for_balance_2_grouped, by="participantId")
+
+
+#str(use_this_for_balance_2)
+#target <- c(5, 1, 2)
+#test <- use_this_for_balance_2[match(target, use_this_for_balance_2$participantId),]
+```
+
+fig <- plot_ly(
+    x = use_this_for_balance$timestamp, y = use_this_for_balance$participantId,
+    z = use_this_for_balance$balance, type = "heatmap"
+)
+
+fig
+
+```{r}
+financialJournal <- read_csv("data/FinancialJournal.csv")
+glimpse(financialJournal)
+
+saveRDS(financialJournal, 'data/financialJournal.rds')
+financialJournal <- readRDS('data/financialJournal.rds')
+
+# Creating sub-dataset for the category "Education"
+educationExpense <- filter(financialJournal, category == 'Education')
+
+# Creating sub-dataset for the category "Food"
+foodExpense <- filter(financialJournal, category == 'Food')
+
+# Creating sub-dataset for the category "Recreation"
+recreationExpense <- filter(financialJournal, category == 'Recreation')
+
+# Creating sub-dataset for the category "Shelter"
+shelterExpense <- filter(financialJournal, category == 'Shelter')
+
+# Creating sub-dataset for the category "Wage"
+wageIncome <- filter(financialJournal, category == 'Wage')
+
+# Get all expense related data
+allExpense <- filter(financialJournal, !(category == 'Wage'))
+
+# Create a new data.frame with the newly formatted date field
+allExpense <- allExpense %>%
+  mutate(timestamp = as.Date(timestamp, format = "%m/%d/%y"))
+
+allExpense <- allExpense %>%
+  group_by(participantId, timestamp) %>%
+  summarise(amount = sum(amount, na.rm = TRUE))
+
+# Create a new data.frame with the newly formatted date field
+wageIncome <- wageIncome %>%
+  mutate(timestamp = as.Date(timestamp, format = "%m/%d/%y"))
+
+colnames(wageIncome) <- c('participantId','timestamp','income', 'incomeAmount')
+
+colnames(allExpense) <- c('participantId','timestamp','expenseAmount')
+
+nrow(wageIncome)
+nrow(allExpense)
+
+# Create a new data.frame with the newly formatted date field
+wageIncome <- wageIncome %>%
+  group_by(participantId, timestamp) %>%
+  summarise(incomeAmount = sum(incomeAmount, na.rm = TRUE)) 
+
+# Given that wageIncome has more rows, we left-join into that
+
+incomeAndExpenseTable <- merge(x = wageIncome, y = allExpense, c("participantId", "timestamp"), all.x = TRUE)
+
+incomeAndExpenseTable <- incomeAndExpenseTable %>% 
+  mutate(balance = incomeAmount + expenseAmount)
+
+# Get all balance related data
+allBalance <- data.frame(incomeAndExpenseTable$participantId, incomeAndExpenseTable$timestamp, incomeAndExpenseTable$balance)
+head(allBalance)
+
+# Creating data frame for total income against time
+totalIncome <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(totalIncome = sum(incomeAmount, na.rm = TRUE))
+
+# Creating data frame for total expense against time
+totalExpense <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(totalExpense = sum(expenseAmount, na.rm = TRUE))
+
+# Creating data frame for total balance against time
+totalBalance <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(totalBalance = sum(balance, na.rm = TRUE))
+
+#I also merge the dataframes because I will like to use the plotly *add_trace* function to plot all 3 dataframes on the same plotly graph.
+
+#First we multiply totalExpense by -1 to get the absolute value. This will make comparison in the plotly graph easier.
+
+totalExpense$totalExpense <- totalExpense$totalExpense * -1
+
+completeDataframe <- merge(x = totalIncome, y = totalExpense, c("timestamp"), all.x = TRUE)
+
+completeDataframeFinal <- merge(x = completeDataframe, y = totalBalance, c("timestamp"), all.x = TRUE)
+
+# Creating plotly graph for average
+
+avgIncome <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(avgIncome = mean(incomeAmount, na.rm = TRUE))
+# head(avgIncome)
+
+avgExpense <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(avgExpense = mean(expenseAmount, na.rm = TRUE))
+# head(avgExpense)
+
+avgBalance <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(avgBalance = mean(balance, na.rm = TRUE))
+# head(avgBalance)
+
+avgExpense$avgExpense <- avgExpense$avgExpense * -1
+# head(avgExpense)
+
+completeDataframeAvg <- merge(x = avgIncome, y = avgExpense, c("timestamp"), all.x = TRUE)
+
+completeDataframeAvgFinal <- merge(x = completeDataframeAvg, y = avgBalance, c("timestamp"), all.x = TRUE)
+
+# Creating plotly graph for maximum
+
+maxIncome <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(maxIncome = max(incomeAmount, na.rm = TRUE))
+# head(maxIncome)
+
+maxExpense <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(maxExpense = max(expenseAmount, na.rm = TRUE))
+# head(maxExpense)
+
+maxBalance <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(maxBalance = max(balance, na.rm = TRUE))
+# head(maxBalance)
+
+maxExpense$maxExpense <- maxExpense$maxExpense * -1
+# head(maxExpense)
+
+completeDataframemax <- merge(x = maxIncome, y = maxExpense, c("timestamp"), all.x = TRUE)
+
+completeDataframemaxFinal <- merge(x = completeDataframemax, y = maxBalance, c("timestamp"), all.x = TRUE)
+
+# Creating plotly graph for minimum
+minIncome <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(minIncome = min(incomeAmount, na.rm = TRUE))
+# head(minIncome)
+
+minExpense <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(minExpense = min(expenseAmount, na.rm = TRUE))
+# head(minExpense)
+
+minBalance <- incomeAndExpenseTable %>%
+  group_by(timestamp) %>%
+  summarise(minBalance = min(balance, na.rm = TRUE))
+# head(minBalance)
+
+minExpense$minExpense <- minExpense$minExpense * -1
+# head(minExpense)
+
+completeDataframemin <- merge(x = minIncome, y = minExpense, c("timestamp"), all.x = TRUE)
+completeDataframeminFinal <- merge(x = completeDataframemin, y = minBalance, c("timestamp"), all.x = TRUE)
+```
+
+#Footnote
+
+Just need to focus on using *completeDataframeFinal* and *incomeAndExpenseTable*. 
+
+#Starting to graph
+
+
+
+
+
+
+#Choosing the type of time division
+    if (input$dateDivCheck) {
+      
+      if (input$division != "daily") {
+        
+        if (input$division != "yearly") {
+          df_use_this$timestamp <- format(as.Date(df_use_this$timestamp), "%Y-%m")
+          
+          df_use_this <- df_use_this %>%
+            group_by(timestamp) %>%
+            summarise(across(everything(), list(sum)))
+          
+          print(df_use_this)
+          
+        } 
+        
+        else if (input$division != "monthly") {
+          df_use_this$timestamp <- format(as.Date(df_use_this$timestamp), "%Y")
+          
+          df_use_this <- df_use_this %>%
+            group_by(timestamp) %>%
+            summarise(across(everything(), list(sum)))
+          
+          print(df_use_this)
+          
+        }
+        
+      }
+      
+    }
+Downloading the packages needed for ComplexHeatMap and InteractiveHeatMap
+
+```{r, echo=FALSE}
+#Ok this kinda works. Cleaned it in excel. 
+
+names(allBalance) <- c('participantId', 'timestamp', 'balance')
+
+#Now we want to manipulate the shape of the allBalance table by making the timestamps the columns, the participants the row and the 
+#balance the data
+allBalancePivotWider <- allBalance %>% 
+  pivot_wider(names_from = participantId, values_from = balance)
+
+#Export to manually clean it
+#This one we are removing days where there are too many NAs
+write_csv(allBalancePivotWider, "data/allBalancePivotWider.csv")
+
+#Import cleaned balance
+cleaned_balance <- read_csv("data/all_balance_removed_nas.csv")
+
+#Now we transpose it
+allBalancePivotWider_transpose = t(cleaned_balance)
+
+#Let's export this and manipulate it from there
+#write_csv(allBalancePivotWider_transpose, "data/allBalancePivotWider_transpose.csv")
+
+#This one we are using to remove accounts that have too many NAs
+write.csv(allBalancePivotWider_transpose,"data/allBalancePivotWider_transpose.csv", row.names = FALSE)
+```
+
+```{r}
+participant_balance_without_participant_id <- read_csv("data/usethis_balance_without_participant_id_v3.csv")
+#participant_balance <- read_csv("data/usethis_balance.csv")
+
+#Converting it into a matrix
+#participant_balance_without_participant_id_mat = data.matrix(participant_balance_without_participant_id)
+```
+
+Now we start graphing. 
+
+```{r}
+ht2 = Heatmap(participant_balance_without_participant_id_mat, name = "mat",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = FALSE, column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+
+ht2
+```
+
+```{r}
+ht2 = Heatmap(participant_balance_without_participant_id, name = "mat",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = TRUE, cluster_columns = FALSE, 
+    column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+ht2 = draw(ht2)
+
+ui = fluidPage(
+    h3("The first heatmap"),
+    InteractiveComplexHeatmapOutput("heatmap_1"),
+    hr()
+)
+
+server = function(input, output, session) {
+    makeInteractiveComplexHeatmap(input, output, session, ht2, "heatmap_1")
+}
+shinyApp(ui, server)
+```
+
+ok it works, now let's get the rest of the variations. 
+Sum, average, min, max
+1 day, 2 day... 7 days
+Weekday, weekend
+
+```{r}
+usethis_balance_without_participant_id_v3 <- read_csv("data/usethis_balance_without_participant_id_v3.csv")
+usethis_balance_without_participant_id_2_day_window <- read_csv("data/usethis_balance_without_participant_id_2_day_window.csv")
+usethis_balance_without_participant_id_3_day_window <- read_csv("data/usethis_balance_without_participant_id_3_day_window.csv")
+usethis_balance_without_participant_id_4_day_window <- read_csv("data/usethis_balance_without_participant_id_4_day_window.csv")
+usethis_balance_without_participant_id_5_day_window <- read_csv("data/usethis_balance_without_participant_id_5_day_window.csv")
+usethis_balance_without_participant_id_6_day_window <- read_csv("data/usethis_balance_without_participant_id_6_day_window.csv")
+usethis_balance_without_participant_id_7_day_window <- read_csv("data/usethis_balance_without_participant_id_7_day_window.csv")
+usethis_balance_without_participant_id_15_day_window <- read_csv("data/usethis_balance_without_participant_id_15_day_window.csv")
+usethis_balance_without_participant_id_25_day_window <- read_csv("data/usethis_balance_without_participant_id_25_day_window.csv")
+```
+
+```{r, echo=FALSE}
+#Keeping some code here
+#usethis_balance_without_participant_id_v3
+ht1 = Heatmap(usethis_balance_without_participant_id_v3, name = "balance",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = TRUE, cluster_columns = FALSE, 
+    column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+ht1 = draw(ht1)
+
+h3("The first heatmap"),
+    InteractiveComplexHeatmapOutput("heatmap_1"),
+    
+#makeInteractiveComplexHeatmap(input, output, session, ht1, "heatmap_1")
+```
+
+```{r}
+#usethis_balance_without_participant_id_2_day_window
+ht2 = Heatmap(usethis_balance_without_participant_id_2_day_window, name = "balance",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = TRUE, cluster_columns = FALSE, 
+    column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+ht2 = draw(ht2)
+
+#usethis_balance_without_participant_id_3_day_window
+ht3 = Heatmap(usethis_balance_without_participant_id_3_day_window, name = "balance",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = TRUE, cluster_columns = FALSE, 
+    column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+ht3 = draw(ht3)
+
+#usethis_balance_without_participant_id_4_day_window
+ht4 = Heatmap(usethis_balance_without_participant_id_4_day_window, name = "balance",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = TRUE, cluster_columns = FALSE, 
+    column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+ht4 = draw(ht4)
+
+#usethis_balance_without_participant_id_5_day_window
+ht5 = Heatmap(usethis_balance_without_participant_id_5_day_window, name = "balance",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = TRUE, cluster_columns = FALSE, 
+    column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+ht5 = draw(ht5)
+
+#usethis_balance_without_participant_id_6_day_window
+ht6 = Heatmap(usethis_balance_without_participant_id_6_day_window, name = "balance",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = TRUE, cluster_columns = FALSE, 
+    column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+ht6 = draw(ht6)
+
+#usethis_balance_without_participant_id_7_day_window
+ht7 = Heatmap(usethis_balance_without_participant_id_7_day_window, name = "balance",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = TRUE, cluster_columns = FALSE, 
+    column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+ht7 = draw(ht7)
+
+#usethis_balance_without_participant_id_15_day_window
+ht15 = Heatmap(usethis_balance_without_participant_id_15_day_window, name = "balance",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = TRUE, cluster_columns = FALSE, 
+    column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+ht15 = draw(ht15)
+
+#usethis_balance_without_participant_id_25_day_window
+ht25 = Heatmap(usethis_balance_without_participant_id_25_day_window, name = "balance",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = TRUE, cluster_columns = FALSE, 
+    column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+ht25 = draw(ht25)
+
+ui = fluidPage(
+    h3("heatmap_2"),
+    InteractiveComplexHeatmapOutput("heatmap_2"), 
+    h3("heatmap_3"),
+    InteractiveComplexHeatmapOutput("heatmap_3"), 
+    h3("heatmap_4"),
+    InteractiveComplexHeatmapOutput("heatmap_4"), 
+    h3("heatmap_5"),
+    InteractiveComplexHeatmapOutput("heatmap_5"), 
+    h3("heatmap_6"),
+    InteractiveComplexHeatmapOutput("heatmap_6"), 
+    h3("heatmap_7"),
+    InteractiveComplexHeatmapOutput("heatmap_7"), 
+    h3("heatmap_15"),
+    InteractiveComplexHeatmapOutput("heatmap_15"), 
+    h3("heatmap_25"),
+    InteractiveComplexHeatmapOutput("heatmap_25"), 
+)
+server = function(input, output, session) {
+    makeInteractiveComplexHeatmap(input, output, session, ht2, "heatmap_2")
+    makeInteractiveComplexHeatmap(input, output, session, ht3, "heatmap_3")
+    makeInteractiveComplexHeatmap(input, output, session, ht4, "heatmap_4")
+    makeInteractiveComplexHeatmap(input, output, session, ht5, "heatmap_5")
+    makeInteractiveComplexHeatmap(input, output, session, ht6, "heatmap_6")
+    makeInteractiveComplexHeatmap(input, output, session, ht7, "heatmap_7")
+    makeInteractiveComplexHeatmap(input, output, session, ht15, "heatmap_15")
+    makeInteractiveComplexHeatmap(input, output, session, ht25, "heatmap_25")
+}
+shinyApp(ui, server)
+```
+
+```{r}
+write_csv(completeDataframeFinal, "data/completeDataframeFinal.csv")
+write_csv(completeDataframeAvgFinal, "data/completeDataframeAvgFinal.csv")
+write_csv(completeDataframemaxFinal, "data/completeDataframeMaxFinal.csv")
+write_csv(completeDataframeminFinal, "data/completeDataframeMinFinal.csv")
+
+write_csv(foodExpense, "data/foodExpenseParticipant.csv")
+write_csv(educationExpense, "data/educationExpenseParticipant.csv")
+write_csv(recreationExpense, "data/recreationExpenseParticipant.csv")
+write_csv(shelterExpense, "data/shelterExpenseParticipant.csv")
+
+write_csv(incomeAndExpenseTable, "data/incomeAndExpenseParticipant.csv")
+```
+
+```{r}
+# Food Expense
+foodExpense <- foodExpense %>%
+  mutate(timestamp = as.Date(timestamp, format = "%m/%d/%y"))
+
+totalFoodExpense <- foodExpense %>%
+  group_by(timestamp) %>%
+  summarise(totalExpense = sum(amount, na.rm = TRUE))
+
+avgFoodExpense <- foodExpense %>%
+  group_by(timestamp) %>%
+  summarise(avgExpense = mean(amount, na.rm = TRUE))
+
+maxFoodExpense <- foodExpense %>%
+  group_by(timestamp) %>%
+  summarise(maxExpense = max(amount, na.rm = TRUE))
+
+minFoodExpense <- foodExpense %>%
+  group_by(timestamp) %>%
+  summarise(minExpense = min(amount, na.rm = TRUE))
+
+write_csv(totalFoodExpense, "data/totalFoodExpense.csv")
+write_csv(avgFoodExpense, "data/avgFoodExpense.csv")
+write_csv(maxFoodExpense, "data/maxFoodExpense.csv")
+write_csv(minFoodExpense, "data/minFoodExpense.csv")
+
+# Education Expense
+educationExpense <- educationExpense %>%
+  mutate(timestamp = as.Date(timestamp, format = "%m/%d/%y"))
+
+totaleducationExpense <- educationExpense %>%
+  group_by(timestamp) %>%
+  summarise(totalExpense = sum(amount, na.rm = TRUE))
+
+avgeducationExpense <- educationExpense %>%
+  group_by(timestamp) %>%
+  summarise(avgExpense = mean(amount, na.rm = TRUE))
+
+maxeducationExpense <- educationExpense %>%
+  group_by(timestamp) %>%
+  summarise(maxExpense = max(amount, na.rm = TRUE))
+
+mineducationExpense <- educationExpense %>%
+  group_by(timestamp) %>%
+  summarise(minExpense = min(amount, na.rm = TRUE))
+
+write_csv(totaleducationExpense, "data/totaleducationExpense.csv")
+write_csv(avgeducationExpense, "data/avgeducationExpense.csv")
+write_csv(maxeducationExpense, "data/maxeducationExpense.csv")
+write_csv(mineducationExpense, "data/mineducationExpense.csv")
+
+# Recreation Expense
+recreationExpense <- recreationExpense %>%
+  mutate(timestamp = as.Date(timestamp, format = "%m/%d/%y"))
+
+totalrecreationExpense <- recreationExpense %>%
+  group_by(timestamp) %>%
+  summarise(totalExpense = sum(amount, na.rm = TRUE))
+
+avgrecreationExpense <- recreationExpense %>%
+  group_by(timestamp) %>%
+  summarise(avgExpense = mean(amount, na.rm = TRUE))
+
+maxrecreationExpense <- recreationExpense %>%
+  group_by(timestamp) %>%
+  summarise(maxExpense = max(amount, na.rm = TRUE))
+
+minrecreationExpense <- recreationExpense %>%
+  group_by(timestamp) %>%
+  summarise(minExpense = min(amount, na.rm = TRUE))
+
+write_csv(totalrecreationExpense, "data/totalrecreationExpense.csv")
+write_csv(avgrecreationExpense, "data/avgrecreationExpense.csv")
+write_csv(maxrecreationExpense, "data/maxrecreationExpense.csv")
+write_csv(minrecreationExpense, "data/minrecreationExpense.csv")
+
+# Shelter Expense
+shelterExpense <- shelterExpense %>%
+  mutate(timestamp = as.Date(timestamp, format = "%m/%d/%y"))
+
+totalshelterExpense <- shelterExpense %>%
+  group_by(timestamp) %>%
+  summarise(totalExpense = sum(amount, na.rm = TRUE))
+
+avgshelterExpense <- shelterExpense %>%
+  group_by(timestamp) %>%
+  summarise(avgExpense = mean(amount, na.rm = TRUE))
+
+maxshelterExpense <- shelterExpense %>%
+  group_by(timestamp) %>%
+  summarise(maxExpense = max(amount, na.rm = TRUE))
+
+minshelterExpense <- shelterExpense %>%
+  group_by(timestamp) %>%
+  summarise(minExpense = min(amount, na.rm = TRUE))
+
+write_csv(totalshelterExpense, "data/totalshelterExpense.csv")
+write_csv(avgshelterExpense, "data/avgshelterExpense.csv")
+write_csv(maxshelterExpense, "data/maxshelterExpense.csv")
+write_csv(minshelterExpense, "data/minshelterExpense.csv")
+```
+
+```{r}
+# Creating sub-dataset for the category "Education"
+rentAdjustmenExpense <- filter(financialJournal, category == 'RentAdjustment')
+
+rentAdjustmenExpense <- rentAdjustmenExpense %>%
+  mutate(timestamp = as.Date(timestamp, format = "%m/%d/%y"))
+
+totalrentAdjustmenExpense <- rentAdjustmenExpense %>%
+  group_by(timestamp) %>%
+  summarise(totalExpense = sum(amount, na.rm = TRUE))
+
+avgrentAdjustmenExpense <- rentAdjustmenExpense %>%
+  group_by(timestamp) %>%
+  summarise(avgExpense = mean(amount, na.rm = TRUE))
+
+maxrentAdjustmenExpense <- rentAdjustmenExpense %>%
+  group_by(timestamp) %>%
+  summarise(maxExpense = max(amount, na.rm = TRUE))
+
+minrentAdjustmenExpense <- rentAdjustmenExpense %>%
+  group_by(timestamp) %>%
+  summarise(minExpense = min(amount, na.rm = TRUE))
+
+write_csv(totalrentAdjustmenExpense, "data/totalrentAdjustmenExpense.csv")
+write_csv(avgrentAdjustmenExpense, "data/avgrentAdjustmenExpense.csv")
+write_csv(maxrentAdjustmenExpense, "data/maxrentAdjustmenExpense.csv")
+write_csv(minrentAdjustmenExpense, "data/minrentAdjustmenExpense.csv")
+```
+
+```{r}
+# Extracting the base dataframe
+
+# Extracting Participant Basic Information 
+participantData <- read_csv("data/participant/Participants.csv")
+
+# Extracting Participant Data For Income, Expense and Balance 
+incomeExpenseBalanceParticipant <- read_csv("data/participant/incomeAndExpenseParticipant.csv")
+foodExpenseParticipant <- read_csv("data/participant/foodExpenseParticipant.csv")
+educationExpenseParticipant <- read_csv("data/participant/educationExpenseParticipant.csv")
+shelterExpenseParticipant <- read_csv("data/participant/shelterExpenseParticipant.csv")
+recreationExpenseParticipant <- read_csv("data/participant/educationExpenseParticipant.csv")
+
+# Extracting Engagement-Level Information For Income, Expense and Balance
+incomeExpenseBalanceTotal <- read_csv("data/overall/completeDataframeFinal.csv")
+incomeExpenseBalanceMin <- read_csv("data/overall/completeDataframeMinFinal.csv")
+incomeExpenseBalanceAverage <- read_csv("data/overall/completeDataframeAvgFinal.csv")
+incomeExpenseBalanceMax <- read_csv("data/overall/completeDataframeMaxFinal.csv")
+
+# Food Expense
+FoodExpenseTotal <- read_csv("data/overall/totalFoodExpense.csv")
+FoodExpenseMin <- read_csv("data/overall/minFoodExpense.csv")
+FoodExpenseAvg <- read_csv("data/overall/avgFoodExpense.csv")
+FoodExpenseMax <- read_csv("data/overall/maxFoodExpense.csv")
+
+# Shelter Expense
+shelterExpenseTotal <- read_csv("data/overall/totalshelterExpense.csv")
+shelterExpenseMin <- read_csv("data/overall/minshelterExpense.csv")
+shelterExpenseAvg <- read_csv("data/overall/avgshelterExpense.csv")
+shelterExpenseMax <- read_csv("data/overall/maxshelterExpense.csv")
+
+# Recreation Expense
+recreationExpenseTotal <- read_csv("data/overall/totalrecreationExpense.csv")
+recreationExpenseMin <- read_csv("data/overall/minrecreationExpense.csv")
+recreationExpenseAvg <- read_csv("data/overall/avgrecreationExpense.csv")
+recreationExpenseMax <- read_csv("data/overall/maxrecreationExpense.csv")
+
+# Rent Adjustment Expense
+rentAdjustmentExpenseTotal <- read_csv("data/overall/totalrentAdjustmenExpense.csv")
+rentAdjustmentExpenseMin <- read_csv("data/overall/minrentAdjustmenExpense.csv")
+rentAdjustmentExpenseAvg <- read_csv("data/overall/avgrentAdjustmenExpense.csv")
+rentAdjustmentExpenseMax <- read_csv("data/overall/maxrentAdjustmenExpense.csv")
+
+# Education Expense
+educationExpenseTotal <- read_csv("data/overall/totaleducationExpense.csv")
+educationExpenseMin <- read_csv("data/overall/mineducationExpense.csv")
+educationExpenseAvg <- read_csv("data/overall/avgeducationExpense.csv")
+educationExpenseMax <- read_csv("data/overall/maxeducationExpense.csv")
+
+# For the overall plot
+baseDataframe <- read_csv("data/starter/basic_starter.csv")
+```
+
+```{r}
+incomeExpenseBalanceTotal <- incomeExpenseBalanceTotal %>%
+  mutate(timestamp = as.Date(timestamp))
+
+shelterExpenseTotal <- shelterExpenseTotal %>%
+  mutate(timestamp = as.Date(timestamp))
+
+```
+incomeExpenseBalanceTotal <- merge(incomeExpenseBalanceTotal, FoodExpenseTotal, by = "timestamp")
+incomeExpenseBalanceTotal <- merge(incomeExpenseBalanceTotal, shelterExpenseTotal, by = "timestamp")
+incomeExpenseBalanceTotal <- merge(incomeExpenseBalanceTotal, rentAdjustmentExpenseTotal, by = "timestamp")
+incomeExpenseBalanceTotal <- merge(incomeExpenseBalanceTotal, educationExpenseTotal, by = "timestamp")
+incomeExpenseBalanceTotal <- merge(incomeExpenseBalanceTotal, recreationExpenseTotal, by = "timestamp")
+
+```{r}
+# Extracting Participant Data For Income, Expense and Balance 
+incomeExpenseBalanceTotal <- read_csv("data/overall/total.csv")
+incomeExpenseBalanceMin <- read_csv("data/overall/min.csv")
+incomeExpenseBalanceAverage <- read_csv("data/overall/average.csv")
+incomeExpenseBalanceMax <- read_csv("data/overall/max.csv")
+
+#incomeExpenseBalanceMin2 <- incomeExpenseBalanceMin %>% mutate(timestamp = as.Date(timestamp, format = "%d/%m/%y"))
+#incomeExpenseBalanceMin2
+
+incomeExpenseBalanceTotal
+```
+  
+
+```{r}
+incomeExpenseBalanceTotalLong2 <- melt(incomeExpenseBalanceTotal, id.vars = c("timestamp"))
+```
+
+```{r}
+incomeExpenseBalanceTotal$test <- as.Date(incomeExpenseBalanceTotal$timestamp, format =  "%d/%m/%Y")
+
+incomeExpenseBalanceMin$test <- as.Date(incomeExpenseBalanceMin$timestamp, format =  "%d/%m/%Y")
+incomeExpenseBalanceMin
+
+incomeExpenseBalanceMinTest <- incomeExpenseBalanceMin %>% 
+      filter(test >= as.Date("2022-03-31", format = "%Y-%m-%d"))
+```
+
+incomeExpenseBalanceTotal <- incomeExpenseBalanceTotal %>% mutate(timestamp = as.Date(timestamp, format = "%m/%d/%y"))
+
+#incomeExpenseBalanceTotal
+
+```{r}
+
+incomeExpenseBalanceMax <- incomeExpenseBalanceMax %>% 
+      filter(timestamp >= start_date & timestamp < end_date)
+    
+    df <- melt(df, id.vars = c("timestamp"))
+```
+####################################
+# Getting Data                     #
+####################################
+# Extracting Participant Basic Information 
+participantData <- read_csv("data/participant/Participants.csv")
+
+# Extracting Participant Data For Income, Expense and Balance 
+incomeExpenseBalanceParticipant <- read_csv("data/participant/incomeAndExpenseParticipant.csv")
+foodExpenseParticipant <- read_csv("data/participant/foodExpenseParticipant.csv")
+educationExpenseParticipant <- read_csv("data/participant/educationExpenseParticipant.csv")
+shelterExpenseParticipant <- read_csv("data/participant/shelterExpenseParticipant.csv")
+recreationExpenseParticipant <- read_csv("data/participant/educationExpenseParticipant.csv")
+
+# Extracting Engagement-Level Information For Income, Expense and Balance
+incomeExpenseBalanceTotal <- read_csv("data/overall/total.csv")
+incomeExpenseBalanceMin <- read_csv("data/overall/min.csv")
+incomeExpenseBalanceAverage <- read_csv("data/overall/average.csv")
+incomeExpenseBalanceMax <- read_csv("data/overall/max.csv")
+
+incomeExpenseBalanceTotalLong <- read_csv("data/overall/total-long.csv")
+incomeExpenseBalanceMinLong <- read_csv("data/overall/min-long.csv")
+incomeExpenseBalanceAverageLong <- read_csv("data/overall/average-long.csv")
+incomeExpenseBalanceMaxLong <- read_csv("data/overall/max-long.csv")
+
+```{r}
+incomeExpenseBalanceParticipant <- read_csv("data/participant/incomeAndExpenseParticipant.csv")
+foodExpenseParticipant <- read_csv("data/participant/foodExpenseParticipant.csv")
+educationExpenseParticipant <- read_csv("data/participant/educationExpenseParticipant.csv")
+shelterExpenseParticipant <- read_csv("data/participant/shelterExpenseParticipant.csv")
+recreationExpenseParticipant <- read_csv("data/participant/recreationExpenseParticipant.csv")
+rentAdjustmentExpenseParticipant <- read_csv("data/participant/rentAdjustmentExpenseParticipant.csv")
+```
+
+```{r}
+incomeExpenseBalanceParticipant$timestamp <- as.Date(incomeExpenseBalanceParticipant$timestamp, format =  "%d/%m/%Y")
+#str(incomeExpenseBalanceParticipant)
+
+foodExpenseParticipant$timestamp <- as.Date(foodExpenseParticipant$timestamp, format =  "%d/%m/%Y")
+educationExpenseParticipant$timestamp <- as.Date(educationExpenseParticipant$timestamp, format =  "%d/%m/%Y")
+shelterExpenseParticipant$timestamp <- as.Date(shelterExpenseParticipant$timestamp, format =  "%d/%m/%Y")
+recreationExpenseParticipant$timestamp <- as.Date(recreationExpenseParticipant$timestamp, format =  "%d/%m/%Y")
+rentAdjustmentExpenseParticipant$timestamp <- as.Date(rentAdjustmentExpenseParticipant$timestamp, format =  "%d/%m/%Y")
+```
+
+```{r}
+incomeExpenseBalanceParticipant<-merge(x=incomeExpenseBalanceParticipant,
+                                       y=foodExpenseParticipant,
+                                       by = c("participantId", "timestamp"),
+                                       all.x=TRUE)
+
+incomeExpenseBalanceParticipant<-merge(x=incomeExpenseBalanceParticipant,
+                                       y=educationExpenseParticipant,
+                                       by = c("participantId", "timestamp"),
+                                       all.x=TRUE)
+
+incomeExpenseBalanceParticipant<-merge(x=incomeExpenseBalanceParticipant,
+                                       y=shelterExpenseParticipant,
+                                       by = c("participantId", "timestamp"),
+                                       all.x=TRUE)
+
+incomeExpenseBalanceParticipant<-merge(x=incomeExpenseBalanceParticipant,
+                                       y=recreationExpenseParticipant,
+                                       by = c("participantId", "timestamp"),
+                                       all.x=TRUE)
+
+incomeExpenseBalanceParticipant<-merge(x=incomeExpenseBalanceParticipant,
+                                       y=rentAdjustmentExpenseParticipant,
+                                       by = c("participantId", "timestamp"),
+                                       all.x=TRUE)
+```
+
+
+
+```{r}
+write_csv(incomeExpenseBalanceParticipant, "data/participant/comprehensiveParticipantInfo.csv")
+```
+
+```{r}
+incomeExpenseBalanceParticipant_usethis <- incomeExpenseBalanceParticipant %>%
+            group_by(participantId, timestamp) %>%
+            summarise(across(everything(), list(sum)))
+
+write_csv(incomeExpenseBalanceParticipant_usethis, "data/participant/comprehensiveParticipantInfo2.csv")
+```
+
+```{r}
+# Load ggplot2
+library(ggplot2)
+
+# Create data
+data <- data.frame(
+  name=c("A","B","C","D","E") ,  
+  value=c(3,12,5,18,45)
+  )
+
+print(data)
+str(data)
+
+# Barplot
+ggplot(data, aes(x=name, y=value)) + 
+  geom_bar(stat = "identity")
+```

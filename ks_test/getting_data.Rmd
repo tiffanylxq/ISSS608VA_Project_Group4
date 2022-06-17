@@ -388,3 +388,202 @@ server = function(input, output, session) {
 }
 shinyApp(ui, server)
 ```
+
+```{r}
+write_csv(completeDataframeFinal, "data/completeDataframeFinal.csv")
+write_csv(completeDataframeAvgFinal, "data/completeDataframeAvgFinal.csv")
+write_csv(completeDataframemaxFinal, "data/completeDataframeMaxFinal.csv")
+write_csv(completeDataframeminFinal, "data/completeDataframeMinFinal.csv")
+
+write_csv(foodExpense, "data/foodExpenseParticipant.csv")
+write_csv(educationExpense, "data/educationExpenseParticipant.csv")
+write_csv(recreationExpense, "data/recreationExpenseParticipant.csv")
+write_csv(shelterExpense, "data/shelterExpenseParticipant.csv")
+
+write_csv(incomeAndExpenseTable, "data/incomeAndExpenseParticipant.csv")
+```
+
+```{r}
+# Food Expense
+foodExpense <- foodExpense %>%
+  mutate(timestamp = as.Date(timestamp, format = "%m/%d/%y"))
+
+totalFoodExpense <- foodExpense %>%
+  group_by(timestamp) %>%
+  summarise(totalExpense = sum(amount, na.rm = TRUE))
+
+avgFoodExpense <- foodExpense %>%
+  group_by(timestamp) %>%
+  summarise(avgExpense = mean(amount, na.rm = TRUE))
+
+maxFoodExpense <- foodExpense %>%
+  group_by(timestamp) %>%
+  summarise(maxExpense = max(amount, na.rm = TRUE))
+
+minFoodExpense <- foodExpense %>%
+  group_by(timestamp) %>%
+  summarise(minExpense = min(amount, na.rm = TRUE))
+
+write_csv(totalFoodExpense, "data/totalFoodExpense.csv")
+write_csv(avgFoodExpense, "data/avgFoodExpense.csv")
+write_csv(maxFoodExpense, "data/maxFoodExpense.csv")
+write_csv(minFoodExpense, "data/minFoodExpense.csv")
+
+# Education Expense
+educationExpense <- educationExpense %>%
+  mutate(timestamp = as.Date(timestamp, format = "%m/%d/%y"))
+
+totaleducationExpense <- educationExpense %>%
+  group_by(timestamp) %>%
+  summarise(totalExpense = sum(amount, na.rm = TRUE))
+
+avgeducationExpense <- educationExpense %>%
+  group_by(timestamp) %>%
+  summarise(avgExpense = mean(amount, na.rm = TRUE))
+
+maxeducationExpense <- educationExpense %>%
+  group_by(timestamp) %>%
+  summarise(maxExpense = max(amount, na.rm = TRUE))
+
+mineducationExpense <- educationExpense %>%
+  group_by(timestamp) %>%
+  summarise(minExpense = min(amount, na.rm = TRUE))
+
+write_csv(totaleducationExpense, "data/totaleducationExpense.csv")
+write_csv(avgeducationExpense, "data/avgeducationExpense.csv")
+write_csv(maxeducationExpense, "data/maxeducationExpense.csv")
+write_csv(mineducationExpense, "data/mineducationExpense.csv")
+
+# Recreation Expense
+recreationExpense <- recreationExpense %>%
+  mutate(timestamp = as.Date(timestamp, format = "%m/%d/%y"))
+
+totalrecreationExpense <- recreationExpense %>%
+  group_by(timestamp) %>%
+  summarise(totalExpense = sum(amount, na.rm = TRUE))
+
+avgrecreationExpense <- recreationExpense %>%
+  group_by(timestamp) %>%
+  summarise(avgExpense = mean(amount, na.rm = TRUE))
+
+maxrecreationExpense <- recreationExpense %>%
+  group_by(timestamp) %>%
+  summarise(maxExpense = max(amount, na.rm = TRUE))
+
+minrecreationExpense <- recreationExpense %>%
+  group_by(timestamp) %>%
+  summarise(minExpense = min(amount, na.rm = TRUE))
+
+write_csv(totalrecreationExpense, "data/totalrecreationExpense.csv")
+write_csv(avgrecreationExpense, "data/avgrecreationExpense.csv")
+write_csv(maxrecreationExpense, "data/maxrecreationExpense.csv")
+write_csv(minrecreationExpense, "data/minrecreationExpense.csv")
+
+# Shelter Expense
+shelterExpense <- shelterExpense %>%
+  mutate(timestamp = as.Date(timestamp, format = "%m/%d/%y"))
+
+totalshelterExpense <- shelterExpense %>%
+  group_by(timestamp) %>%
+  summarise(totalExpense = sum(amount, na.rm = TRUE))
+
+avgshelterExpense <- shelterExpense %>%
+  group_by(timestamp) %>%
+  summarise(avgExpense = mean(amount, na.rm = TRUE))
+
+maxshelterExpense <- shelterExpense %>%
+  group_by(timestamp) %>%
+  summarise(maxExpense = max(amount, na.rm = TRUE))
+
+minshelterExpense <- shelterExpense %>%
+  group_by(timestamp) %>%
+  summarise(minExpense = min(amount, na.rm = TRUE))
+
+write_csv(totalshelterExpense, "data/totalshelterExpense.csv")
+write_csv(avgshelterExpense, "data/avgshelterExpense.csv")
+write_csv(maxshelterExpense, "data/maxshelterExpense.csv")
+write_csv(minshelterExpense, "data/minshelterExpense.csv")
+```
+
+```{r}
+# Creating sub-dataset for the category "Education"
+rentAdjustmenExpense <- filter(financialJournal, category == 'RentAdjustment')
+
+rentAdjustmenExpense <- rentAdjustmenExpense %>%
+  mutate(timestamp = as.Date(timestamp, format = "%m/%d/%y"))
+
+totalrentAdjustmenExpense <- rentAdjustmenExpense %>%
+  group_by(timestamp) %>%
+  summarise(totalExpense = sum(amount, na.rm = TRUE))
+
+avgrentAdjustmenExpense <- rentAdjustmenExpense %>%
+  group_by(timestamp) %>%
+  summarise(avgExpense = mean(amount, na.rm = TRUE))
+
+maxrentAdjustmenExpense <- rentAdjustmenExpense %>%
+  group_by(timestamp) %>%
+  summarise(maxExpense = max(amount, na.rm = TRUE))
+
+minrentAdjustmenExpense <- rentAdjustmenExpense %>%
+  group_by(timestamp) %>%
+  summarise(minExpense = min(amount, na.rm = TRUE))
+
+write_csv(totalrentAdjustmenExpense, "data/totalrentAdjustmenExpense.csv")
+write_csv(avgrentAdjustmenExpense, "data/avgrentAdjustmenExpense.csv")
+write_csv(maxrentAdjustmenExpense, "data/maxrentAdjustmenExpense.csv")
+write_csv(minrentAdjustmenExpense, "data/minrentAdjustmenExpense.csv")
+```
+
+```{r}
+# Extracting the base dataframe
+# For the overall plot
+baseDataframe <- read_csv("data/starter/basic_starter.csv")
+
+# Extracting Participant Basic Information 
+participantData <- read_csv("data/participant/Participants.csv")
+
+# Extracting Participant Data For Income, Expense and Balance 
+incomeExpenseBalanceParticipant <- read_csv("data/participant/incomeAndExpenseParticipant.csv")
+foodExpenseParticipant <- read_csv("data/participant/foodExpenseParticipant.csv")
+educationExpenseParticipant <- read_csv("data/participant/educationExpenseParticipant.csv")
+shelterExpenseParticipant <- read_csv("data/participant/shelterExpenseParticipant.csv")
+recreationExpenseParticipant <- read_csv("data/participant/educationExpenseParticipant.csv")
+
+# Extracting Engagement-Level Information For Income, Expense and Balance
+incomeExpenseBalanceTotal <- read_csv("data/overall/completeDataframeFinal.csv")
+incomeExpenseBalanceMin <- read_csv("data/overall/completeDataframeMinFinal.csv")
+incomeExpenseBalanceAverage <- read_csv("data/overall/completeDataframeAvgFinal.csv")
+incomeExpenseBalanceMax <- read_csv("data/overall/completeDataframeMaxFinal.csv")
+
+# Food Expense
+FoodExpenseTotal <- read_csv("data/overall/totalFoodExpense.csv")
+FoodExpenseMin <- read_csv("data/overall/minFoodExpense.csv")
+FoodExpenseAvg <- read_csv("data/overall/avgFoodExpense.csv")
+FoodExpenseMax <- read_csv("data/overall/maxFoodExpense.csv")
+
+# Shelter Expense
+shelterExpenseTotal <- read_csv("data/overall/totalshelterExpense.csv")
+shelterExpenseMin <- read_csv("data/overall/minshelterExpense.csv")
+shelterExpenseAvg <- read_csv("data/overall/avgshelterExpense.csv")
+shelterExpenseMax <- read_csv("data/overall/maxshelterExpense.csv")
+
+# Recreation Expense
+recreationExpenseTotal <- read_csv("data/overall/totalrecreationExpense.csv")
+recreationExpenseMin <- read_csv("data/overall/minrecreationExpense.csv")
+recreationExpenseAvg <- read_csv("data/overall/avgrecreationExpense.csv")
+recreationExpenseMax <- read_csv("data/overall/maxrecreationExpense.csv")
+
+# Rent Adjustment Expense
+rentAdjustmentExpenseTotal <- read_csv("data/overall/totalrentAdjustmenExpense.csv")
+rentAdjustmentExpenseMin <- read_csv("data/overall/minrentAdjustmenExpense.csv")
+rentAdjustmentExpenseAvg <- read_csv("data/overall/avgrentAdjustmenExpense.csv")
+rentAdjustmentExpenseMax <- read_csv("data/overall/maxrentAdjustmenExpense.csv")
+
+# Education Expense
+educationExpenseTotal <- read_csv("data/overall/totaleducationExpense.csv")
+educationExpenseMin <- read_csv("data/overall/mineducationExpense.csv")
+educationExpenseAvg <- read_csv("data/overall/avgeducationExpense.csv")
+educationExpenseMax <- read_csv("data/overall/maxeducationExpense.csv")
+
+baseDataframe <- merge(baseDataframe, educationExpenseTotal, by = "timestamp")
+```

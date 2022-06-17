@@ -130,15 +130,47 @@ Getting the data we need
 
 ```{r}
 usethis_balance_without_participant_id_v3 <- read_csv("data/usethis_balance_without_participant_id_v3.csv")
-usethis_balance_without_participant_id_2_day_window <- read_csv("data/usethis_balance_without_participant_id_2_day_window")
-usethis_balance_without_participant_id_3_day_window <- read_csv("data/usethis_balance_without_participant_id_3_day_window")
-usethis_balance_without_participant_id_4_day_window <- read_csv("data/usethis_balance_without_participant_id_4_day_window")
-usethis_balance_without_participant_id_5_day_window <- read_csv("data/usethis_balance_without_participant_id_5_day_window")
-usethis_balance_without_participant_id_6_day_window <- read_csv("data/usethis_balance_without_participant_id_6_day_window")
-usethis_balance_without_participant_id_7_day_window <- read_csv("data/usethis_balance_without_participant_id_7_day_window")
-usethis_balance_without_participant_id_15_day_window <- read_csv("data/usethis_balance_without_participant_id_15_day_window")
-usethis_balance_without_participant_id_25_day_window <- read_csv("data/usethis_balance_without_participant_id_25_day_window")
+usethis_balance_without_participant_id_2_day_window <- read_csv("data/usethis_balance_without_participant_id_2_day_window.csv")
+usethis_balance_without_participant_id_3_day_window <- read_csv("data/usethis_balance_without_participant_id_3_day_window.csv")
+usethis_balance_without_participant_id_4_day_window <- read_csv("data/usethis_balance_without_participant_id_4_day_window.csv")
+usethis_balance_without_participant_id_5_day_window <- read_csv("data/usethis_balance_without_participant_id_5_day_window.csv")
+usethis_balance_without_participant_id_6_day_window <- read_csv("data/usethis_balance_without_participant_id_6_day_window.csv")
+usethis_balance_without_participant_id_7_day_window <- read_csv("data/usethis_balance_without_participant_id_7_day_window.csv")
+usethis_balance_without_participant_id_15_day_window <- read_csv("data/usethis_balance_without_participant_id_15_day_window.csv")
+usethis_balance_without_participant_id_25_day_window <- read_csv("data/usethis_balance_without_participant_id_25_day_window.csv")
+```
 
+```{r}
+library(plotly)
+fig <- plot_ly(z = usethis_balance_without_participant_id_25_day_window, type = "heatmap")
+
+fig
+```
+
+```{r}
+library(ComplexHeatmap)
+library(InteractiveComplexHeatmap)
+library(shiny)
+
+ui = fluidPage(
+    h3("The first heatmap"),
+    InteractiveComplexHeatmapOutput("heatmap_1")
+)
+
+server = function(input, output, session) {
+
+  ht4 = Heatmap(usethis_balance_without_participant_id_4_day_window, name = "balance",
+    show_row_names = FALSE, show_column_names = FALSE,
+    cluster_rows = TRUE, cluster_columns = FALSE, 
+    column_title = "apply reordering", 
+    show_column_dend = FALSE, show_row_dend = FALSE)
+  
+  ht4 = draw(ht4)
+  
+  makeInteractiveComplexHeatmap(input, output, session, ht4, "heatmap_1")
+}
+
+shinyApp(ui, server)
 ```
 
 ```{r}
