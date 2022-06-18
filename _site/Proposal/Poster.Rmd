@@ -1,0 +1,81 @@
+---
+title: IEEE Vast Challenge 2022
+author:
+  - name: ISSS 608 Group 4 - Hulwana Binte Saifulzaman, Lee Xiao Qi, Yeo Kim Siang
+affiliation:
+  - address: Advisor - Professor Kam Tin Seong 
+
+output: 
+  posterdown::posterdown_html:
+    self_contained: false
+bibliography: packages.bib
+title_textsize: "35pt"
+author_textsize: "30pt"
+affiliation_textsize: "20pt"
+body_textsize: "16pt"
+main_textsize: "16pt"
+sectitle_textsize: "18pt"
+sectitle2_textsize: "18pt"
+poster_height: "33.11in"
+poster_width: "23.386in"
+titlebox_height: "5%"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Introduction
+
+The first of its kind, this term’s ISSS608 Visual Analytics and Applications course led by Professor Kam Tin Seong builds us towards the highly prestigious IEEE Vast Challenge 2022.
+
+There are 4 challenges provided, targeting different aspects of life in the fictional town Engagement. Our team chose to analyse the Economics of Engagement, and created an interactive dashboard that allows the user to visually analyse the interplay between employee (or residents) and business (or employers) in order to answer the questions: *Over time, are businesses growing or shrinking? How are people changing jobs? Are standards of living improving or declining over time?*.
+
+# Data Preparation
+
+This year, the competition features the fictional town Engagement. We are given a total of 13 datasets comprising information from 2022-03-01T00:00:00Z to 2022-03-04T14:25:00Z about the 1010 participants who reside there. The team used 10 of these datasets for this project, and they are **Participant StatusLogs, Apartments, Buildings, Employers, Jobs, Participants, Pubs, Restaurants, Schools and CheckinJournal**.
+
+We performed data wrangling and transformation to the datasets before loading them in the application. Click here for the code to these steps. 
+
+# Methodology
+
+The application uses various packages such as tidyverse, plotly, ggplot2, lubridate, tmap, sf packages to conduct exploratory data analysis. 
+
+# Findings
+
+## Q1
+
+Aliquam sed faucibus risus, quis efficitur erat. Vestibulum semper mauris quis tempus eleifend. Aliquam sagittis dictum ipsum, quis viverra ligula eleifend ut. Curabitur sagittis vitae arcu eget faucibus. In non elementum felis. Duis et aliquam nunc. Nunc pulvinar sapien nunc, vel pretium nisi efficitur in. Fusce fringilla maximus leo et maximus. Fusce at ligula laoreet, iaculis mi at, auctor odio. Praesent sed elementum justo. Aenean consectetur risus rhoncus tincidunt efficitur. Praesent dictum mauris at diam maximus maximus [@R-posterdown].
+
+
+
+## Q2
+
+Or with figures: Figure \@ref(fig:standard-plot), or Figure \@ref(fig:morefigs).
+
+```{r standard-plot, out.width='80%', fig.align='center', fig.cap='Great figure!', fig.height=5}
+plot(mtcars[1:2])
+```
+
+
+## Q3
+
+```{r morefigs, out.width='80%', echo=TRUE, fig.cap='Amazing, right?!', fig.height=5}
+data <- iris
+plot(x = data$Sepal.Length, 
+     y = data$Sepal.Width, 
+     col = data$Species,
+     pch = 19, 
+     xlab = "Sepal Length (cm)",
+     ylab = "Sepal Width (cm)")
+```
+
+# Conclusion
+
+Try `posterdown` out! Hopefully you like it!
+
+```{r, include=FALSE}
+knitr::write_bib(c('knitr','rmarkdown','posterdown','pagedown'), 'packages.bib')
+```
+
+# References

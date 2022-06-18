@@ -1,0 +1,301 @@
+---
+title: "Q3"
+description: |
+
+author:
+  - name: Lee Xiao Qi 
+    url: https://example.com/norajones
+    affiliation: School of Computing and Information Systems (SMU)
+    affiliation_url: https://example.com/spacelysprokets
+date: "`r Sys.Date()`"
+output: distill::distill_article
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      eval = TRUE,
+                      warning = FALSE,
+                      message = FALSE)
+```
+
+
+The code chunk below is used to install and load the required packages onto RStudio.
+
+```{r}
+packages = c('tidyverse','treemap','ggrepel','lubridate','gapminder','gganimate','ggiraph','plotly','zoo', 'tmap', 'sf','trelliscopejs', 'hrbrthemes','transformr','d3treeR',
+             'lubridate','clock',
+             'sftime','rmarkdown','data.table')
+
+for(p in packages){
+  if(!require(p, character.only =T)){
+    install.packages(p)
+    }
+  library(p, character.only =T)
+}
+```
+
+The code chuck below import *Employers.csv*, *Buildings.csv*, *Jobs.csv*, *CheckinJournal.csv* and *Participants.csv* from the data folder into R by using `read_csv()` and save it as an tibble data frame.  
+
+```{r}
+Employers <- read_csv("data/Employers.csv")
+Buildings <- read_csv("data/Buildings.csv")
+Jobs <- read_csv("data/Jobs.csv")
+Checkin <- read_csv("data/CheckinJournal.csv")
+Participants <- read_csv("data/Participants.csv")
+
+Checkin <- Checkin %>%
+  rename('employerId' = 'venueId')
+
+```
+
+```{r}
+#Extract the date from timestamp
+Checkin$Date <- as.Date(Checkin$timestamp)
+
+#Filter rows with workplace as value
+Workplace_Checkin <- Checkin %>%
+  filter(venueType == "Workplace")
+
+#Assign Running Week Number
+Workplace_Checkin <- Workplace_Checkin %>%
+  mutate(Week_Num = as.double(ceiling(difftime(Workplace_Checkin$Date, strptime("01.03.2022", format = "%d.%m.%Y"),units="weeks"))))
+
+#Compute no. of employees that report to work during that week (5day work week) 
+Count_Checkin <- Workplace_Checkin %>%
+  group_by(employerId,Week_Num) %>%
+  summarise('Num_of_Employees'= n_distinct(participantId)) %>%  
+  ungroup()
+
+#Calculate Percentage Change  
+Count_Checkin <- Count_Checkin %>%  
+  group_by(employerId) %>%
+  mutate(Perc_Chg = round((Num_of_Employees - lag(Num_of_Employees))/lag(Num_of_Employees)*100,0))%>%
+  replace(is.na(.), 0)
+
+Count_Checkin <- merge(Count_Checkin, Employers, by ='employerId')
+write_csv(Count_Checkin, "data/csv/Count_Checkin.csv")
+Count_Checkin_sf <- read_sf("data/csv/Count_Checkin.csv", 
+                   options = "GEOM_POSSIBLE_NAMES=location")
+
+Count_Checkin_sf$Num_of_Employees <- as.numeric(Count_Checkin_sf$Num_of_Employees)
+Count_Checkin_sf$Week_Num <- as.numeric(Count_Checkin_sf$Week_Num)
+
+#Compute no. of employers that each participants every week  
+Change_Job <- Workplace_Checkin %>%
+  group_by(participantId,Week_Num) %>%
+  summarise('Num_of_Employers'= n_distinct(employerId)) %>%  
+  filter(Num_of_Employers >1) %>% 
+  ungroup()  
+  
+Change_Job <- merge(Change_Job, Participants, by ='participantId')
+
+```
+
+
+
+```{r}
+buildings <- read_sf("data/Buildings.csv", 
+                   options = "GEOM_POSSIBLE_NAMES=location")
+
+employers <- read_sf("data/Employers.csv", 
+                   options = "GEOM_POSSIBLE_NAMES=location")
+
+```
+
+```{r}
+Employers <- Employers %>% left_join(Buildings,by="buildingId")
+
+```
+
+Next, we use outer join on *Employers* and *Jobs* based on `employerId` to have a full overview on all the jobs that are offered by each employer.   
+
+```{r}
+Employers = merge(x=Employers,y=Jobs,by="employerId",all=TRUE)
+
+```
+
+# Partcipants who changed job - crosstalk
+
+```{r}
+d <- highlight_key(Change_Job)
+
+p1 <- ggplot(d, aes(x= as.factor(Num_of_Employers), fill = educationLevel)) +
+  geom_bar() +
+  facet_wrap(~educationLevel)+
+  ggtitle('Participants with >1 Employers') +
+  xlab("Numbers of Employers") +
+  ylab("No. of\nParticipants") +
+  theme(axis.title.y= element_text(angle=0), axis.ticks.x= element_blank(),
+         axis.line= element_line(color= 'grey'))
+
+gg <- highlight(ggplotly(p1),
+                "plotly_selected")
+
+crosstalk::bscols(gg, 
+                  widths = c(12,12),
+                  DT::datatable(d,
+                                rownames = FALSE),
+                                class = 'display')
+```
+
+# Employers Trelliscope
+
+```{r}
+r <- ggplot(Count_Checkin, aes(x= as.factor(Week_Num), y= Num_of_Employees)) +
+  geom_point(color='red') +
+  labs(x= 'Week', y= 'Number of\nEmployees',
+       title = 'Weekly Turnover of Each Employers') +
+  ylim(0,28) + 
+  facet_trelliscope(~ employerId, 
+                    nrow = 3, ncol = 3, width = 800,
+                    path = 'trellisr/',
+                    self_contained = TRUE) +
+  theme(axis.title.y= element_text(angle=0), 
+        axis.text.x = element_text(angle = 0, vjust = 0.5, hjust = 0.3),
+        axis.ticks.x= element_blank(),
+        panel.background= element_blank(), 
+        axis.line= element_line(color= 'grey'))
+r
+```
+
+# Wage vs Edu Level - raincloud plot
+
+```{r}
+
+Jobs$educationRequirement = factor(Jobs$educationRequirement, levels = c('Low', 'HighSchoolOrCollege', 'Bachelors','Graduate'))
+
+p<- ggplot(Jobs, aes(x = educationRequirement, y = hourlyRate, fill=educationRequirement)) + 
+  ggdist::stat_halfeye(
+    adjust = .5, 
+    width = .6, 
+    .width = 0, 
+    justification = -.3, 
+    point_colour = NA) + 
+  geom_boxplot(
+    width = .25, 
+    outlier.shape = NA
+  ) +
+  geom_point(
+    size = 1.3,
+    alpha = .3,
+    position = position_jitter(
+      seed = 1, width = .1
+    ),
+  aes(text = paste('Job ID: ', Jobs$jobId,
+                         'Employer ID: ', Jobs$employerId,
+                         'Hourly Rate: $', Jobs$hourlyRate))
+      ) + 
+  coord_cartesian(xlim = c(1.2, NA), clip = "off")+
+  coord_flip() +
+  ggtitle(label = "Wage Distribution for Different Education Level",
+          subtitle = "High Wages For Higher Educated")+
+  theme_minimal()+
+  theme(plot.title = element_text(size=14, face="bold",hjust = 0.5),
+          plot.subtitle = element_text(size=12,hjust = 0.5,color='mediumvioletred'))+
+  theme(axis.title.y= element_blank(),
+        panel.background= element_blank(), axis.line= element_line(color= 'grey'))
+
+ggplotly(p, tooltip = 'text') 
+
+```
+
+# Age vs Employers - Heatmap
+
+```{r,fig.width=20, fig.height=5, echo=FALSE}
+
+Workplace_Checkin_Wk60 <- Workplace_Checkin %>%
+  filter(Date == '2023-04-18')
+
+AvgHourRate <- Jobs %>% 
+  group_by(employerId) %>%
+  summarise(jobNum = n(),
+            avgPay = mean(hourlyRate))
+
+Employee_Num_Age <- left_join(Workplace_Checkin_Wk60, Participants, by ='participantId') %>%
+  group_by(employerId) %>%
+  summarise(ENum = n(),
+            avgAge = mean(age))
+
+Employee_Num_Age_Pay <- left_join(Employee_Num_Age, AvgHourRate, by ='employerId')  
+
+Employee_Num_Age_Pay <- Employee_Num_Age_Pay %>%
+  mutate(group = paste(ENum, 'Employees'))
+
+tm <- treemap(Employee_Num_Age_Pay,
+        index=c("group", "employerId"),
+        vSize="avgPay",
+        vColor="avgAge",
+        type = "value",
+        title = 'Employee Age by Employer')
+
+```
+
+### interactive Heatmap
+
+```{r,fig.width=20, fig.height=5, echo=FALSE}
+
+Workplace_Checkin <- Workplace_Checkin %>%
+  filter(Date == '2023-04-18')
+
+AvgHourRate <- Jobs %>% 
+  group_by(employerId) %>%
+  summarise(jobNum = n(),
+            avgPay = mean(hourlyRate))
+
+Employee_Num_Age <- left_join(Workplace_Checkin_Wk, Participants, by ='participantId') %>%
+  group_by(employerId) %>%
+  summarise('Num_of_Employees' = n_distinct(participantId),
+            avgAge = mean(age))
+
+Employee_Num_Age_Pay <- left_join(Employee_Num_Age, AvgHourRate, by ='employerId')  
+
+Employee_Num_Age_Pay <- Employee_Num_Age_Pay %>%
+  mutate(group = paste(Num_of_Employees, 'Employees'))
+
+tm <- treemap(Employee_Num_Age_Pay,
+        index=c("group", "employerId"),
+        vSize="avgPay",
+        vColor="avgAge",
+        type = "value",
+        title = 'Employee Age by Employer')
+
+```
+```{r,fig.width=20, fig.height=5}
+
+d3tree(tm, rootname = "Age and No. of Employees under Each Employer" )
+```
+
+# Map + No. of Employees over time
+
+```{r}
+p <- ggplot() +
+  geom_sf(data = buildings) +
+  geom_sf(data = Count_Checkin_sf, aes(color =Num_of_Employees, size = Num_of_Employees), alpha = 1)  +
+  scale_colour_gradientn(colours=rainbow(4)) +
+  theme_void()+
+  labs(title = 'Week:{closest_state}') +
+  transition_states(Week_Num) +
+  ease_aes('linear')
+
+animate(p, nframes = 100, fps = 3)
+
+```
+
+# Map + % Chg in No. of Employees over time
+
+```{r}
+library(colorspace)
+
+g <- ggplot() +
+  geom_sf(data = buildings) +
+  geom_sf(data = Count_Checkin_sf, aes(color =Num_of_Employees , size = Perc_Chg), alpha = 0.3)  +
+  scale_colour_gradientn(colours=rainbow(4)) +
+  theme_void()+
+  labs(title = 'Week:{closest_state}') +
+  transition_states(Week_Num) +
+  ease_aes('linear')
+
+animate(g, nframes = 100, fps = 3)
+
+```
