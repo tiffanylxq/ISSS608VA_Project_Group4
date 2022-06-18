@@ -15,7 +15,6 @@ library(reshape2)
 library(ComplexHeatmap)
 library(InteractiveComplexHeatmap)
 library(scales)
-library(hrbrthemes)
 
 ####################################
 # Getting Data                     #
@@ -129,12 +128,12 @@ ui <- fluidPage(theme = shinytheme("united"),
                                     
                                     mainPanel(
                                       HTML("<h3>Engagement Statistics</h3>"),
-                                      plotlyOutput("plot1"),
-                                      plotlyOutput("plot1a"),
+                                      plotlyOutput("plot1", 
+                                                   height=800),
                                       
                                       HTML("<h3>Individual Statistics</h3>"),
-                                      plotlyOutput("plot2"),
-                                      plotlyOutput("plot2a")
+                                      plotlyOutput("plot2", 
+                                                   height=800)
                                     )
                                     
                            ), #tabPanel(), Home
@@ -314,9 +313,6 @@ server <- function(input, output, session) {
   })
   
   output$plot1 <- renderPlotly({
-    
-    print(dataOverall())
-    
     p <- ggplot(dataOverall(), 
                 aes(x = timestamp, 
                     y = value, 
@@ -326,22 +322,6 @@ server <- function(input, output, session) {
       theme(axis.title.x=element_blank(),
             axis.text.x=element_blank(), 
             axis.ticks.x=element_blank())
-    
-    ggplotly(p)
-  })
-  
-  #This is for the boxplot
-  output$plot1a <- renderPlotly({
-    
-    df_for_boxplot <- subset(dataOverall(), select = -c(timestamp))
-    
-    p <- ggplot(df_for_boxplot,
-                aes(x=variable, y=value, fill=variable)) +
-      geom_violin() +
-      theme(
-        legend.position="none",
-        plot.title = element_text(size=11)
-      ) 
     
     ggplotly(p)
   })
@@ -437,22 +417,6 @@ server <- function(input, output, session) {
       theme(axis.title.x=element_blank(),
             axis.text.x=element_blank(), 
             axis.ticks.x=element_blank())
-    
-    ggplotly(p)
-  })
-  
-  #This is for the boxplot
-  output$plot2a <- renderPlotly({
-    
-    df_for_boxplot <- subset(dataParticipant(), select = -c(timestamp))
-    
-    p <- ggplot(df_for_boxplot,
-                aes(x=variable, y=value, fill=variable)) +
-      geom_violin() +
-      theme(
-        legend.position="none",
-        plot.title = element_text(size=11)
-      ) 
     
     ggplotly(p)
   })

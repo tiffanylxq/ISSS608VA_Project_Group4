@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE, message = FALSE, warning = FALS
 
 ```{r}
 packages = c('tidyverse', 'trelliscopejs', 'ggplot2', 'gapminder', 'lubridate', 'dplyr', 'plotly', 'ggdist', 'reshape', 
-             'circlize', 'ComplexHeatmap', 'InteractiveComplexHeatmap', 'shiny', 'reshape2')
+             'circlize', 'ComplexHeatmap', 'InteractiveComplexHeatmap', 'shiny', 'reshape2', 'hrbrthemes')
 for(p in packages){
   if(!require(p,character.only = T)){
     install.packages(p)
@@ -29,6 +29,33 @@ for(p in packages){
 
 library(circlize)
 library(ComplexHeatmap)
+```
+
+```{r}
+# Libraries
+library(tidyverse)
+library(hrbrthemes)
+library(viridis)
+
+# create a dataset
+data <- data.frame(
+  name=c( rep("A",500), rep("B",500), rep("B",500), rep("C",20), rep('D', 100)  ),
+  value=c( rnorm(500, 10, 5), rnorm(500, 13, 1), rnorm(500, 18, 1), rnorm(20, 25, 4), rnorm(100, 12, 1) )
+)
+
+
+
+ggplot(data,
+       aes(x=name, y=value, fill=name)) +
+  geom_violin() +
+  scale_fill_viridis(discrete = TRUE, alpha=0.6, option="A") +
+  theme_ipsum() +
+  theme(
+    legend.position="none",
+    plot.title = element_text(size=11)
+  ) +
+  ggtitle("Violin chart") +
+  xlab("")
 ```
 
 ```{r}
