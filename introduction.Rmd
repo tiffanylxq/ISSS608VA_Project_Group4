@@ -1,0 +1,72 @@
+---
+title: "Introduction to Visual Analytics Project"
+description: |
+author:
+  - name: Group 4 (Hulwana Binte Saifulzaman, Lee Xiao Qi. Yeo Kim Siang)
+    affiliation: SMU
+date: "`r Sys.Date()`"
+output: distill::distill_article
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+The first of its kind, this term's ISSS608 Visual Analytics and
+Applications course led by [Professor Kam Tin
+Seong](link%20to%20about%20us%20page) builds us towards the highly
+prestigious [IEEE Vast Challenge
+2022](https://vast-challenge.github.io/2022/).
+
+There are 4 challenges provided, targeting different aspects of life in
+the fictional town *Engagement*. Each team is to choose one challenge to
+create a visualisation solution that will be hosted on a web application
+using the R package - [Shiny](https://shiny.rstudio.com/). We chose to
+analyse the Economics of Engagement, and created a dashboard that allows
+the user to visually analyse the interplay between employee (or
+residents) and business (or employers) before delving deeply into
+exploring either.
+
+# Brief Information About Competition
+
+This year, the competition features the fictional town *Engagement*. We
+are given information from *2022-03-01T00:00:00Z* to
+*2022-03-04T14:25:00Z* about the 1010 participants who reside there.
+
+## Datasets
+
+In general, there are 13 datasets.
+
+|     | Dataset                 | Description                                                                                                                                                                                                                                                                                                                                   |
+|-----------------|-----------------|------------------------------------|
+| 1   | Pa rtici pantStatusLogs | A collection of 72 Comma-Separated Values (CSV) files, each containing information about all participants' day-to-day activities. Each CSV file contains information about the participant's current location, hunger status, sleep status, apartment, available balance, job, financial status, daily food budget and extra weekly budget.   |
+| 2   | Apartments              | Information about the rental cost, max occupancy, number of rooms, and location of buildings in Engagement.                                                                                                                                                                                                                                   |
+| 3   | Buildings               | Information about the location, types and maximum occupancy of buildings in Engagement.                                                                                                                                                                                                                                                       |
+| 4   | Employers               | Information about the location of employers in Engagement.                                                                                                                                                                                                                                                                                    |
+| 5   | Jobs                    | Information about employers, hourly rate, start time, end time, days to work and education requirements that employees in Engagement have to meet.                                                                                                                                                                                            |
+| 6   | Participants            | Overarching information about each participant, including household size, whether they have kids, age, education levels, interest groups and joviality.                                                                                                                                                                                       |
+| 7   | Pubs                    | Information about the hourly cost of operation, mac occupancy and location of pubs in Engagement.                                                                                                                                                                                                                                             |
+| 8   | Restaurants             | Information about the cost of food, maximum occupancy and location of restaurants in Engagement.                                                                                                                                                                                                                                              |
+| 9   | Schools                 | Information about the monthly costs, maximum enrollment and location of schools in Engagement.                                                                                                                                                                                                                                                |
+| 10  | CheckinJournal          | Information about the time participants check into different venues in Engagement.                                                                                                                                                                                                                                                            |
+| 11  | Fi nancialJournal       | Information about the time and amount participants spend on certain types of items (ie Education, Food, Recreation, Rent Adjustment, Shelter and Wage)                                                                                                                                                                                        |
+| 12  | SocialNetwork           | Information about the interaction between 2 participants in Engagement.                                                                                                                                                                                                                                                                       |
+| 13  | Trave lJournal          | Information about the all travel start and end time and duration, their purpose, the check-in and check-out timing associated with such travel, and the amount a participant starts and ends off with during such travel.                                                                                                                     |
+
+## Challenges
+
+There were 4 challenges provided. Each one asks us to choose a
+perspective to evaluate Engagement by.
+
+They are:
+
+1.  Demographics and Relationships
+
+2.  Patterns of Life
+
+3.  Economic
+
+4.  Combining analysis from Challenges 1 to 3
