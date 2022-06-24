@@ -19,37 +19,39 @@ knitr::opts_chunk$set(echo = FALSE)
 
 We chose Challenge 3 (Economics), and its accompanying sub-questions.
 
-+---------------+-------------------------------------------------+
-| Overarching   |                                                 |
-| Question      |                                                 |
-+===============+=================================================+
-| \             | Over time, are businesses growing or shrinking? |
-|               | How are people changing jobs? Are standards of  |
-|               | living improving or declining over time?        |
-+---------------+-------------------------------------------------+
-| **Sub         | \                                               |
-| -Questions**  |                                                 |
-+---------------+-------------------------------------------------+
-| 1             | Over the period covered by the dataset, which   |
-|               | businesses appear to be more prosperous? Which  |
-|               | appear to be struggling? Describe your          |
-|               | rationale for your answers. Limit your response |
-|               | to 10 images and 500 words.                     |
-+---------------+-------------------------------------------------+
-| 2             | How does the financial health of the residents  |
-|               | change over the period covered by the dataset?  |
-|               | How do wages compare to the overall cost of     |
-|               | living in Engagement? Are there groups that     |
-|               | appear to exhibit similar patterns? Describe    |
-|               | your rationale for your answers. Limit your     |
-|               | response to 10 images and 500 words.            |
-+---------------+-------------------------------------------------+
-| 3             | Describe the health of the various employers    |
-|               | within the city limits. What employment         |
-|               | patterns do you observe? Do you notice any      |
-|               | areas of particularly high or low turnover?     |
-|               | Limit your response to 10 images and 500 words. |
-+---------------+-------------------------------------------------+
++----------------------+----------------------------------------------+
+| Overarching Question |                                              |
++======================+==============================================+
+| \                    | Over time, are businesses growing or         |
+|                      | shrinking? How are people changing jobs? Are |
+|                      | standards of living improving or declining   |
+|                      | over time?                                   |
++----------------------+----------------------------------------------+
+| **Sub -Questions**   | \                                            |
++----------------------+----------------------------------------------+
+| 1                    | Over the period covered by the dataset,      |
+|                      | which businesses appear to be more           |
+|                      | prosperous? Which appear to be struggling?   |
+|                      | Describe your rationale for your answers.    |
+|                      | Limit your response to 10 images and 500     |
+|                      | words.                                       |
++----------------------+----------------------------------------------+
+| 2                    | How does the financial health of the         |
+|                      | residents change over the period covered by  |
+|                      | the dataset? How do wages compare to the     |
+|                      | overall cost of living in Engagement? Are    |
+|                      | there groups that appear to exhibit similar  |
+|                      | patterns? Describe your rationale for your   |
+|                      | answers. Limit your response to 10 images    |
+|                      | and 500 words.                               |
++----------------------+----------------------------------------------+
+| 3                    | Describe the health of the various employers |
+|                      | within the city limits. What employment      |
+|                      | patterns do you observe? Do you notice any   |
+|                      | areas of particularly high or low turnover?  |
+|                      | Limit your response to 10 images and 500     |
+|                      | words.                                       |
++----------------------+----------------------------------------------+
 
 ## Visualisation Solution
 
@@ -84,7 +86,7 @@ for your answers.*
 We use 2 sub-tabs to answer this - *Pubs & Restaurants* and
 *Workplaces.*
 
-####  
+#### 
 
 ![](images/paste-8F193D1A.png)
 
@@ -108,21 +110,11 @@ The *Pubs & Restaurants* tab has 7 parts.
 
 The 4 features in which users can play around with are as follows.
 
-+---------------+-----------------------------------------------------------+
-| Feature       | Function                                                  |
-+===============+===========================================================+
-| Category      | User has the option to view either restaurants or pubs.   |
-| (Radio        |                                                           |
-| button)       |                                                           |
-+---------------+-----------------------------------------------------------+
-| Scenario      | User can select the type of scenario they would like to   |
-| (Dropdown)    | visualize. Select 'Top 5' or 'Top 10' to view the top 5   |
-|               | or top 10 businesses to see which companies are           |
-|               | prospering.                                               |
-+---------------+-----------------------------------------------------------+
-| Date (Range   | User has the ability to scope to the target range date.   |
-| Slider)       |                                                           |
-+---------------+-----------------------------------------------------------+
+| Feature                 | Function                                                                                                                                                                    |
+|-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Category (Radio button) | User has the option to view either restaurants or pubs.                                                                                                                     |
+| Scenario (Dropdown)     | User can select the type of scenario they would like to visualize. Select 'Top 5' or 'Top 10' to view the top 5 or top 10 businesses to see which companies are prospering. |
+| Date (Range Slider)     | User has the ability to scope to the target range date.                                                                                                                     |
 
 #### 2. Top Overall Performing Business
 
@@ -163,7 +155,7 @@ dip till June 2022 after which the sales fluctuates.
 
 #### 6. Distribution of Weekly Sales
 
-![Average Spending of Customers Chart Mockup ](C3Q1Chart3.png)
+![Average Spending of Customers Chart Mockup](C3Q1Chart3.png)
 
 To give insights to users on the weekday sales of the selected
 businesses. Are customers spending more on the weekday or the weekends?
@@ -214,9 +206,8 @@ living in Engagement? Are there groups that appear to exhibit similar
 patterns? Describe your rationale for your answers. Limit your response
 to 10 images and 500 words.*
 
-![](images/paste-6AD4F2A6.png)
-We use 3 sub-tabs to answer this - *Income and Expense, Patterns with
-Heatmap* and *Participant Breakdown.*
+![](images/paste-6AD4F2A6.png) We use 3 sub-tabs to answer this -
+*Income and Expense, Patterns with Heatmap* and *Participant Breakdown.*
 
 #### Tab 1 - Income and Expense
 
@@ -370,7 +361,7 @@ We then display a map of the city, and the number of employers in each
 company. This way, the user might be able to look beyond the company and
 see how different employers interact.
 
-#### 3 - Data 
+#### 3 - Data
 
 ![](images/paste-9032D801.png)
 
@@ -385,36 +376,36 @@ Extra data is provided to help the user find patterns.
 These are the R packages we are planning on using. This is subject to
 change as the requirements of the project from our end might change.
 
-+-----------------------+---------------------------------------+
-| Package Name          | Use                                   |
-+=======================+=======================================+
-| shiny and shiny       | To build an interactive web           |
-| dashboard             | visualisation.                        |
-+-----------------------+---------------------------------------+
-| shinythemes           | To make our shiny website more        |
-|                       | aesthetic.                            |
-+-----------------------+---------------------------------------+
-| tidyverse             | A must-have for data manipulation and |
-|                       | exploration.                          |
-+-----------------------+---------------------------------------+
-| plotly                | To create all bar charts and graphs.  |
-+-----------------------+---------------------------------------+
-| ggplot2               | To plot our visualisations and        |
-|                       | conduct Exploratory Data Analysis.    |
-+-----------------------+---------------------------------------+
-| treemap               | To display hierarchical data as a set |
-|                       | of nested rectangles.                 |
-+-----------------------+---------------------------------------+
-| ggrepel               | To repel overlapping text labels away |
-|                       | from each other and away from the     |
-|                       | data points that they label.          |
-+-----------------------+---------------------------------------+
-| lubridate             | To make it easier to work with dates  |
-|                       | and times.                            |
-+-----------------------+---------------------------------------+
-| gapminder             | \                                     |
-+-----------------------+---------------------------------------+
-| gganimate             | To create animated ggplots.           |
-+-----------------------+---------------------------------------+
-| ggiraph               | To create dynamic ggplot graphs.      |
-+-----------------------+---------------------------------------+
++---------------------------+-----------------------------------------+
+| Package Name              | Use                                     |
++===========================+=========================================+
+| shiny and shiny dashboard | To build an interactive web             |
+|                           | visualisation.                          |
++---------------------------+-----------------------------------------+
+| shinythemes               | To make our shiny website more          |
+|                           | aesthetic.                              |
++---------------------------+-----------------------------------------+
+| tidyverse                 | A must-have for data manipulation and   |
+|                           | exploration.                            |
++---------------------------+-----------------------------------------+
+| plotly                    | To create all bar charts and graphs.    |
++---------------------------+-----------------------------------------+
+| ggplot2                   | To plot our visualisations and conduct  |
+|                           | Exploratory Data Analysis.              |
++---------------------------+-----------------------------------------+
+| treemap                   | To display hierarchical data as a set   |
+|                           | of nested rectangles.                   |
++---------------------------+-----------------------------------------+
+| ggrepel                   | To repel overlapping text labels away   |
+|                           | from each other and away from the data  |
+|                           | points that they label.                 |
++---------------------------+-----------------------------------------+
+| lubridate                 | To make it easier to work with dates    |
+|                           | and times.                              |
++---------------------------+-----------------------------------------+
+| gapminder                 | \                                       |
++---------------------------+-----------------------------------------+
+| gganimate                 | To create animated ggplots.             |
++---------------------------+-----------------------------------------+
+| ggiraph                   | To create dynamic ggplot graphs.        |
++---------------------------+-----------------------------------------+

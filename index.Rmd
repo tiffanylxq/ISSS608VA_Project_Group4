@@ -1,6 +1,17 @@
 ---
-title: "ISS608 VA Project"
-description: |
-  Welcome to Our Group Project Blog!
+title: "Visual Analytics Class of 2022 - Group 4"
+image: "tomatosoup.jpg"
+links:
+  - label: '<i class="fab fa-github"></i> GitHub'
+    url: "https://github.com/tiffanylxq/ISSS608VA_Project_Group_4"
+  - label: '<i class="fas fa-envelope"></i> Email'
+    url: "mailto:isss608group4@gmail.com"
+output:
+  postcards::jolla
 site: distill::distill_website
 ---
+By day, I am a can of tomato soup. 
+
+By night, we are a group of 3 graduate students, each from disparate fields bounded by our love for data visualisation. Hulwana (right) is a real estate expert, Tiffany (centre) is a security professional and Kim Siang (left) is a software engineer. 
+
+We present our solution for the IEEE Data Visualsation 2022 Challenge - Question 3 in this website, and hope that you will enjoy reading it as much as we enjoyed creating it. 

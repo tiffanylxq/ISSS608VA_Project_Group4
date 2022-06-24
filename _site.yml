@@ -6,7 +6,7 @@ output_dir: "_site"
 navbar:
   right:
     - text: "Home"
-      href: postcard.html
+      href: index.html
     - text: "Introduction"
       href: introduction.html
     - text: "Proposal"
@@ -14,6 +14,6 @@ navbar:
     - text: "RShiny App"
       href: about.html
     - text: "Poster"
-      href: about.html
+      href: Poster.html
 output: distill::distill_article
 theme: theme.css
