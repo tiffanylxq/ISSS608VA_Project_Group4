@@ -83,48 +83,44 @@ for your answers.*
 
 We use 2 sub-tabs to answer this - *By Revenue* and *By Wages*.
 
-## The 'By Revenue' Tab
+## The 'By Revenue (Overview)' Tab
 
-This tab has 7 parts: 
+!['By Revenue (Overview)' Tab](images/Q1RevenueO.png)
 
-1.  The controller that allows the user to interact with the different
-    plots and graphs.
+This tab has 4 parts: 
+
+1.  The controller that allows the user to:
+    - Select a category, either Pubs or Restaurants
+    - Select Date Range, for filtering the period of interest
 2.  A bar graph displaying the ranking of businesses by total revenue in city 
     of Engagement.
 3.  A data table and sparklines that shows the monthly sales trend of businesses 
     over time.
 4.  A map that shows the total sales by venue id.
-5.  A violin-and-boxplot that shows the statistical distribution of
-    daily sales across the weekdays.
-6.  A heatmap that displays the frequency of check-ins by days in the
-    week and time of the day.
 
-### 1. Control
 
-The 4 features in which users can play around with are as follows.
+### 1-Control
 
-| Feature                 | Function                                                                                                                                                                    |
-|-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Category (Radio button) | User has the option to view either restaurants or pubs.                                                                                                                     
-| Date (Range Slider)     | User has the ability to scope to the target range date.                |
+![](images/Q1ControlOverview.png)
 
-|
+1. User has the option to view either 'Pubs' or 'Restaurants'. This control will
+   alter all 3 charts found within the pane.
 
-### 2. Top Overall Performing Business
+2. User has the ability to scope to the interested date range.This control will
+   alter all 3 charts found within the pane.              
+
+
+### 2-Top Overall Performing Business
 
 ![Business Performance Ranking](images/Q1Overview1.png)
 
-The main objective of the first question in challenge 3 is to identify
-which businesses are prospering or struggling. As there is no sales and
-expense data found on the `Restaurants.csv` and `Pubs.csv`, the only way
-to obtain sales volume is to compute via the customer's spending on
-these businesses. Prosperous businesses will refer to companies that are
-making more sales whereas struggling businesses will refer to companies
-that have lower sales. As the sales volume fluctuates sporadically
-day-to-day, to determine the top 5 companies, the total overall sales
-are calculated and the 5 companies with the most sales are selected.
+The 'Business Performance Ranking By Total Revenue' bar chart arranges the 
+'venueId' based on the total revenue generated in descending order. At a glance,
+users are able to identify the performing and struggling businesses.Users can 
+hover over the bar charts to obtain the total revenue amount for each businesses.
 
-### 3. Monthly Sales Trend and Distribution
+
+### 3-Monthly Sales Trend and Distribution
 
 ![Monthly Sales Trend](images/Q1Overview3.png)
 
@@ -132,68 +128,122 @@ As the businesses in the *Business Performance Ranking Chart* are compared based
 on the overall sales accumulated, it provides no insights on how the 
 businesses are performing overtime. Thus, the data table and sparklines chart 
 is displayed to reveal the monthly sales trend and provide the lowest and 
-highest revenue generated. We observe that in general, there is a sharp decline 
-in sales from March 2022 to April 2022. Businesses continue to deteriorate till 
-June 2022 after which the sales fluctuates.
+highest revenue generated. 
 
-### 4. Business Performance by Location
+### 4-Business Performance by Location
 
 ![Business Performance by Location](images/Q1Overview2.png)
 
 The map plot enables users to explore and identify if there are any patterns in 
 terms of business performance based on the location of the pubs or restaurants.
+Users have the ability to zoom in and out of the plot as well as hover onto the
+circles to identify the 'venue ID' and the total sales collected.
 
-### 5. Distribution of Weekly Sales
+## The 'By Revenue (Deep Dive)' Tab
+
+!['By Revenue (Deep Dive)' Tab](images/Q1RevenueD.png)
+
+This tab has 3 parts: 
+
+1.  The controller that allows the user to:
+    - Select a particular company of interest
+    - Select parameters for the box-plot.
+2.  A violin-and-boxplot that shows the statistical distribution of
+    daily sales across the weekdays.
+3.  A heatmap that displays the frequency of check-ins by days in the
+    week and time of the day.
+    
+
+### 1-Control
+
+![](images/Q1ControlDeep.png)
+
+1. User has the option to view either 'Pubs' or 'Restaurants'. This control will
+   alter both charts found within the pane.
+
+2. User can deep dive for a particular venueId or company of interest. This 
+   control will alter both charts found within the pane.
+
+3. User can select the type of box-plot that they would like to view. This is 
+   only applicable to the *Distribution of Daily Sales by Weekday* chart.
+
+4. User can select the type of statistical test in comparing the difference in 
+   sales between 2 weekdays. This is only applicable to the 
+   *Distribution of Daily Sales by Weekday* chart.
+   
+5. User can select the type of pairwise display for the box plot. This is only 
+   applicable to the *Distribution of Daily Sales by Weekday* chart.
+   
+6. User can select the type of P-Adjust methods for the box plot. This is only 
+   applicable to the *Distribution of Daily Sales by Weekday* chart.
+
+
+
+### 5. Distribution of Daily Sales by Weekday
 
 ![Average Spending of Customers Chart](images/Q1Deep1.png)
 
-To give insights to users on the weekday sales of the selected
-businesses. Are customers spending more on the weekday or the weekends?
+User can compare the daily sales amount based on the weekdays.
 
 ### 7. Check-in By Weekday and Time of Day
 
 ![Average Check-in Heatmap Chart](images/Q1Deep2.png)
 
-The *Average Check-In by Weekday and Time of the Day* Heatmap provides 
-vizualisation on the average visitors for the selected company across the 
-weekdays at hourly intervals. the chart can be used to examine the peak and 
-non-peak periods of the selected businesses.
+The *Average Check-In by Weekday and Time of the Day* heatmap provides 
+visualization on the average visitors for the selected company across the 
+weekdays at hourly intervals. The chart can be used to examine the peak and 
+non-peak periods of the selected businesses.User can also hover on the heatmap 
+to view the average number of vistors at a selected hour.
 
 ## The 'By Wages' Tab
 
-![](images/paste-642CAD58.png)
+!["By Wages' Tab](images/Q1WagesO.png)
 
-This tab has 3 parts.
+This tab has 4 parts.
 
-1.  The controller that allows the user to interact with the different
-    plots and graphs.
-2.  A bar graph displaying the total wages paid by an employer.
-3.  A line graph that shows the monthly total wages paid by an employer
-    over time.
+1.  The controller that allows the user to:
+    - Select the education level
+2.  A packed bar chart displaying the arrangement of businesses in descending
+    values of `average hourly wage`.
+3.  A box-plot that shows the distribution of average hourly wage of all
+    employers.
+4.  A data table that displays the venueId, number of jobs, average hourly wage 
+    and total hourly wage details.
 
 ### 1. Control
 
-![](images/Q1.png)
+![](images/Q1ControlWages.png)
 
-\*\* Please fill in
+1. User can filter based on the 'Education Level'. This applies to all 3 charts 
+   found within the pane.
 
 ### 2. Packed Bar Chart of Average Hourly Wage
 
 ![Average Hourly Wage Packed Bar Chart](images/Q1Wages1.png)
 
+The top 10 employers that offers highest average hourly wage are highlighted in 
+blue. User can hover onto the bar chart to view the employer ID and the average 
+hourly wage offered by the respective employer.
 
 
-### 3. Line Chart of Monthly Total Wages
+### 3. Box-plot Depicting the Distribution of Average Hourly Wage
 
-![](images/Q1Wages2.png)
+![Distribution of Average Hourly Wage by Employer](images/Q1Wages2.png)
 
-\*\* Please fill in.
+User can hover the box-plot and data points to view the average hourly wage 
+offered.User can also select the data points to reveal more details on the
+selected points.
 
 ### 4. Line Chart of Monthly Total Wages
 
-![](images/Q1Wages3a.png)
+![Boxplot with Data Points Selected](images/Q1Wages3a.png)
 
-![](images/Q1Wages3b.png)
+![Data Table](images/Q1Wages3b.png)
+
+When a user select a sets of data points from the 
+*Distribution of Average Hourly Wage by Employer* a data table appears showing 
+information on employer ID, number of jobs, average hourly pay and total hourly 
+pay.
 
 # Employees
 
