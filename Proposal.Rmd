@@ -349,9 +349,9 @@ The entire tab will be updated accordingly to the parameters chosen. If there is
 
 1. User can choose 'Daily', 'Weekly', 'Monthly' or 'Weekday' time period to view, the default selection is 'Weekly'.
 
-2. User can select the number of employees employed by each employer, the default selection is to show all employees under each employer. 
+2. User can select the range or specific number of employees employed by each employer, the default selection is to show all employees under each employer. 
 
-3. User can select the number of jobs offered by each employer.
+3. User can select the range or specific number of jobs offered by each employer.
 
 4. User can select the hiring rate of each employer. Hiring rate is defined as the Number of Employees Employed divide by Number of Jobs Offered. 
 
