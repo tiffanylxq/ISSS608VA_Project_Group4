@@ -52,23 +52,31 @@ We performed data wrangling and transformation to the datasets before loading th
 The application uses various packages such as tidyverse, plotly, ggplot2, lubridate, tmap, sf packages to conduct exploratory data analysis. 
 
 
-
 # Features
 
 The app consist of three tabs for users to explore the economy of Engagement City; (1) Business Perfomance, (2) Employees and (3) Employers.  
 
 ## Tab 1 - 'Business Performance'
 
-In assessing which businesses within the city of Engagement are thriving, we consider two approaches by using the revenue generated and wages offered. Pubs and restaurants are two distinct businesses with participant's expenses data available. As such, the performance of pubs and restaurants are evaluated based on the accumulated sales. On the other hand, as wages are the only numeric data present for all employers, it will be the basis in comparing the financial prosperity of the employers.
+In assessing which businesses within the city of Engagement are thriving, we consider two approaches by using the revenue generated and wages offered. Pubs and restaurants are two distinct businesses with participant's expenses data available. As such, the performance of pubs and restaurants is evaluated based on the accumulated sales. On the other hand, as wages are the only numeric data present for all employers, it will be the basis for comparing the financial prosperity of the employers.
  
 Upon clicking on the 'Business Performance' tab, the user can further select 2 components to explore. They are (1) By Revenue and (2) By Wages.
 
 **(1) By Revenue**
 Under the `By Revenue` section it is further divided into 2 sub-tabs, `Overview` and `Deep Dive`.
 
-The`Overview` sub-tab provides an overall glance of the business performance of pubs and restaurants. Users first select either pubs or restaurants to see the ranking in terms of overall sales based on the duration filtered. The data found to the right of the dashboard provides further insights on the sales performance of each business that falls under the selected category of pubs or restaurants arranged based on the average monthly sales in descending order. Users can also observe the monthly trend of each business through the sparklines available. Additionally, the map plot illuminates areas of the town where pubs or restaurants are flourishing.
+The`Overview` sub-tab provides an overall glance of the business performance of pubs and restaurants. Users first select either pubs or restaurants to see the ranking in terms of overall sales based on the filtered duration. The data found on the right part of the dashboard provides further insights on the sales performance of each business that falls under the selected category of pubs or restaurants arranged based on the average monthly sales in descending order. Users can also observe the monthly trend of each business through the sparklines available. Meanwhile, the map plot illuminates areas of the town where businiesses are flourishing.
 
 ![By Revenue (Overview) Tab Visualisation Chart](images/Q1ByRevenueOverview.png){width=90%}
+
+The `Deep Dive` section allows user to explore on the sales performance of a selected business across the weekdays. In general, we observe that pubs tend to have higher sales and more visitors during the weekends. On the other hand, the heatmap plot reveals the peak timings of the 'Venue ID' selected.
+
+![By Revenue (Deep Dive) Tab Visualisation Chart](images/Q1ByRevenueDeepDive.png){width=90%}
+
+**(2) By Wages**
+Users have the option to compare the average wages of the employers by filtering the education level. The packed bar charts showcase the top employers that offers the 10 highest average hourly wage by education level. The box plot depicts the distribution of the average hourly wage of all employers. User can select the points on the boxplot to obtain additional details of the selected businesses such as the number of jobs offered for that particular education level.
+
+![By Wage Tab Visualisation Chart](images/Q1ByWages.png){width=90%}
 
 ## Tab 2 - 'Employees'
 
@@ -90,7 +98,7 @@ Upon clicking on the 'Employers' tab, the user can further select 2 components t
 <center>
 
 # Future Work and Conclusion
-A limitation identified by the team is the lack of data to better assess the health of businesses. Given more information, such as business expenses, it would enable the team to accurately determine the growth of a business by comparing the profits and losses over time.
+A limitation identified by the team is the lack of data to better assess the financial health of businesses. Given more information, such as business expenses, it could enable the team to accurately determine the growth of a business by comparing the profits and losses over time.
 
 Try `posterdown` out! Hopefully you like it!
 
