@@ -50,12 +50,16 @@ We performed data wrangling and transformation to the datasets before loading th
 
 The application uses various packages such as tidyverse, plotly, ggplot2, lubridate, tmap, sf packages to conduct exploratory data analysis. 
 
+
+
 # Features
-The app consist of three tabs for users to explore the economy of Engagement City; (1) Businesses, (2) Residents and (3) Employers.  
+The app consist of three tabs for users to explore the economy of Engagement City; (1) Business Perfomance, (2) Employees and (3) Employers.  
 
-## Tab 1 - 'Businesses'
+## Tab 1 - 'Business Performance'
 
-Aliquam sed faucibus risus, quis efficitur erat. Vestibulum semper mauris quis tempus eleifend. Aliquam sagittis dictum ipsum, quis viverra ligula eleifend ut. Curabitur sagittis vitae arcu eget faucibus. In non elementum felis. Duis et aliquam nunc. Nunc pulvinar sapien nunc, vel pretium nisi efficitur in. Fusce fringilla maximus leo et maximus. Fusce at ligula laoreet, iaculis mi at, auctor odio. Praesent sed elementum justo. Aenean consectetur risus rhoncus tincidunt efficitur. Praesent dictum mauris at diam maximus maximus [@R-posterdown].
+In assessing which businesses within the city of Engagement are thriving, we consider two approaches by using the revenue generated and wages offered. Pubs and restaurants are two distinct businesses with participant's expenses data available. As such, the performance of pubs and restaurants are evaluated based on the accumulated sales. On the other hand, as wages are the only numeric data present for all employers, it will be the basis in comparing the prosperity of the businesses.
+
+[@R-posterdown].
 
 
 ## Tab 2 - 'Residents'
@@ -99,12 +103,15 @@ Upon clicking on the 'Employers' tab, the user can further select 3 components t
 
 <center>
 
-# Conclusion
+# Future Work and Conclusion
+A limitation identified by the team is the lack of data to better assess the health of businesses. Given more information, such as business expenses, it would enable the team to accurately determine the growth of a business by comparing the profits and losses over time.
 
 Try `posterdown` out! Hopefully you like it!
 
 ```{r, include=FALSE}
 knitr::write_bib(c('knitr','rmarkdown','posterdown','pagedown'), 'packages.bib')
 ```
+
+
 
 # References
