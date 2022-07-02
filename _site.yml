@@ -9,7 +9,7 @@ navbar:
       href: index.html
     - text: "Introduction"
       href: introduction.html
-    - text: "Proposal"
+    - text: "User Guide"
       href: Proposal.html
     - text: "RShiny App"
       href: about.html
