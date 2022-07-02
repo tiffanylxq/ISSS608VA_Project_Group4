@@ -13,7 +13,7 @@ navbar:
       href: Proposal.html
     - text: "RShiny App"
       href: about.html
-    - text: "Poster"
+    - text: "Poster" 
       href: Poster.html
 output: distill::distill_article
 theme: theme.css
