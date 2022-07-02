@@ -50,16 +50,17 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  { color: #00769e; background-color: #f1f3f5; }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
+code span { color: #00769e; } /* Normal */
 code span.al { color: #ad0000; } /* Alert */
 code span.an { color: #5e5e5e; } /* Annotation */
-code span.at { } /* Attribute */
+code span.at { color: #657422; } /* Attribute */
 code span.bn { color: #ad0000; } /* BaseN */
 code span.bu { } /* BuiltIn */
-code span.cf { color: #007ba5; } /* ControlFlow */
+code span.cf { color: #00769e; } /* ControlFlow */
 code span.ch { color: #20794d; } /* Char */
 code span.cn { color: #8f5902; } /* Constant */
 code span.co { color: #5e5e5e; } /* Comment */
@@ -73,9 +74,9 @@ code span.fl { color: #ad0000; } /* Float */
 code span.fu { color: #4758ab; } /* Function */
 code span.im { } /* Import */
 code span.in { color: #5e5e5e; } /* Information */
-code span.kw { color: #007ba5; } /* Keyword */
+code span.kw { color: #00769e; } /* Keyword */
 code span.op { color: #5e5e5e; } /* Operator */
-code span.ot { color: #007ba5; } /* Other */
+code span.ot { color: #00769e; } /* Other */
 code span.pp { color: #ad0000; } /* Preprocessor */
 code span.sc { color: #5e5e5e; } /* SpecialChar */
 code span.ss { color: #20794d; } /* SpecialString */
@@ -1031,10 +1032,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     margin-top: 1.5em;
   }
 
-  .figure img {
-    width: 100%;
-  }
-
   .figure .caption {
     color: rgba(0, 0, 0, 0.6);
     font-size: 12px;
@@ -1864,6 +1861,12 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
       // hoverable references
       $('span.citation[data-cites]').each(function() {
+        if ($(this).children()[0].nodeName == "D-FOOTNOTE") {
+          var fn = $(this).children()[0]
+          $(this).html(fn.shadowRoot.querySelector("sup"))
+          $(this).id = fn.id
+          fn.remove()
+        }
         var refs = $(this).attr('data-cites').split(" ");
         var refHtml = refs.map(function(ref) {
           return "<p>" + $('#ref-' + ref).html() + "</p>";
@@ -1878,6 +1881,31 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
           placement: 'bottom-start'
         });
       });
+
+      // fix footnotes in tables (#411)
+      // replacing broken distill.pub feature
+      $('table d-footnote').each(function() {
+        // we replace internal showAtNode methode which is triggered when hovering a footnote
+        this.hoverBox.showAtNode = function(node) {
+          // ported from https://github.com/distillpub/template/pull/105/files
+          calcOffset = function(elem) {
+              let x = elem.offsetLeft;
+              let y = elem.offsetTop;
+              // Traverse upwards until an `absolute` element is found or `elem`
+              // becomes null.
+              while (elem = elem.offsetParent && elem.style.position != 'absolute') {
+                  x += elem.offsetLeft;
+                  y += elem.offsetTop;
+              }
+
+              return { left: x, top: y };
+          }
+          // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
+          const bbox = node.getBoundingClientRect();
+          const offset = calcOffset(node);
+          this.show([offset.left + bbox.width, offset.top + bbox.height]);
+        }
+      })
 
       // clear polling timer
       clearInterval(tid);
@@ -1977,6 +2005,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // mark non-body figures created by knitr chunks as 100% width
     $('.layout-chunk').each(function(i, val) {
       var figures = $(this).find('img, .html-widget');
+      // ignore leaflet img layers (#106)
+      figures = figures.filter(':not(img[class*="leaflet"])')
       if ($(this).attr('data-layout') !== "l-body") {
         figures.css('width', '100%');
       } else {
@@ -1999,7 +2029,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     // get rid of index.html references in header
     if (window.location.protocol !== "file:") {
       $('.distill-site-header a[href]').each(function(i,val) {
-        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+        $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
       });
     }
 
@@ -2371,7 +2401,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     color: var(--hover-color, white);
   }</style>
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+  <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2442,11 +2472,11 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <li><a href="#control">1. Control</a></li>
 <li><a href="#top-overall-performing-business">2. Top Overall Performing
 Business</a></li>
-<li><a href="#monthly-sales">3. Monthly Sales</a></li>
-<li><a href="#total-sales-by-venueid">4. Total Sales by VenueId</a></li>
-<li><a href="#cumulative-sales-by-cumulative-visitors">5. Cumulative
-Sales By Cumulative Visitors</a></li>
-<li><a href="#distribution-of-weekly-sales">6. Distribution of Weekly
+<li><a href="#monthly-sales-trend-and-distribution">3. Monthly Sales
+Trend and Distribution</a></li>
+<li><a href="#business-performance-by-location">4. Business Performance
+by Location</a></li>
+<li><a href="#distribution-of-weekly-sales">5. Distribution of Weekly
 Sales</a></li>
 <li><a href="#check-in-by-weekday-and-time-of-day">7. Check-in By
 Weekday and Time of Day</a></li>
@@ -2454,9 +2484,11 @@ Weekday and Time of Day</a></li>
 <li><a href="#the-by-wages-tab">The ‘By Wages’ Tab</a>
 <ul>
 <li><a href="#control-1">1. Control</a></li>
-<li><a href="#bar-graph-of-total-wages">2. Bar Graph of Total
-Wages</a></li>
+<li><a href="#packed-bar-chart-of-average-hourly-wage">2. Packed Bar
+Chart of Average Hourly Wage</a></li>
 <li><a href="#line-chart-of-monthly-total-wages">3. Line Chart of
+Monthly Total Wages</a></li>
+<li><a href="#line-chart-of-monthly-total-wages-1">4. Line Chart of
 Monthly Total Wages</a></li>
 </ul></li>
 </ul></li>
@@ -2580,15 +2612,13 @@ Wages</em>.</p>
 <ol type="1">
 <li>The controller that allows the user to interact with the different
 plots and graphs.</li>
-<li>A bar graph displaying the top overall performing businesses in
-Engagement.</li>
-<li>A line graph that shows the monthly sales of different venues over
-time.</li>
+<li>A bar graph displaying the ranking of businesses by total revenue in
+city of Engagement.</li>
+<li>A data table and sparklines that shows the monthly sales trend of
+businesses over time.</li>
 <li>A map that shows the total sales by venue id.</li>
-<li>A scatter plot demonstrating the cumulative sales by different
-visitors.</li>
 <li>A violin-and-boxplot that shows the statistical distribution of
-weekend sales.</li>
+daily sales across the weekdays.</li>
 <li>A heatmap that displays the frequency of check-ins by days in the
 week and time of the day.</li>
 </ol>
@@ -2612,22 +2642,17 @@ follows.</p>
 <td>User has the option to view either restaurants or pubs.</td>
 </tr>
 <tr class="even">
-<td>Scenario (Dropdown)</td>
-<td>User can select the type of scenario they would like to visualize.
-Select ‘Top 5’ or ‘Top 10’ to view the top 5 or top 10 businesses to see
-which companies are prospering.</td>
-</tr>
-<tr class="odd">
 <td>Date (Range Slider)</td>
 <td>User has the ability to scope to the target range date.</td>
 </tr>
 </tbody>
 </table>
+<div class="line-block"></div>
 <h3 id="top-overall-performing-business">2. Top Overall Performing
 Business</h3>
 <figure>
-<img src="C3Q1Chart1.png" alt="Total Sales Chart Mockup" />
-<figcaption aria-hidden="true">Total Sales Chart Mockup</figcaption>
+<img src="images/Q1Overview1.png" alt="Business Performance Ranking" />
+<figcaption aria-hidden="true">Business Performance Ranking</figcaption>
 </figure>
 <p>The main objective of the first question in challenge 3 is to
 identify which businesses are prospering or struggling. As there is no
@@ -2639,32 +2664,38 @@ businesses will refer to companies that have lower sales. As the sales
 volume fluctuates sporadically day-to-day, to determine the top 5
 companies, the total overall sales are calculated and the 5 companies
 with the most sales are selected.</p>
-<h3 id="monthly-sales">3. Monthly Sales</h3>
+<h3 id="monthly-sales-trend-and-distribution">3. Monthly Sales Trend and
+Distribution</h3>
 <figure>
-<img src="C3Q1Chart2.png" alt="Monthly Sales Mockup" />
-<figcaption aria-hidden="true">Monthly Sales Mockup</figcaption>
+<img src="images/Q1Overview3.png" alt="Monthly Sales Trend" />
+<figcaption aria-hidden="true">Monthly Sales Trend</figcaption>
 </figure>
-<p>As the <em>Total Sales Chart</em> only compares at the overall sales
-volume, it provides no insights on how the businesses are performing
-overtime. Therefore, the Monthly Sales chart visualizes how the
-companies are performing at a monthly basis. We see that in general,
-there is a sharp decline in sales from March 2022 to April 2022.
-Businesses continues to dip till June 2022 after which the sales
-fluctuates.</p>
-<h3 id="total-sales-by-venueid">4. Total Sales by VenueId</h3>
-<p><img src="images/paste-8C0C906B.png" width="666" /></p>
-<p>**Please fill in.</p>
-<h3 id="cumulative-sales-by-cumulative-visitors">5. Cumulative Sales By
-Cumulative Visitors</h3>
-<p><img src="images/paste-F012A16D.png" width="675" /></p>
-<p>**Please fill in.</p>
-<h3 id="distribution-of-weekly-sales">6. Distribution of Weekly
+<p>As the businesses in the <em>Business Performance Ranking Chart</em>
+are compared based on the overall sales accumulated, it provides no
+insights on how the businesses are performing overtime. Thus, the data
+table and sparklines chart is displayed to reveal the monthly sales
+trend and provide the lowest and highest revenue generated. We observe
+that in general, there is a sharp decline in sales from March 2022 to
+April 2022. Businesses continue to deteriorate till June 2022 after
+which the sales fluctuates.</p>
+<h3 id="business-performance-by-location">4. Business Performance by
+Location</h3>
+<figure>
+<img src="images/Q1Overview2.png"
+alt="Business Performance by Location" />
+<figcaption aria-hidden="true">Business Performance by
+Location</figcaption>
+</figure>
+<p>The map plot enables users to explore and identify if there are any
+patterns in terms of business performance based on the location of the
+pubs or restaurants.</p>
+<h3 id="distribution-of-weekly-sales">5. Distribution of Weekly
 Sales</h3>
 <figure>
-<img src="C3Q1Chart3.png"
-alt="Average Spending of Customers Chart Mockup" />
-<figcaption aria-hidden="true">Average Spending of Customers Chart
-Mockup</figcaption>
+<img src="images/Q1Deep1.png"
+alt="Average Spending of Customers Chart" />
+<figcaption aria-hidden="true">Average Spending of Customers
+Chart</figcaption>
 </figure>
 <p>To give insights to users on the weekday sales of the selected
 businesses. Are customers spending more on the weekday or the
@@ -2672,13 +2703,14 @@ weekends?</p>
 <h3 id="check-in-by-weekday-and-time-of-day">7. Check-in By Weekday and
 Time of Day</h3>
 <figure>
-<img src="C3Q1Chart4.png" alt="Occupancy Heatmap Chart Mockup" />
-<figcaption aria-hidden="true">Occupancy Heatmap Chart
-Mockup</figcaption>
+<img src="images/Q1Deep2.png" alt="Average Check-in Heatmap Chart" />
+<figcaption aria-hidden="true">Average Check-in Heatmap
+Chart</figcaption>
 </figure>
-<p>The Occupancy Heatmap provides vizualisation on the average occupancy
-rate for the selected company across the weekdays at hourly intervals.
-Users are able to see which are the peak and non-peak periods.</p>
+<p>The <em>Average Check-In by Weekday and Time of the Day</em> Heatmap
+provides vizualisation on the average visitors for the selected company
+across the weekdays at hourly intervals. the chart can be used to
+examine the peak and non-peak periods of the selected businesses.</p>
 <h2 id="the-by-wages-tab">The ‘By Wages’ Tab</h2>
 <p><img src="images/paste-642CAD58.png" /></p>
 <p>This tab has 3 parts.</p>
@@ -2690,15 +2722,24 @@ plots and graphs.</li>
 over time.</li>
 </ol>
 <h3 id="control-1">1. Control</h3>
-<p><img src="images/paste-9CBF4BB5.png" /></p>
+<p><img src="images/Q1.png" /></p>
 <p>** Please fill in</p>
-<h3 id="bar-graph-of-total-wages">2. Bar Graph of Total Wages</h3>
-<p><img src="images/paste-1A88BC86.png" /></p>
-<p>** Please fill in.</p>
+<h3 id="packed-bar-chart-of-average-hourly-wage">2. Packed Bar Chart of
+Average Hourly Wage</h3>
+<figure>
+<img src="images/Q1Wages1.png"
+alt="Average Hourly Wage Packed Bar Chart" />
+<figcaption aria-hidden="true">Average Hourly Wage Packed Bar
+Chart</figcaption>
+</figure>
 <h3 id="line-chart-of-monthly-total-wages">3. Line Chart of Monthly
 Total Wages</h3>
-<p><img src="images/paste-8010F41A.png" /></p>
+<p><img src="images/Q1Wages2.png" /></p>
 <p>** Please fill in.</p>
+<h3 id="line-chart-of-monthly-total-wages-1">4. Line Chart of Monthly
+Total Wages</h3>
+<p><img src="images/Q1Wages3a.png" /></p>
+<p><img src="images/Q1Wages3b.png" /></p>
 <h1 id="employees">Employees</h1>
 <p><em>How does the financial health of the residents change over the
 period covered by the dataset? How do wages compare to the overall cost
@@ -2829,11 +2870,11 @@ height="80" /></p>
 <ol type="1">
 <li><p>User can choose ‘Daily’, ‘Weekly’, ‘Monthly’ or ‘Weekday’ time
 period to view, the default selection is ‘Weekly’.</p></li>
-<li><p>User can select the number of employees employed by each
-employer, the default selection is to show all employees under each
-employer.</p></li>
-<li><p>User can select the number of jobs offered by each
-employer.</p></li>
+<li><p>User can select the range or specific number of employees
+employed by each employer, the default selection is to show all
+employees under each employer.</p></li>
+<li><p>User can select the range or specific number of jobs offered by
+each employer.</p></li>
 <li><p>User can select the hiring rate of each employer. Hiring rate is
 defined as the Number of Employees Employed divide by Number of Jobs
 Offered.</p></li>

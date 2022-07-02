@@ -89,16 +89,14 @@ This tab has 7 parts:
 
 1.  The controller that allows the user to interact with the different
     plots and graphs.
-2.  A bar graph displaying the top overall performing businesses in
-    Engagement.
-3.  A line graph that shows the monthly sales of different venues over
-    time.
+2.  A bar graph displaying the ranking of businesses by total revenue in city 
+    of Engagement.
+3.  A data table and sparklines that shows the monthly sales trend of businesses 
+    over time.
 4.  A map that shows the total sales by venue id.
-5.  A scatter plot demonstrating the cumulative sales by different
-    visitors.
-6.  A violin-and-boxplot that shows the statistical distribution of
-    weekend sales.
-7.  A heatmap that displays the frequency of check-ins by days in the
+5.  A violin-and-boxplot that shows the statistical distribution of
+    daily sales across the weekdays.
+6.  A heatmap that displays the frequency of check-ins by days in the
     week and time of the day.
 
 ### 1. Control
@@ -107,13 +105,14 @@ The 4 features in which users can play around with are as follows.
 
 | Feature                 | Function                                                                                                                                                                    |
 |-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Category (Radio button) | User has the option to view either restaurants or pubs.                                                                                                                     |
-| Scenario (Dropdown)     | User can select the type of scenario they would like to visualize. Select 'Top 5' or 'Top 10' to view the top 5 or top 10 businesses to see which companies are prospering. |
-| Date (Range Slider)     | User has the ability to scope to the target range date.                                                                                                                     |
+| Category (Radio button) | User has the option to view either restaurants or pubs.                                                                                                                     
+| Date (Range Slider)     | User has the ability to scope to the target range date.                |
+
+|
 
 ### 2. Top Overall Performing Business
 
-![Total Sales Chart Mockup](C3Q1Chart1.png)
+![Business Performance Ranking](images/Q1Overview1.png)
 
 The main objective of the first question in challenge 3 is to identify
 which businesses are prospering or struggling. As there is no sales and
@@ -125,43 +124,40 @@ that have lower sales. As the sales volume fluctuates sporadically
 day-to-day, to determine the top 5 companies, the total overall sales
 are calculated and the 5 companies with the most sales are selected.
 
-### 3. Monthly Sales
+### 3. Monthly Sales Trend and Distribution
 
-![Monthly Sales Mockup](C3Q1Chart2.png)
+![Monthly Sales Trend](images/Q1Overview3.png)
 
-As the *Total Sales Chart* only compares at the overall sales volume, it
-provides no insights on how the businesses are performing overtime.
-Therefore, the Monthly Sales chart visualizes how the companies are
-performing at a monthly basis. We see that in general, there is a sharp
-decline in sales from March 2022 to April 2022. Businesses continues to
-dip till June 2022 after which the sales fluctuates.
+As the businesses in the *Business Performance Ranking Chart* are compared based 
+on the overall sales accumulated, it provides no insights on how the 
+businesses are performing overtime. Thus, the data table and sparklines chart 
+is displayed to reveal the monthly sales trend and provide the lowest and 
+highest revenue generated. We observe that in general, there is a sharp decline 
+in sales from March 2022 to April 2022. Businesses continue to deteriorate till 
+June 2022 after which the sales fluctuates.
 
-### 4. Total Sales by VenueId
+### 4. Business Performance by Location
 
-![](images/paste-8C0C906B.png){width="666"}
+![Business Performance by Location](images/Q1Overview2.png)
 
-\*\*Please fill in.
+The map plot enables users to explore and identify if there are any patterns in 
+terms of business performance based on the location of the pubs or restaurants.
 
-### 5. Cumulative Sales By Cumulative Visitors
+### 5. Distribution of Weekly Sales
 
-![](images/paste-F012A16D.png){width="675"}
-
-\*\*Please fill in.
-
-### 6. Distribution of Weekly Sales
-
-![Average Spending of Customers Chart Mockup](C3Q1Chart3.png)
+![Average Spending of Customers Chart](images/Q1Deep1.png)
 
 To give insights to users on the weekday sales of the selected
 businesses. Are customers spending more on the weekday or the weekends?
 
 ### 7. Check-in By Weekday and Time of Day
 
-![Occupancy Heatmap Chart Mockup](C3Q1Chart4.png)
+![Average Check-in Heatmap Chart](images/Q1Deep2.png)
 
-The Occupancy Heatmap provides vizualisation on the average occupancy
-rate for the selected company across the weekdays at hourly intervals.
-Users are able to see which are the peak and non-peak periods.
+The *Average Check-In by Weekday and Time of the Day* Heatmap provides 
+vizualisation on the average visitors for the selected company across the 
+weekdays at hourly intervals. the chart can be used to examine the peak and 
+non-peak periods of the selected businesses.
 
 ## The 'By Wages' Tab
 
@@ -177,21 +173,27 @@ This tab has 3 parts.
 
 ### 1. Control
 
-![](images/paste-9CBF4BB5.png)
+![](images/Q1.png)
 
 \*\* Please fill in
 
-### 2. Bar Graph of Total Wages
+### 2. Packed Bar Chart of Average Hourly Wage
 
-![](images/paste-1A88BC86.png)
+![Average Hourly Wage Packed Bar Chart](images/Q1Wages1.png)
 
-\*\* Please fill in.
+
 
 ### 3. Line Chart of Monthly Total Wages
 
-![](images/paste-8010F41A.png)
+![](images/Q1Wages2.png)
 
 \*\* Please fill in.
+
+### 4. Line Chart of Monthly Total Wages
+
+![](images/Q1Wages3a.png)
+
+![](images/Q1Wages3b.png)
 
 # Employees
 
