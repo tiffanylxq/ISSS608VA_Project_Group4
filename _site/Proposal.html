@@ -2542,10 +2542,10 @@ Barplots of Traits Representative of Participant</a></li>
 <h1 id="challenge-chosen">Challenge Chosen</h1>
 <p>We chose Challenge 3 (Economics), and its accompanying
 sub-questions.</p>
-<table style="width:97%;">
+<table style="width:94%;">
 <colgroup>
-<col style="width: 31%" />
-<col style="width: 65%" />
+<col style="width: 30%" />
+<col style="width: 63%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -2735,8 +2735,8 @@ Chart</figcaption>
 provides visualization on the average visitors for the selected company
 across the weekdays at hourly intervals. The chart can be used to
 examine the peak and non-peak periods of the selected businesses.User
-can also hover on the heatmap to view the average number of vistors at a
-selected hour.</p>
+can also hover on the heatmap to view the average number of visitors at
+a selected hour.</p>
 <h2 id="the-by-wages-tab">The ‘By Wages’ Tab</h2>
 <figure>
 <img src="images/Q1WagesO.png" alt="“By Wages’ Tab" />
@@ -2854,18 +2854,32 @@ Heatmap</em> tab has 2 parts.</p>
 <ol type="1">
 <li>The controller that allows the user to interact with the different
 plots and graphs.</li>
-<li>A heatmap representing the balance of individuals in
-Engagement.</li>
+<li>2 heatmaps representing the balance of individuals in Engagement - a
+Ranking Heatmap and a Clustering Heatmap.</li>
 </ol>
 <h3 id="control-4">1 - Control</h3>
-<p><img src="images/paste-E2B7CCB9.png" width="678" /></p>
-<p>The controller allows us to choose the date range and the time
-division to evaluate. In order to seek a “pattern”, we let the user rank
-the participants based on a certain factor. The user can do this
-ascendingly or descendingly. Lastly, we allow the user to explore
-different ranges of people, from the top 50 all the way to the 237th
-member ranked.</p>
+<p>There are 3 parts to the controller.</p>
+<p><img src="images/paste-71C4FD98.png" /></p>
+<p>The first part allows us to choose the date range and the time
+division to evaluate. We also allow the user to explore different ranges
+of people, from the top 50 all the way to the 237th member.</p>
+<p><img src="images/paste-FDDC6C22.png" /></p>
+<p>The second part controls for the Ranking Heatmap. In order to seek a
+“pattern”, we let the user rank the participants based on a certain
+factor. The user can do this ascendingly or descendingly.</p>
+<p><img src="images/paste-A6D19567.png" /></p>
+<p>The last part controls for the Clustering Heatmap.</p>
+<p>Firstly, we allow the user to normalize the data since this can
+improve the accuracy and visibility of our data set.</p>
+<p>In order not to clutter up the heatmap, we let the user remove and
+add the x-axis and y-axis labels.</p>
+<p>The user can choose the distance method and clustering method, and
+can also choose to cluster by either the rows or the columns of the
+heatmap, or both.</p>
+<p>Lastly, we allow the user to sort the dendogram in order to get a
+better understanding of the clusters that happen in the data set.</p>
 <h3 id="heatmap">2 - Heatmap</h3>
+<p><strong>Ranking Heatmap</strong></p>
 <p><img src="images/paste-ADF68383.png" /></p>
 <p>Each row in the heat map represents a participant. Each column in the
 heat map represents a time period. To adjust the number of participants
@@ -2875,6 +2889,15 @@ Controller. </p>
 the amount of balance or debt. For example, a participant with more debt
 in a certain time period will have a denser red-coloured grid than a
 user with less debt.</p>
+<p><strong>Clustering Heatmap</strong></p>
+<p><img src="images/paste-C09528DB.png" /></p>
+<p>We use this in the case where the previous heatmap does not allow us
+to determine a good enough pattern.</p>
+<p>Each row in the heat map represents a participant. Each column in the
+heat map represents a time period. Using the dendograms, the user can
+find interesting clusters by hovering over the zone, and find out more
+about them by inputting their values in the <em>Participant
+Breakdown</em> tab.</p>
 <h2 id="the-employee-breakdown-tab">The ‘Employee Breakdown’ Tab</h2>
 <p><img src="images/paste-DBF91829.png" /></p>
 <p>The <em>Employee Breakdown</em> tab has 2 large parts.</p>

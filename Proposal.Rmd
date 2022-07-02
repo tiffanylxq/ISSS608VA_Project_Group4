@@ -23,39 +23,40 @@ knitr::opts_chunk$set(echo = FALSE,fig.align="center")
 
 We chose Challenge 3 (Economics), and its accompanying sub-questions.
 
-+----------------------+----------------------------------------------+
-| Overarching Question |                                              |
-+======================+==============================================+
-| \                    | Over time, are businesses growing or         |
-|                      | shrinking? How are people changing jobs? Are |
-|                      | standards of living improving or declining   |
-|                      | over time?                                   |
-+----------------------+----------------------------------------------+
-| **Sub -Questions**   | \                                            |
-+----------------------+----------------------------------------------+
-| 1                    | Over the period covered by the dataset,      |
-|                      | which businesses appear to be more           |
-|                      | prosperous? Which appear to be struggling?   |
-|                      | Describe your rationale for your answers.    |
-|                      | Limit your response to 10 images and 500     |
-|                      | words.                                       |
-+----------------------+----------------------------------------------+
-| 2                    | How does the financial health of the         |
-|                      | residents change over the period covered by  |
-|                      | the dataset? How do wages compare to the     |
-|                      | overall cost of living in Engagement? Are    |
-|                      | there groups that appear to exhibit similar  |
-|                      | patterns? Describe your rationale for your   |
-|                      | answers. Limit your response to 10 images    |
-|                      | and 500 words.                               |
-+----------------------+----------------------------------------------+
-| 3                    | Describe the health of the various employers |
-|                      | within the city limits. What employment      |
-|                      | patterns do you observe? Do you notice any   |
-|                      | areas of particularly high or low turnover?  |
-|                      | Limit your response to 10 images and 500     |
-|                      | words.                                       |
-+----------------------+----------------------------------------------+
++---------------------+---------------------------------------------+
+| Overarching         |                                             |
+| Question            |                                             |
++=====================+=============================================+
+| \                   | Over time, are businesses growing or        |
+|                     | shrinking? How are people changing jobs?    |
+|                     | Are standards of living improving or        |
+|                     | declining over time?                        |
++---------------------+---------------------------------------------+
+| **Sub -Questions**  | \                                           |
++---------------------+---------------------------------------------+
+| 1                   | Over the period covered by the dataset,     |
+|                     | which businesses appear to be more          |
+|                     | prosperous? Which appear to be struggling?  |
+|                     | Describe your rationale for your answers.   |
+|                     | Limit your response to 10 images and 500    |
+|                     | words.                                      |
++---------------------+---------------------------------------------+
+| 2                   | How does the financial health of the        |
+|                     | residents change over the period covered by |
+|                     | the dataset? How do wages compare to the    |
+|                     | overall cost of living in Engagement? Are   |
+|                     | there groups that appear to exhibit similar |
+|                     | patterns? Describe your rationale for your  |
+|                     | answers. Limit your response to 10 images   |
+|                     | and 500 words.                              |
++---------------------+---------------------------------------------+
+| 3                   | Describe the health of the various          |
+|                     | employers within the city limits. What      |
+|                     | employment patterns do you observe? Do you  |
+|                     | notice any areas of particularly high or    |
+|                     | low turnover? Limit your response to 10     |
+|                     | images and 500 words.                       |
++---------------------+---------------------------------------------+
 
 # Visualisation Solution
 
@@ -68,10 +69,16 @@ user how to use our app, and the rest for each question.
 As seen above, all 4 prongs will be parked under a unifying dashboard,
 with each prong being accessible by a tab. The questions will be
 arranged sequentially, starting from the user menu (or introduction,
-Sub-Question 1 (ie *Business Performance*), Sub-Question 2 (ie *Employee*) and Sub-Question 3 (ie *Employer*).
+Sub-Question 1 (ie *Business Performance*), Sub-Question 2 (ie
+*Employee*) and Sub-Question 3 (ie *Employer*).
 
-We arrange our tabs in this manner to guide user into a top-down understanding of the economy in Engagement. The user first learns about the business ecosystem in Engagement using the *Business Performance* tab. Using that information, user will be able to make informed exploratory decisions to understand the situation from the employee, through the *Income and Expense* tab, and employer's,
-through the *Employer* tab, perspectives.
+We arrange our tabs in this manner to guide user into a top-down
+understanding of the economy in Engagement. The user first learns about
+the business ecosystem in Engagement using the *Business Performance*
+tab. Using that information, user will be able to make informed
+exploratory decisions to understand the situation from the employee,
+through the *Income and Expense* tab, and employer's, through the
+*Employer* tab, perspectives.
 
 # Business Performance
 
@@ -84,6 +91,7 @@ for your answers.*
 We use 2 sub-tabs to answer this - *By Revenue* and *By Wages*.
 
 ## The 'By Revenue (Overview)' Tab
+
 
 !['By Revenue (Overview)' Tab](images/Q1RevenueO.png)
 
@@ -139,6 +147,7 @@ terms of business performance based on the location of the pubs or restaurants.
 Users have the ability to zoom in and out of the plot as well as hover onto the
 circles to identify the 'venue ID' and the total sales collected.
 
+
 ## The 'By Revenue (Deep Dive)' Tab
 
 !['By Revenue (Deep Dive)' Tab](images/Q1RevenueD.png)
@@ -193,7 +202,7 @@ The *Average Check-In by Weekday and Time of the Day* heatmap provides
 visualization on the average visitors for the selected company across the 
 weekdays at hourly intervals. The chart can be used to examine the peak and 
 non-peak periods of the selected businesses.User can also hover on the heatmap 
-to view the average number of vistors at a selected hour.
+to view the average number of visitors at a selected hour.
 
 ## The 'By Wages' Tab
 
@@ -316,19 +325,45 @@ parts.
 
 1.  The controller that allows the user to interact with the different
     plots and graphs.
-2.  A heatmap representing the balance of individuals in Engagement.
+2.  2 heatmaps representing the balance of individuals in Engagement - a
+    Ranking Heatmap and a Clustering Heatmap.
 
 ### 1 - Control
 
-![](images/paste-E2B7CCB9.png){width="678"}
+There are 3 parts to the controller.
 
-The controller allows us to choose the date range and the time division
-to evaluate. In order to seek a "pattern", we let the user rank the
-participants based on a certain factor. The user can do this ascendingly
-or descendingly. Lastly, we allow the user to explore different ranges
-of people, from the top 50 all the way to the 237th member ranked.
+![](images/paste-71C4FD98.png)
+
+The first part allows us to choose the date range and the time division
+to evaluate. We also allow the user to explore different ranges of
+people, from the top 50 all the way to the 237th member.
+
+![](images/paste-FDDC6C22.png)
+
+The second part controls for the Ranking Heatmap. In order to seek a
+"pattern", we let the user rank the participants based on a certain
+factor. The user can do this ascendingly or descendingly.
+
+![](images/paste-A6D19567.png)
+
+The last part controls for the Clustering Heatmap.
+
+Firstly, we allow the user to normalize the data since this can improve
+the accuracy and visibility of our data set.
+
+In order not to clutter up the heatmap, we let the user remove and add
+the x-axis and y-axis labels.
+
+The user can choose the distance method and clustering method, and can
+also choose to cluster by either the rows or the columns of the heatmap,
+or both.
+
+Lastly, we allow the user to sort the dendogram in order to get a better
+understanding of the clusters that happen in the data set.
 
 ### 2 - Heatmap
+
+**Ranking Heatmap**
 
 ![](images/paste-ADF68383.png)
 
@@ -341,6 +376,18 @@ More importantly, the magnitude of the colour is representative of the
 amount of balance or debt. For example, a participant with more debt in
 a certain time period will have a denser red-coloured grid than a user
 with less debt.
+
+**Clustering Heatmap**
+
+![](images/paste-C09528DB.png)
+
+We use this in the case where the previous heatmap does not allow us to
+determine a good enough pattern.
+
+Each row in the heat map represents a participant. Each column in the
+heat map represents a time period. Using the dendograms, the user can
+find interesting clusters by hovering over the zone, and find out more
+about them by inputting their values in the *Participant Breakdown* tab.
 
 ## The 'Employee Breakdown' Tab
 
@@ -387,89 +434,128 @@ We use 2 sub-tabs to answer this - *Map View* and *Turnover Rate*.
 
 This tab has 4 parts.
 
-1.  The controller with 11 parameters that allows the user to interact with the map, plot and data table.
-2.  A map that shows the location and number of employees employed by the employer.
-3.  A plot that shows distribution of employees employed by each employer with a selected factor.
-4.  A datatable with information on each employer such as the number of employees and jobs they have, the pay ranges and hiring rate.
+1.  The controller with 11 parameters that allows the user to interact
+    with the map, plot and data table.
+2.  A map that shows the location and number of employees employed by
+    the employer.
+3.  A plot that shows distribution of employees employed by each
+    employer with a selected factor.
+4.  A datatable with information on each employer such as the number of
+    employees and jobs they have, the pay ranges and hiring rate.
 
 ### 1 - Control
 
-![](images/mapcontrol72.png)
-The entire tab will be updated accordingly to the parameters chosen. If there is no data from the selected parameters, an error message will be reflected: 
+![](images/mapcontrol72.png) The entire tab will be updated accordingly
+to the parameters chosen. If there is no data from the selected
+parameters, an error message will be reflected:
 
-![](images/Q3error72.png){height="80" width=40%}
+![](images/Q3error72.png){height="80" width="40%"}
 
-1. User can choose 'Daily', 'Weekly', 'Monthly' or 'Weekday' time period to view, the default selection is 'Weekly'.
+1.  User can choose 'Daily', 'Weekly', 'Monthly' or 'Weekday' time
+    period to view, the default selection is 'Weekly'.
 
-2. User can select the range or specific number of employees employed by each employer, the default selection is to show all employees under each employer. 
+2.  User can select the range or specific number of employees employed
+    by each employer, the default selection is to show all employees
+    under each employer.
 
-3. User can select the range or specific number of jobs offered by each employer.
+3.  User can select the range or specific number of jobs offered by each
+    employer.
 
-4. User can select the hiring rate of each employer. Hiring rate is defined as the Number of Employees Employed divide by Number of Jobs Offered. 
+4.  User can select the hiring rate of each employer. Hiring rate is
+    defined as the Number of Employees Employed divide by Number of Jobs
+    Offered.
 
-5. This shows the minimum, maximum, average and median hourly rate pay across all jobs under each employer. User can choose the computation; the default selection is average pay. 
+5.  This shows the minimum, maximum, average and median hourly rate pay
+    across all jobs under each employer. User can choose the
+    computation; the default selection is average pay.
 
-6. User can select the pay group category, the default selection is to show all groups. 
+6.  User can select the pay group category, the default selection is to
+    show all groups.
 
-7. This control the y variable of the statistical plot which is defaulted at the "Number of Jobs offered by each employer", the x variable is fixed at the number of employees employed by each employer. 
+7.  This control the y variable of the statistical plot which is
+    defaulted at the "Number of Jobs offered by each employer", the x
+    variable is fixed at the number of employees employed by each
+    employer.
 
-8. User can specify the statistical test that he/she wishes to see. The default selection is parametic test.
+8.  User can specify the statistical test that he/she wishes to see. The
+    default selection is parametic test.
 
-9. User can specify the type of plot he/she wishes to see for the statistical plot.The default selection is box-violin plot. 
+9.  User can specify the type of plot he/she wishes to see for the
+    statistical plot.The default selection is box-violin plot.
 
-10. User can filter the entire tab based on 'EmployerId'. To see more than one employer, user is to add a comma after each ID eg. 379,862,884. 
+10. User can filter the entire tab based on 'EmployerId'. To see more
+    than one employer, user is to add a comma after each ID eg.
+    379,862,884.
 
-11. User can key in any text which will be auto updated as title above the map. 
+11. User can key in any text which will be auto updated as title above
+    the map.
 
 ### 2 - Map
 
-A map of the city is displayed on the left, with a legend showing the number of employers in each
-company. User can hover to the bubbles to see the respective employerId. This way, the user might be able to look beyond the company and see how different employers interact.
+A map of the city is displayed on the left, with a legend showing the
+number of employers in each company. User can hover to the bubbles to
+see the respective employerId. This way, the user might be able to look
+beyond the company and see how different employers interact.
 
-On the right is the statistical plot that shows the distribution of number of the employees employed. 
+On the right is the statistical plot that shows the distribution of
+number of the employees employed.
 
 ![](images/Q3mapplot72.png)
 
 ### 3 - Data table
 
-User can filter the table via the input field at the bottom of each column. This serves to provide more information to help the user find patterns.
+User can filter the table via the input field at the bottom of each
+column. This serves to provide more information to help the user find
+patterns.
 
 ![](images/Q3datatable72.png)
 
-## The 'Turnover Rate' tab  
+## The 'Turnover Rate' tab
 
 This tab has 3 parts.
 
-1.  The controller with 7 parameters that allow user to filter the plots.
-2.  The facet plots that classified the employees into different educational level and show whether they have kids.
-3.  The statistical plot that shows distribution of selected variables. 
- 
-The datasets used for this tab are already filtered to only 1) employers with the number of different employees and 2) employees that has more than one employer during the 15 month data collection period. 
+1.  The controller with 7 parameters that allow user to filter the
+    plots.
+2.  The facet plots that classified the employees into different
+    educational level and show whether they have kids.
+3.  The statistical plot that shows distribution of selected variables.
 
-!['Overall View of 'Turnover Rate' Tab'](images/Q3turnover72.png) 
+The datasets used for this tab are already filtered to only 1) employers
+with the number of different employees and 2) employees that has more
+than one employer during the 15 month data collection period.
+
+!['Overall View of 'Turnover Rate' Tab'](images/Q3turnover72.png)
 
 ### 1 - Control
 
-![](images/turncontrol72.png){height="400" width=40%}
+![](images/turncontrol72.png){height="400" width="40%"}
 
-1. User can choose the 'Date', 'Week' or 'Month' or 'Weekday' to see the time period where there are changes to the employees/employers. 
+1.  User can choose the 'Date', 'Week' or 'Month' or 'Weekday' to see
+    the time period where there are changes to the employees/employers.
 
-2. User can further refine to specific time period eg. specific date, week number or month to see the change to the employees/employers. 
+2.  User can further refine to specific time period eg. specific date,
+    week number or month to see the change to the employees/employers.
 
-3.  User can choose the x and y variable of the statistical plot. The default selection is "Educational Level" as x variable and "Joviality" as y variable. 
+3.  User can choose the x and y variable of the statistical plot. The
+    default selection is "Educational Level" as x variable and
+    "Joviality" as y variable.
 
-8. User can specify the statistical test that he/she wishes to see. The default selection is parametic test.
+4.  User can specify the statistical test that he/she wishes to see. The
+    default selection is parametic test.
 
-5. User can specify the type of plot he/she wishes to see for the statistical plot.The default selection is box-violin plot. 
+5.  User can specify the type of plot he/she wishes to see for the
+    statistical plot.The default selection is box-violin plot.
 
-6. User can key in any text and click the "Update Title" button to customize the page title.  
+6.  User can key in any text and click the "Update Title" button to
+    customize the page title.
 
 ### 2 - Plots
 
-The plots displayed on the left shows employers with the number of different employees during the selected time period. 
+The plots displayed on the left shows employers with the number of
+different employees during the selected time period.
 
- ![](images/Q3turnleft72.png)
-The plots displayed on the right shows employees that has more than one employer during the selected time period. 
+![](images/Q3turnleft72.png) The plots displayed on the right shows
+employees that has more than one employer during the selected time
+period.
 
 ![](images/Q3turnright72.png)
- 
