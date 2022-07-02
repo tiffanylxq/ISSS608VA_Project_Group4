@@ -25,6 +25,11 @@ Count_Checkin_Weekly$Num_of_Employees <- as.numeric(Count_Checkin_Weekly$Num_of_
 Count_Checkin_Weekday$Num_of_Employees <- as.numeric(Count_Checkin_Weekday$Num_of_Employees)
 Count_Checkin_Monthly$Num_of_Employees <- as.numeric(Count_Checkin_Monthly$Num_of_Employees)
 
+Count_Checkin_Daily$Pay_Group <-factor(Count_Checkin_Daily$Pay_Group, levels = c("<=$15 (Low)","$16-35(Mid)", ">$36(High)"))
+Count_Checkin_Weekly$Pay_Group <-factor(Count_Checkin_Weekly$Pay_Group, levels = c("<=$15 (Low)","$16-35(Mid)", ">$36(High)"))
+Count_Checkin_Weekday$Pay_Group <-factor(Count_Checkin_Weekday$Pay_Group, levels = c("<=$15 (Low)","$16-35(Mid)", ">$36(High)"))
+Count_Checkin_Monthly$Pay_Group <-factor(Count_Checkin_Monthly$Pay_Group, levels = c("<=$15 (Low)","$16-35(Mid)", ">$36(High)"))
+
 ui <- navbarPage("Hello World",
   theme = bs_theme(bootswatch = "united", version = 3), 
   tabPanel("Home", "home page content"),
@@ -35,20 +40,15 @@ ui <- navbarPage("Hello World",
     navlistPanel( 
         widths = c(2,10),
     tabPanel("Map View", fluidRow(
-      tags$style(make_css(list('.box', 
-                               c('font-size', 'font-family', 'color'), 
-                               c('10px', 'arial', 'Orange')))),
       titlePanel("Interactive City Map View"),
-      splitLayout(
         selectInput("period", label = "Period", choices = c("Daily", "Weekly", "Weekday", "Monthly")),
-        sliderInput(inputId = "employees",
-                    label = "Number of Employees",
-                    min = 1,
-                    max = 26,
-                    value = c(1))),
-        verbatimTextOutput("selected"),
+        selectInput("employee", label = "Num of Employees", choices = c("--")),
+        selectInput("job", label = "Num of Jobs", choices = c("--")),
+        selectInput("hired", label = "Hired Rate", choices = c("--")),
+        checkboxGroupInput("pay", label = "Pay Group", choices = c("")),
+        textInput("eid", label = "Employer Id", value = ""),  
       tmapOutput("plot1"),
-      DT::dataTableOutput(outputId = "aTable")
+        DT::dataTableOutput("aTable")
     )),
     tabPanel("Turnover Rate", fluidRow(
       splitLayout(
@@ -57,10 +57,10 @@ ui <- navbarPage("Hello World",
       ), 
       splitLayout( 
         plotOutput("ChangeStaff"),
-        plotlyOutput("ChangeStaffJ")
+        plotOutput("ChangeJob")
       ), 
       splitLayout( 
-        plotOutput("ChangeJob"),
+        plotlyOutput("ChangeStaffJ"),
         plotlyOutput("ChangeJobJ")
       )
     )),
@@ -85,29 +85,52 @@ server <- function (input, output, session) {
        Count_Checkin_Weekday
      } else {
        Count_Checkin_Monthly
-     } %>%
-      filter(EMPLOYEES == input$employees) 
+     } #%>%
+      #filter(EMPLOYEES == input$employees) 
   })
   
-  output$selected <- renderPrint({
-    summary(selected_period()) 
+  observeEvent(selected_period(), {
+    updateSelectInput(inputId = "employee", choices = c("--",unique(selected_period()$Num_of_Employees)))
+    updateSelectInput(inputId = "job", choices = c("--",unique(selected_period()$Num_of_Jobs)))
+    updateSelectInput(inputId = "hired", choices = c("--",unique(selected_period()$HiredRate)))
+    pay <- unique(selected_period()$Pay_Group)
+    updateCheckboxGroupInput(inputId = "pay", choices = pay, selected = pay)
+    updateTextInput(inputId = "eid", value = "")
   })
   
+ 
+  filtered_data <- reactive({
+    temp <- selected_period()
+    if (input$employee != "--") {
+      temp <- filter(temp, Num_of_Employees == input$employee)
+    }
+    if (input$job != "--") {
+      temp <- filter(temp, Num_of_Jobs == input$job)
+    }
+    if (input$hired != "--") {
+      temp <- filter(temp, HiredRate == input$hired)
+    }
+    temp <- filter(temp, Pay_Group == input$pay)
+    if (input$eid != "") {
+      temp <- filter(temp, employerId == input$eid)
+    }
+    temp
+  })
+
   output$plot1 <- renderTmap({
-    tmap_mode("view")
-    tm_shape(buildings) +
-    tm_polygons(col = "grey60", size = 1, border.col = "white",border.lwd = 1) +
-    tm_shape(shp = selected_period()) +
-    tm_symbols(size = 0.5,col = "EMPLOYEES", style = "cont",border.col = "black",
-               border.lwd = 0.5, title.col = "Number of\nEmployees")
+      tm_shape(buildings)+
+        tm_polygons(col = "grey60",
+                    size = 1,
+                    border.col = "white",
+                    border.lwd = 1) +
+        tm_shape(shp = filtered_data()) +
+        tm_bubbles(size = 0.5, col = "Num_of_Employees", title.col = "Number of\nEmployees")
   })
   
   output$aTable <- DT::renderDataTable({
-    if(input$selected){
-      DT::datatable(data = selected_period() ,
+      DT::datatable(data = filtered_data() ,
                     options= list(pageLength = 10),
                     rownames = FALSE)
-    }
   }) 
   #############   Employer - Turnover Rate   #########################
   selected_filter <- reactive({
@@ -186,12 +209,8 @@ server <- function (input, output, session) {
     
   })
   
-  ###
-  observeEvent(selected_filter(), {
-    updateSelectInput(inputId = "change_value", choices = selected_filter()) 
-  })
   
-  selected_value <- reactive({
+  selected_job <- reactive({
     if (input$change_filter == "Date") {
       filter(Change_Job, Date == input$change_value)
     } else if (input$change_filter == "Week") {
@@ -201,12 +220,11 @@ server <- function (input, output, session) {
     } else {
       Change_Job
     } 
-    
   })
   
-  output$Change_Job <- renderPlot({
+  output$ChangeJob <- renderPlot({
     
-    ggplot(selected_value(), aes(x= as.factor(Num_of_Employers), fill = haveKids)) +
+    ggplot(selected_job(), aes(x= as.factor(Num_of_Employers), fill = haveKids)) +
       geom_bar() +
       facet_wrap(~educationLevel)+
       ggtitle('Employers with Turnover Staff') +
@@ -217,8 +235,8 @@ server <- function (input, output, session) {
     
   })
   
-  output$Change_JobJ <- renderPlotly({
-    p<- ggplot(selected_value(), aes(x = educationLevel, y = Num_of_Employers, fill=joviality)) + 
+  output$ChangeJobJ <- renderPlotly({
+    p<- ggplot(selected_job(), aes(x = educationLevel, y = Num_of_Employers, fill=joviality)) + 
       ggdist::stat_halfeye(
         adjust = .5, 
         width = .6, 
@@ -235,9 +253,9 @@ server <- function (input, output, session) {
         position = position_jitter(
           seed = 1, width = .1
         ),
-        aes(text = paste('Employee: ', selected_value()$participantId,
-                         'Employer: ', selected_value()$employerId,
-                         'Date of Job Change: ', selected_value()$Date))
+        aes(text = paste('Employee: ', selected_job()$participantId,
+                         'Employer: ', selected_job()$employerId,
+                         'Date of Job Change: ', selected_job()$Date))
       ) + 
       coord_cartesian(xlim = c(1.2, NA), clip = "off")+
       coord_flip() +

@@ -24,69 +24,7 @@ Google fonts api stuff
 
 
 
-<style type="text/css">pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */</style>
+
 
 <style>
 @page {
@@ -112,14 +50,14 @@ padding: 0cm;
 width: 23.386in;
 height: calc(33.11in * 0.15);
 overflow: hidden;
-background-color: #0b4545;
+background-color: maroon;
 border: 0 solid #0b4545;
 }
 .logo_left {
 float: left;
 width: 10%;
 height: 100%;
-background-color: #0b4545;
+background-color: maroon;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -128,7 +66,7 @@ justify-content: center;
 float: right;
 width: 10%;
 height: 100%;
-background-color: #0b4545;
+background-color: maroon;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -149,24 +87,24 @@ font-family: Palatino;
 }
 /* unvisited link */
 a:link {
-color: #cc0000;
+color: blue;
 }
 .mybreak {
   break-before: column;
 }
 /* visited link */
 a:visited {
-color: #cc0000;
+color: blue;
 }
 
 /* mouse over link */
 a:hover {
-color: #cc0000;
+color: blue;
 }
 
 /* selected link */
 a:active {
-color: #cc0000;
+color: blue;
 }
 .poster_body {
 -webkit-column-count: 3; /* Chrome, Safari, Opera */
@@ -181,9 +119,9 @@ column-rule-width: 1mm;
 -webkit-column-rule-style: dashed;
 -moz-column-rule-style: dashed;
 column-rule-style: dashed;
--webkit-column-rule-color: #0b4545;
--moz-column-rule-color: #0b4545;
-column-rule-color: #0b4545;
+-webkit-column-rule-color: maroon;
+-moz-column-rule-color: maroon;
+column-rule-color: maroon;
 column-gap: 1em;
 padding-left: 0.5em;
 padding-right: 0.5em;
@@ -192,7 +130,7 @@ color: #000000
 background-color: #ffffff;
 }
 .poster_title h1 {
-font-size: 35pt;
+font-size: 45pt;
 margin: 0;
 border: 0;
 font-weight: normal;
@@ -206,7 +144,7 @@ background-color: #ffffff;
 }
 .poster_title h3 {
 color: #ffffff;
-font-size: 30pt;
+font-size: 35pt;
 margin: 0;
 border: 0;
 font-weight: normal;
@@ -232,9 +170,9 @@ margin-bottom: 0;
 .poster_body h1 {
 text-align: center;
 color: #FFFFFF;
-font-size: 18pt;
-border: 2mm solid #0b4545;
-background-color: #0b4545;
+font-size: 20pt;
+border: 2mm solid maroon;
+background-color: maroon;
 border-radius: 4mm 0mm;
 margin-top: 2mm;
 margin-bottom: 2mm;
@@ -242,7 +180,7 @@ font-weight: normal;
 }
 .poster_body h2 {
 color: #000000;
-font-size: 18pt;
+font-size: 20pt;
 padding-left: 4mm;
 font-weight: normal;
 }
@@ -287,7 +225,7 @@ code {
 font-size: 1em;
 font-family: monospace;
 background-color: #00808024;
-color: #0b4545;
+color: maroon;
 padding: 1.2mm;
 border-radius: 2mm;
 }
@@ -369,15 +307,16 @@ font-size: 20pt;
 <h1>Methodology</h1>
 <p>The application uses various packages such as tidyverse, plotly, ggplot2, lubridate, tmap, sf packages to conduct exploratory data analysis.</p>
 </div>
-<div id="findings" class="section level1">
-<h1>Findings</h1>
-<div id="q1" class="section level2">
-<h2>Q1</h2>
+<div id="features" class="section level1">
+<h1>Features</h1>
+<p>The app consist of three tabs for users to explore the economy of Engagement City; (1) Businesses, (2) Residents and (3) Employers.</p>
+<div id="tab-1---businesses" class="section level2">
+<h2>Tab 1 - ‘Businesses’</h2>
 <p>Aliquam sed faucibus risus, quis efficitur erat. Vestibulum semper mauris quis tempus eleifend. Aliquam sagittis dictum ipsum, quis viverra ligula eleifend ut. Curabitur sagittis vitae arcu eget faucibus. In non elementum felis. Duis et aliquam nunc. Nunc pulvinar sapien nunc, vel pretium nisi efficitur in. Fusce fringilla maximus leo et maximus. Fusce at ligula laoreet, iaculis mi at, auctor odio. Praesent sed elementum justo. Aenean consectetur risus rhoncus tincidunt efficitur. Praesent dictum mauris at diam maximus maximus <span class="citation">(Thorne 2019)</span>.</p>
 </div>
-<div id="q2" class="section level2">
-<h2>Q2</h2>
-<p>Or with figures: Figure <a href="#fig:standard-plot">1</a>, or Figure <a href="#fig:morefigs">2</a>.</p>
+<div id="tab-2---residents" class="section level2">
+<h2>Tab 2 - ‘Residents’</h2>
+<p>Or with figures: Figure <a href="#fig:standard-plot">1</a>, or Figure <a href="#fig:morefigs"><strong>??</strong></a>.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:standard-plot"></span>
 <img src="Poster_files/figure-html/standard-plot-1.png" alt="Great figure!" width="80%" />
 <p class="caption">
@@ -385,21 +324,30 @@ Figure 1: Great figure!
 </p>
 </div>
 </div>
-<div id="q3" class="section level2">
-<h2>Q3</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> iris</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> data<span class="sc">$</span>Sepal.Length, </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">y =</span> data<span class="sc">$</span>Sepal.Width, </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> data<span class="sc">$</span>Species,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Sepal Length (cm)&quot;</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Sepal Width (cm)&quot;</span>)</span></code></pre></div>
-<div class="figure"><span style="display:block;" id="fig:morefigs"></span>
-<img src="Poster_files/figure-html/morefigs-1.png" alt="Amazing, right?!" width="80%" />
-<p class="caption">
-Figure 2: Amazing, right?!
-</p>
+<div id="tab-3---employers" class="section level2">
+<h2>Tab 3 - ‘Employers’</h2>
+<p>Upon clicking on the ‘Employers’ tab, the user can further select 3 components to explore. They are (1) Employment Numbers (2) Hiring Rate and (3) Turnover Rate</p>
+<p><strong>(1) Overview of Employers’ Health</strong> From “Employment Numbers” tab, users can study the employment numbers throughout different time period of all the employers in the city via the reactive map and datatable. The map shows the locations, employer ID, average pay given and number of employees they employed.</p>
+<center>
+<div class="figure">
+<img src="map.png" style="width:50.0%" alt="" />
+<p class="caption">Employer-Employee Tab Visualisation Chart</p>
 </div>
+<center>
+<p><strong>(2) Hiring Rate</strong> From trelliscope, users can filter through the different variables within the chart to explore how the hiring rate varies across different employers at different time period.</p>
+<center>
+<div class="figure">
+<img src="more_info.png" style="width:50.0%" alt="" />
+<p class="caption">Employer-Employee Tab Visualisation Chart</p>
+</div>
+<center>
+<p><strong>(2) Turnover Rate</strong> This tab zoomed down to residents that have changed jobs and employers that have changed employees during the study period. The charts separate the employees into different education level and highlight their respective joviality. This allows users to generate insights on relations of other factors to turnover rate.</p>
+<center>
+<div class="figure">
+<img src="turnover.png" style="width:50.0%" alt="" />
+<p class="caption">Employer-Employee Tab Visualisation Chart</p>
+</div>
+<center>
 </div>
 </div>
 <div id="conclusion" class="section level1">
