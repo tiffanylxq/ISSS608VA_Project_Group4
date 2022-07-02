@@ -49,7 +49,7 @@ We performed data wrangling and transformation to the datasets before loading th
 
 # Methodology
 
-The application uses various packages such as tidyverse, plotly, ggplot2, lubridate, tmap, sf packages to conduct exploratory data analysis. 
+While tidyverse and lubridate packages are often used in the data preparation stage, packages such as plotly, ggplot2, tmap, sf are commonly used for visualization of plots.
 
 
 # Features
@@ -65,7 +65,7 @@ Upon clicking on the 'Business Performance' tab, the user can further select 2 c
 **(1) By Revenue**
 Under the `By Revenue` section it is further divided into 2 sub-tabs, `Overview` and `Deep Dive`.
 
-The`Overview` sub-tab provides an overall glance of the business performance of pubs and restaurants. Users first select either pubs or restaurants to see the ranking in terms of overall sales based on the filtered duration. The data found on the right part of the dashboard provides further insights on the sales performance of each business that falls under the selected category of pubs or restaurants arranged based on the average monthly sales in descending order. Users can also observe the monthly trend of each business through the sparklines available. Meanwhile, the map plot illuminates areas of the town where businiesses are flourishing.
+The`Overview` sub-tab provides an overall glance of the business performance of pubs and restaurants. Users first select either pubs or restaurants to see the ranking in terms of overall sales based on the filtered duration. The data found on the right part of the dashboard provides further insights on the sales performance of each business that falls under the selected category of pubs or restaurants arranged based on the average monthly sales in descending order. Users can also observe the monthly trend of each business through the sparklines available. Meanwhile, the map plot illuminates areas of the town where businesses are flourishing.
 
 ![By Revenue (Overview) Tab Visualisation Chart](images/Q1ByRevenueOverview.png){width=90%}
 
