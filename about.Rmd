@@ -1,10 +1,19 @@
 ---
-title: "About this site"
+title: "Directions to Shiny App"
 description: |
-  Some additional details about the website
+author:
+  - name: Group 4 (Hulwana Binte Saifulzaman, Lee Xiao Qi. Yeo Kim Siang)
+    affiliation: SMU
+date: "`r Sys.Date()`"
+output: distill::distill_article
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+Thank you for taking an interest in our Shiny App, called ENGAGE &
+EXPLORE. To visit, please click [here](https://ilovevisualanalyticsverymuch.shinyapps.io/ISS608Group4/).
