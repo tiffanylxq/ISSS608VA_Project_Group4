@@ -5,9 +5,8 @@ author:
 affiliation:
   - address: Advisor - Professor Kam Tin Seong 
 
-titlebox_height: "5%"
 poster_height: "33.11in"
-poster_width: "23.386in"
+poster_width: "100%"
 
 output: 
   posterdown::posterdown_html:
@@ -21,8 +20,10 @@ main_textsize: "16pt"
 sectitle_textsize: "20pt"
 sectitle2_textsize: "20pt"
 image_textsize: "12pt"
-primary_colour: "maroon"
-accent_colour: "blue"
+primary_colour: "#858b97"
+accent_colour: "#343d52"
+titlebox_bordercol: "#7393B3"
+titlebox_borderwidth: "1.5cm"
 ---
 
 ```{r setup, include=FALSE}
@@ -38,64 +39,45 @@ knitr::opts_chunk$set(echo = FALSE,
 
 The first of its kind, this term’s ISSS608 Visual Analytics and Applications course led by Professor Kam Tin Seong builds us towards the highly prestigious IEEE Vast Challenge 2022.
 
-There are 4 challenges provided, targeting different aspects of life in the fictional town Engagement. Our team chose to analyse the Economics of Engagement, and created an interactive dashboard that allows the user to visually analyse the interplay between employee (or residents) and business (or employers) in order to answer the questions: *Over time, are businesses growing or shrinking? How are people changing jobs? Are standards of living improving or declining over time?*.
+There are 4 challenges provided, targeting different aspects of life in the fictional town Engagement. Our team chose to analyse the Economics of Engagement, and created an interactive dashboard that allows the user to visually analyse the interplay between employee (or residents) and business (or employers) in order to answer the questions: *Over time, are businesses growing or shrinking? How are people changing jobs? Are standards of living improving or declining over time?*
 
 # Data Preparation
 
 This year, the competition features the fictional town Engagement. We are given a total of 13 datasets comprising information from 2022-03-01T00:00:00Z to 2022-03-04T14:25:00Z about the 1010 participants who reside there. The team used 10 of these datasets for this project, and they are **Participant StatusLogs, Apartments, Buildings, Employers, Jobs, Participants, Pubs, Restaurants, Schools and CheckinJournal**.
 
-We performed data wrangling and transformation to the datasets before loading them in the application. Click here for the code to these steps. 
+We performed data wrangling and transformation to the datasets before loading them in the application. 
 
 # Methodology
 
 The application uses various packages such as tidyverse, plotly, ggplot2, lubridate, tmap, sf packages to conduct exploratory data analysis. 
 
 # Features
-The app consist of three tabs for users to explore the economy of Engagement City; (1) Businesses, (2) Residents and (3) Employers.  
+The app consist of three tabs for users to explore the economy of Engagement City; (1) Business Performance, (2) Employees and (3) Employers.  
 
-## Tab 1 - 'Businesses'
+## Tab 1 - 'Business Performance'
 
-Aliquam sed faucibus risus, quis efficitur erat. Vestibulum semper mauris quis tempus eleifend. Aliquam sagittis dictum ipsum, quis viverra ligula eleifend ut. Curabitur sagittis vitae arcu eget faucibus. In non elementum felis. Duis et aliquam nunc. Nunc pulvinar sapien nunc, vel pretium nisi efficitur in. Fusce fringilla maximus leo et maximus. Fusce at ligula laoreet, iaculis mi at, auctor odio. Praesent sed elementum justo. Aenean consectetur risus rhoncus tincidunt efficitur. Praesent dictum mauris at diam maximus maximus [@R-posterdown].
+The main objective of the first question in Challenge 3 is to identify which businesses are prospering or struggling. As there is no sales and expense data found on the `Restaurants.csv` and `Pubs.csv`, the only way to obtain sales volume is to compute via the customer's spending on these businesses.
 
+Prosperous businesses will refer to companies that are making more sales whereas struggling businesses will refer to companies that have lower sales. As the sales volume fluctuates sporadically day-to-day, to determine the top 5 companies, the total overall sales are calculated and the 5 companies with the most sales are selected.
 
-## Tab 2 - 'Residents'
+Upon clicking on the 'Business Performance' tab, the user can further select 2 components to explore. They are (1) By Revenue and (2) By Wages.
 
-Or with figures: Figure \@ref(fig:standard-plot), or Figure \@ref(fig:morefigs).
+## Tab 2 - 'Employees'
 
-```{r standard-plot, out.width='80%', fig.align='center', fig.cap='Great figure!', fig.height=5}
-plot(mtcars[1:2])
-```
+Upon clicking on the 'Employees' tab, the user can further select 3 components to explore. They are (1) Income and Expense, (2) Patterns with Heatmap and (2) Participant Breakdown.
 
 
 ## Tab 3 - 'Employers'
 
-Upon clicking on the 'Employers' tab, the user can further select 3 components to explore. They are (1) Employment Numbers (2) Hiring Rate and (3) Turnover Rate 
+Upon clicking on the 'Employers' tab, the user can further select 2 components to explore. They are (1) Map View and (2) Turnover Rate.
 
+**(1) Overview of Employers' Health** Users can study the employment numbers throughout different time period of all the employers in the city via the map and datatable. The map shows the locations of each employer and number of employees they employed. The statistical plot aims to show the distribution of the number of employees with the user selected variable.     
 
+![Employer-Employee Tab Visualisation Chart](images/Q3mapplot72.png){width=90%}
 
-**(1) Overview of Employers' Health** From "Employment Numbers" tab, users can study the employment numbers throughout different time period of all the employers in the city via the reactive map and datatable. The map shows the locations, employer ID, average pay given and number of employees they employed.      
+**(2) Turnover Rate** This tab zoomed down to employees that have changed jobs and employers that have changed employees during the 15 month data collection period. The charts separate the employees into different education levels and whether they have kids. The statistical plots aims to allow users to generate insights on relations of other factors to turnover rate.  
 
-<center>
-
-![Employer-Employee Tab Visualisation Chart](map.png){width=50%}
-
-<center>
-
-
-**(2) Hiring Rate** From trelliscope, users can filter through the different variables within the chart to explore how the hiring rate varies across different employers at different time period.  
-
-
-<center>
-
-![Employer-Employee Tab Visualisation Chart](more_info.png){width=50%}
-
-<center>
-
-**(2) Turnover Rate** This tab zoomed down to residents that have changed jobs and employers that have changed employees during the study period. The charts separate the employees into different education level and highlight their respective joviality. This allows users to generate insights on relations of other factors to turnover rate.  
-
-<center>
-
-![Employer-Employee Tab Visualisation Chart](turnover.png){width=50%}
+![Employer-Employee Tab Visualisation Chart](images/Q3turnright72.png){width=90%}
 
 <center>
 

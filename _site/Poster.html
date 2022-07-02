@@ -977,36 +977,36 @@ d-appendix d-footnote-list a.footnote-backlink {
 
 <style>
 @page {
-size: 23.386in 33.11in;
+size: 100% 33.11in;
 margin: 0;
 padding: 0;
 }
 body {
 margin: 0;
 font-size: 16pt;
-width: 23.386in;
+width: 100%;
 height: 33.11in;
 padding: 0;
 text-align: justify;
 font-family: Palatino;
 }
 .poster_wrap {
-width: 23.386in;
+width: 100%;
 height: 33.11in;
 padding: 0cm;
 }
 .title_container {
-width: 23.386in;
+width: 100%;
 height: calc(33.11in * 0.15);
 overflow: hidden;
-background-color: maroon;
-border: 0 solid #0b4545;
+background-color: #858b97;
+border: 1.5cm solid #0b4545;
 }
 .logo_left {
 float: left;
 width: 10%;
 height: 100%;
-background-color: maroon;
+background-color: #858b97;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -1015,7 +1015,7 @@ justify-content: center;
 float: right;
 width: 10%;
 height: 100%;
-background-color: maroon;
+background-color: #858b97;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -1036,24 +1036,24 @@ font-family: Palatino;
 }
 /* unvisited link */
 a:link {
-color: blue;
+color: #343d52;
 }
 .mybreak {
   break-before: column;
 }
 /* visited link */
 a:visited {
-color: blue;
+color: #343d52;
 }
 
 /* mouse over link */
 a:hover {
-color: blue;
+color: #343d52;
 }
 
 /* selected link */
 a:active {
-color: blue;
+color: #343d52;
 }
 .poster_body {
 -webkit-column-count: 3; /* Chrome, Safari, Opera */
@@ -1068,12 +1068,12 @@ column-rule-width: 1mm;
 -webkit-column-rule-style: dashed;
 -moz-column-rule-style: dashed;
 column-rule-style: dashed;
--webkit-column-rule-color: maroon;
--moz-column-rule-color: maroon;
-column-rule-color: maroon;
-column-gap: 1em;
-padding-left: 0.5em;
-padding-right: 0.5em;
+-webkit-column-rule-color: #858b97;
+-moz-column-rule-color: #858b97;
+column-rule-color: #858b97;
+column-gap: 1.5cm;
+padding-left: calc(1.5cm / 2);
+padding-right: calc(1.5cm / 2);
 height: 100%;
 color: #000000
 background-color: #ffffff;
@@ -1085,7 +1085,7 @@ border: 0;
 font-weight: normal;
 }
 .poster_body_wrap{
-width: calc(23.386in + 0 + 0);
+width: calc(100% + 1.5cm + 1.5cm);
 height: calc(33.11in * 0.83);
 padding-top: calc(33.11in * 0.005);
 padding-bottom: calc(33.11in * 0.01);
@@ -1120,8 +1120,8 @@ margin-bottom: 0;
 text-align: center;
 color: #FFFFFF;
 font-size: 20pt;
-border: 2mm solid maroon;
-background-color: maroon;
+border: 2mm solid #858b97;
+background-color: #858b97;
 border-radius: 4mm 0mm;
 margin-top: 2mm;
 margin-bottom: 2mm;
@@ -1174,7 +1174,7 @@ code {
 font-size: 1em;
 font-family: monospace;
 background-color: #00808024;
-color: maroon;
+color: #858b97;
 padding: 1.2mm;
 border-radius: 2mm;
 }
@@ -1232,7 +1232,7 @@ font-size: 20pt;
 <div class="nav-right">
 <a href="index.html">Home</a>
 <a href="introduction.html">Introduction</a>
-<a href="Proposal.html">Proposal</a>
+<a href="Proposal.html">User Guide</a>
 <a href="about.html">RShiny App</a>
 <a href="Poster.html">Poster</a>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
@@ -1264,12 +1264,12 @@ font-size: 20pt;
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
 <p>The first of its kind, this term’s ISSS608 Visual Analytics and Applications course led by Professor Kam Tin Seong builds us towards the highly prestigious IEEE Vast Challenge 2022.</p>
-<p>There are 4 challenges provided, targeting different aspects of life in the fictional town Engagement. Our team chose to analyse the Economics of Engagement, and created an interactive dashboard that allows the user to visually analyse the interplay between employee (or residents) and business (or employers) in order to answer the questions: <em>Over time, are businesses growing or shrinking? How are people changing jobs? Are standards of living improving or declining over time?</em>.</p>
+<p>There are 4 challenges provided, targeting different aspects of life in the fictional town Engagement. Our team chose to analyse the Economics of Engagement, and created an interactive dashboard that allows the user to visually analyse the interplay between employee (or residents) and business (or employers) in order to answer the questions: <em>Over time, are businesses growing or shrinking? How are people changing jobs? Are standards of living improving or declining over time?</em></p>
 </div>
 <div id="data-preparation" class="section level1">
 <h1>Data Preparation</h1>
 <p>This year, the competition features the fictional town Engagement. We are given a total of 13 datasets comprising information from 2022-03-01T00:00:00Z to 2022-03-04T14:25:00Z about the 1010 participants who reside there. The team used 10 of these datasets for this project, and they are <strong>Participant StatusLogs, Apartments, Buildings, Employers, Jobs, Participants, Pubs, Restaurants, Schools and CheckinJournal</strong>.</p>
-<p>We performed data wrangling and transformation to the datasets before loading them in the application. Click here for the code to these steps.</p>
+<p>We performed data wrangling and transformation to the datasets before loading them in the application.</p>
 </div>
 <div id="methodology" class="section level1">
 <h1>Methodology</h1>
@@ -1277,42 +1277,28 @@ font-size: 20pt;
 </div>
 <div id="features" class="section level1">
 <h1>Features</h1>
-<p>The app consist of three tabs for users to explore the economy of Engagement City; (1) Businesses, (2) Residents and (3) Employers.</p>
-<div id="tab-1---businesses" class="section level2">
-<h2>Tab 1 - ‘Businesses’</h2>
-<p>Aliquam sed faucibus risus, quis efficitur erat. Vestibulum semper mauris quis tempus eleifend. Aliquam sagittis dictum ipsum, quis viverra ligula eleifend ut. Curabitur sagittis vitae arcu eget faucibus. In non elementum felis. Duis et aliquam nunc. Nunc pulvinar sapien nunc, vel pretium nisi efficitur in. Fusce fringilla maximus leo et maximus. Fusce at ligula laoreet, iaculis mi at, auctor odio. Praesent sed elementum justo. Aenean consectetur risus rhoncus tincidunt efficitur. Praesent dictum mauris at diam maximus maximus <span class="citation">(Thorne 2019)</span>.</p>
+<p>The app consist of three tabs for users to explore the economy of Engagement City; (1) Business Performance, (2) Employees and (3) Employers.</p>
+<div id="tab-1---business-performance" class="section level2">
+<h2>Tab 1 - ‘Business Performance’</h2>
+<p>The main objective of the first question in Challenge 3 is to identify which businesses are prospering or struggling. As there is no sales and expense data found on the <code>Restaurants.csv</code> and <code>Pubs.csv</code>, the only way to obtain sales volume is to compute via the customer’s spending on these businesses.</p>
+<p>Prosperous businesses will refer to companies that are making more sales whereas struggling businesses will refer to companies that have lower sales. As the sales volume fluctuates sporadically day-to-day, to determine the top 5 companies, the total overall sales are calculated and the 5 companies with the most sales are selected.</p>
+<p>Upon clicking on the ‘Business Performance’ tab, the user can further select 2 components to explore. They are (1) By Revenue and (2) By Wages.</p>
 </div>
-<div id="tab-2---residents" class="section level2">
-<h2>Tab 2 - ‘Residents’</h2>
-<p>Or with figures: Figure <a href="#fig:standard-plot">1</a>, or Figure <a href="#fig:morefigs"><strong>??</strong></a>.</p>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:standard-plot"></span>
-<img src="Poster_files/figure-html/standard-plot-1.png" alt="Great figure!" width="80%" />
-<p class="caption">
-Figure 1: Great figure!
-</p>
-</div>
+<div id="tab-2---employees" class="section level2">
+<h2>Tab 2 - ‘Employees’</h2>
+<p>Upon clicking on the ‘Employees’ tab, the user can further select 3 components to explore. They are (1) Income and Expense, (2) Patterns with Heatmap and (2) Participant Breakdown.</p>
 </div>
 <div id="tab-3---employers" class="section level2">
 <h2>Tab 3 - ‘Employers’</h2>
-<p>Upon clicking on the ‘Employers’ tab, the user can further select 3 components to explore. They are (1) Employment Numbers (2) Hiring Rate and (3) Turnover Rate</p>
-<p><strong>(1) Overview of Employers’ Health</strong> From “Employment Numbers” tab, users can study the employment numbers throughout different time period of all the employers in the city via the reactive map and datatable. The map shows the locations, employer ID, average pay given and number of employees they employed.</p>
-<center>
+<p>Upon clicking on the ‘Employers’ tab, the user can further select 2 components to explore. They are (1) Map View and (2) Turnover Rate.</p>
+<p><strong>(1) Overview of Employers’ Health</strong> Users can study the employment numbers throughout different time period of all the employers in the city via the map and datatable. The map shows the locations of each employer and number of employees they employed. The statistical plot aims to show the distribution of the number of employees with the user selected variable.</p>
 <div class="figure">
-<img src="map.png" style="width:50.0%" alt="" />
+<img src="images/Q3mapplot72.png" style="width:90.0%" alt="" />
 <p class="caption">Employer-Employee Tab Visualisation Chart</p>
 </div>
-<center>
-<p><strong>(2) Hiring Rate</strong> From trelliscope, users can filter through the different variables within the chart to explore how the hiring rate varies across different employers at different time period.</p>
-<center>
+<p><strong>(2) Turnover Rate</strong> This tab zoomed down to employees that have changed jobs and employers that have changed employees during the 15 month data collection period. The charts separate the employees into different education levels and whether they have kids. The statistical plots aims to allow users to generate insights on relations of other factors to turnover rate.</p>
 <div class="figure">
-<img src="more_info.png" style="width:50.0%" alt="" />
-<p class="caption">Employer-Employee Tab Visualisation Chart</p>
-</div>
-<center>
-<p><strong>(2) Turnover Rate</strong> This tab zoomed down to residents that have changed jobs and employers that have changed employees during the study period. The charts separate the employees into different education level and highlight their respective joviality. This allows users to generate insights on relations of other factors to turnover rate.</p>
-<center>
-<div class="figure">
-<img src="turnover.png" style="width:50.0%" alt="" />
+<img src="images/Q3turnright72.png" style="width:90.0%" alt="" />
 <p class="caption">Employer-Employee Tab Visualisation Chart</p>
 </div>
 <center>
@@ -1322,13 +1308,8 @@ Figure 1: Great figure!
 <h1>Conclusion</h1>
 <p>Try <code>posterdown</code> out! Hopefully you like it!</p>
 </div>
-<div id="references" class="section level1 unnumbered">
+<div id="references" class="section level1">
 <h1>References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-R-posterdown" class="csl-entry">
-Thorne, Brent. 2019. <em>Posterdown: Generate PDF Conference Posters Using r Markdown</em>. <a href="https://github.com/brentthorne/posterdown">https://github.com/brentthorne/posterdown</a>.
-</div>
-</div>
 </div>
 </div>
 </div>
