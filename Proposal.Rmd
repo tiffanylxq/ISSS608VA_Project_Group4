@@ -1,5 +1,5 @@
 ---
-title: "Project Proposal for Visual Analytics Project"
+title: "User Guide for Visual Analytics Project"
 description: |
 author:
   - name: Group 4 (Hulwana Binte Saifulzaman, Lee Xiao Qi. Yeo Kim Siang)
