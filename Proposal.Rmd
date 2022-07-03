@@ -100,52 +100,52 @@ This tab has 4 parts:
 1.  The controller that allows the user to:
     - Select a category, either Pubs or Restaurants
     - Select Date Range, for filtering the period of interest
-2.  A bar graph displaying the ranking of businesses by total revenue in city 
-    of Engagement.
+2.  A bar graph displaying the ranking of businesses by total revenue in the 
+    city of Engagement.
 3.  A data table and sparklines that shows the monthly sales trend of businesses 
     over time.
 4.  A map that shows the total sales by venue id.
 
 
-### 1-Control
+### 1 - Control
 
 ![](images/Q1ControlOverview.png)
 
 1. User has the option to view either 'Pubs' or 'Restaurants'. This control will
    alter all 3 charts found within the pane.
 
-2. User has the ability to scope to the interested date range.This control will
-   alter all 3 charts found within the pane.              
+2. User can scope to the interested date range. This control will alter all 
+   3 charts found within the pane.              
 
 
-### 2-Top Overall Performing Business
+### 2 - Top Overall Performing Business
 
 ![Business Performance Ranking](images/Q1Overview1.png)
 
-The 'Business Performance Ranking By Total Revenue' bar chart arranges the 
-'venueId' based on the total revenue generated in descending order. At a glance,
-users are able to identify the performing and struggling businesses.Users can 
-hover over the bar charts to obtain the total revenue amount for each businesses.
+The **Business Performance Ranking By Total Revenue** bar chart arranges the 
+'venueId' based on the total revenue generated in descending order. User can 
+identify the performing and struggling businesses. User can also hover over the 
+bar charts to obtain the total revenue amount for each business.
 
 
-### 3-Monthly Sales Trend and Distribution
+### 3 - Monthly Sales Trend and Distribution
 
 ![Monthly Sales Trend](images/Q1Overview3.png)
 
-As the businesses in the *Business Performance Ranking Chart* are compared based 
-on the overall sales accumulated, it provides no insights on how the 
-businesses are performing overtime. Thus, the data table and sparklines chart 
-is displayed to reveal the monthly sales trend and provide the lowest and 
+As the businesses in the **Business Performance Ranking Chart** are compared 
+based on the overall sales accumulated, it provides little insights on how the 
+businesses are performing over time. Thus, the data table and sparklines chart 
+is displayed to reveal the monthly sales trend and provide the lowest and the
 highest revenue generated. 
 
-### 4-Business Performance by Location
+### 4 - Business Performance by Location
 
 ![Business Performance by Location](images/Q1Overview2.png)
 
-The map plot enables users to explore and identify if there are any patterns in 
-terms of business performance based on the location of the pubs or restaurants.
-Users have the ability to zoom in and out of the plot as well as hover onto the
-circles to identify the 'venue ID' and the total sales collected.
+The map plot allows the user to explore and identify if there are any patterns 
+in terms of business performance based on the location of the pubs or restaurants.
+The user also has the ability to zoom in and out of the plot as well as hover 
+onto the circles to identify the 'venue ID' and the total sales collected.
 
 
 ## The 'By Revenue (Deep Dive)' Tab
@@ -156,14 +156,14 @@ This tab has 3 parts:
 
 1.  The controller that allows the user to:
     - Select a particular company of interest
-    - Select parameters for the box-plot.
-2.  A violin-and-boxplot that shows the statistical distribution of
+    - Select parameters for the box plot.
+2.  A violin-and-box plot that shows the statistical distribution of
     daily sales across the weekdays.
 3.  A heatmap that displays the frequency of check-ins by days in the
     week and time of the day.
     
 
-### 1-Control
+### 1 - Control
 
 ![](images/Q1ControlDeep.png)
 
@@ -174,35 +174,35 @@ This tab has 3 parts:
    control will alter both charts found within the pane.
 
 3. User can select the type of box-plot that they would like to view. This is 
-   only applicable to the *Distribution of Daily Sales by Weekday* chart.
+   only applicable to the **Distribution of Daily Sales by Weekday** chart.
 
 4. User can select the type of statistical test in comparing the difference in 
    sales between 2 weekdays. This is only applicable to the 
-   *Distribution of Daily Sales by Weekday* chart.
+   **Distribution of Daily Sales by Weekday** chart.
    
 5. User can select the type of pairwise display for the box plot. This is only 
-   applicable to the *Distribution of Daily Sales by Weekday* chart.
+   applicable to the **Distribution of Daily Sales by Weekday** chart.
    
 6. User can select the type of P-Adjust methods for the box plot. This is only 
-   applicable to the *Distribution of Daily Sales by Weekday* chart.
+   applicable to the **Distribution of Daily Sales by Weekday** chart.
 
 
 
-### 5. Distribution of Daily Sales by Weekday
+### 2 - Distribution of Daily Sales by Weekday
 
 ![Average Spending of Customers Chart](images/Q1Deep1.png)
 
-User can compare the daily sales amount based on the weekdays.
+Users can compare the daily sales amount across on the weekdays.
 
-### 7. Check-in By Weekday and Time of Day
+### 3 - Check-in By Weekday and Time of Day
 
 ![Average Check-in Heatmap Chart](images/Q1Deep2.png)
 
-The *Average Check-In by Weekday and Time of the Day* heatmap provides 
+The **Average Check-In by Weekday and Time of the Day** heatmap provides 
 visualization on the average visitors for the selected company across the 
 weekdays at hourly intervals. The chart can be used to examine the peak and 
-non-peak periods of the selected businesses.User can also hover on the heatmap 
-to view the average number of visitors at a selected hour.
+non-peak periods of the selected businesses. User can also hover over the 
+heatmap to view the average number of visitors at a selected hour.
 
 ## The 'By Wages' Tab
 
@@ -214,45 +214,46 @@ This tab has 4 parts.
     - Select the education level
 2.  A packed bar chart displaying the arrangement of businesses in descending
     values of `average hourly wage`.
-3.  A box-plot that shows the distribution of average hourly wage of all
+3.  A box plot that shows the distribution of the average hourly wage of all
     employers.
-4.  A data table that displays the venueId, number of jobs, average hourly wage 
-    and total hourly wage details.
+4.  A data table that displays the 'venueId', number of jobs, average hourly 
+    wage and total hourly wage details.
 
-### 1. Control
+### 1 - Control
 
 ![](images/Q1ControlWages.png)
 
-1. User can filter based on the 'Education Level'. This applies to all 3 charts 
-   found within the pane.
+1. User can filter based on the 'Education Level'. This control applies to all 
+   of the 3 charts found within the pane.
 
-### 2. Packed Bar Chart of Average Hourly Wage
+### 2 - Packed Bar Chart of Average Hourly Wage
 
 ![Average Hourly Wage Packed Bar Chart](images/Q1Wages1.png)
 
-The top 10 employers that offers highest average hourly wage are highlighted in 
-blue. User can hover onto the bar chart to view the employer ID and the average 
-hourly wage offered by the respective employer.
+The top 10 employers that offer the highest average hourly wage are highlighted 
+in blue. Users can hover over the bar chart to view the employer ID and the 
+average hourly wage offered by the respective employer.
 
 
-### 3. Box-plot Depicting the Distribution of Average Hourly Wage
+### 3 - Box-plot Depicting the Distribution of Average Hourly Wage
 
 ![Distribution of Average Hourly Wage by Employer](images/Q1Wages2.png)
 
-User can hover the box-plot and data points to view the average hourly wage 
-offered.User can also select the data points to reveal more details on the
+Users can hover over the box plot and data points to view the average hourly wage 
+offered.Users can also select the data points to reveal more details on the
 selected points.
 
-### 4. Line Chart of Monthly Total Wages
+### 4 - Data Table
 
 ![Boxplot with Data Points Selected](images/Q1Wages3a.png)
 
 ![Data Table](images/Q1Wages3b.png)
 
-When a user select a sets of data points from the 
-*Distribution of Average Hourly Wage by Employer* a data table appears showing 
+When a user selects a set of data points from the 
+**Distribution of Average Hourly Wage by Employer** a data table appears showing 
 information on employer ID, number of jobs, average hourly pay and total hourly 
 pay.
+
 
 # Employees
 
