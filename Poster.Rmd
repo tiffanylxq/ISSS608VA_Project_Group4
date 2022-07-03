@@ -18,7 +18,7 @@ affiliation_textsize: "25pt"
 body_textsize: "16pt"
 main_textsize: "16pt"
 sectitle_textsize: "20pt"
-sectitle2_textsize: "20pt"
+sectitle2_textsize: "18pt"
 image_textsize: "12pt"
 primary_colour: "#858b97"
 accent_colour: "#343d52"
@@ -41,7 +41,7 @@ We created an interactive dashboard that allows the user to visually analyse the
 
 # Data Preparation
 
-We used 10 of 13 data sets that charted *Participant StatusLogs, Apartments, Buildings, Employers, Jobs, Participants, Pubs, Restaurants, Schools and CheckinJournal* from 2022-03-01T00:00:00Z to 2022-03-04T14:25:00Z for all 1010 participants who reside in Engagement. Our goal was to sieve out the key data points related to each of the questions mentioned above. To do that, tidyverse and lubridate packages were used. The data was then saved into RDS formats in order to make retrieval easier. Lastly, we used the packages plotly, ggplot2, tmap and sf to create data visualizations.
+We used 11 of 13 data sets *Participant StatusLogs, Apartments, Buildings, Employers, Jobs, Participants, Pubs, Restaurants, Schools, CheckinJournal and TravelJournal* that charted from 2022-03-01T00:00:00Z to 2022-03-04T14:25:00Z for all 1010 participants who reside in Engagement. Our goal was to sieve out the key data points related to each of the questions mentioned above. To do that, tidyverse and lubridate packages were used. The data was then saved into RDS formats in order to make retrieval easier. Lastly, we used the packages plotly, ggplot2, tmap, sf, rPackedBar, gt, and gtExtras to create data visualizations.
 
 # Features
 
@@ -49,20 +49,17 @@ We used 10 of 13 data sets that charted *Participant StatusLogs, Apartments, Bui
 
 In assessing which businesses within the city of Engagement are thriving, we consider two approaches by using the revenue generated and wages offered. Pubs and restaurants are two distinct businesses with participant's expenses data available. As such, the performance of pubs and restaurants is evaluated based on the accumulated sales. On the other hand, as wages are the only numeric data present for all employers, it will be the basis for comparing the financial prosperity of the employers.
 
-Upon clicking on the 'Business Performance' tab, the user can further select 2 components to explore. They are (1) By Revenue and (2) By Wages.
+Upon clicking on the *Business Performance* tab, the user can further select 2 components to explore. They are (1) By Revenue and (2) By Wages.
 
-**(1) By Revenue** Under the `By Revenue` section it is further divided into 2 sub-tabs, `Overview` and `Deep Dive`.
+**(1) By Revenue** Under the *By Revenue* section it is further divided into 2 sub-tabs, *Overview* and *Deep Dive*.
 
-The`Overview` sub-tab provides an overall glance of the business performance of pubs and restaurants. Users first select either pubs or restaurants to see the ranking in terms of overall sales based on the filtered duration. The data found on the right part of the dashboard provides further insights on the sales performance of each business that falls under the selected category of pubs or restaurants arranged based on the average monthly sales in descending order. Users can also observe the monthly trend of each business through the sparklines available. Meanwhile, the map plot illuminates areas of the town where businesses are flourishing.
-
+The *Overview* sub-tab provides an overall glance of the business performance of pubs and restaurants. Users first select either pubs or restaurants to see the ranking in terms of overall sales based on the filtered duration. The data found on the right part of the dashboard provides further insights on the sales performance of each business that falls under the selected category of pubs or restaurants arranged based on the average monthly sales in descending order. Users can also observe the monthly trend of each business through the sparklines available. Meanwhile, the map plot illuminates areas of the town where businesses are flourishing.
 ![By Revenue (Overview) Tab Visualisation Chart](images/Q1ByRevenueOverview.png){width="90%"}
 
-The `Deep Dive` section allows user to explore on the sales performance of a selected business across the weekdays. In general, we observe that pubs tend to have higher sales and more visitors during the weekends. On the other hand, the heatmap plot reveals the peak timings of the 'Venue ID' selected.
-
+The *Deep Dive* section allows user to explore on the sales performance of a selected business across the weekdays. In general, we observe that pubs tend to have higher sales and more visitors during the weekends. On the other hand, the heatmap plot reveals the peak timings of the 'Venue ID' selected.
 ![By Revenue (Deep Dive) Tab Visualisation Chart](images/Q1ByRevenueDeepDive.png){width="90%"}
 
-**(2) By Wages** Users have the option to compare the average wages of the employers by filtering the education level. The packed bar charts showcase the top employers that offers the 10 highest average hourly wage by education level. The box plot depicts the distribution of the average hourly wage of all employers. User can select the points on the boxplot to obtain additional details of the selected businesses such as the number of jobs offered for that particular education level.
-
+**(2) By Wages** Users have the option to compare the average wages of the employers by filtering the education level. The packed bar charts showcase the top employers that offers the 10 highest average hourly wage by education level. The box plot depicts the distribution of the average hourly wage of all employers. User can select the points on the box plot to obtain additional details of the selected businesses such as the number of jobs offered for that particular education level.
 ![By Wage Tab Visualisation Chart](images/Q1ByWages.png){width="90%"}
 
 ## Tab 2 - 'Employees'
@@ -70,15 +67,12 @@ The `Deep Dive` section allows user to explore on the sales performance of a sel
 Upon clicking on the 'Employees' tab, the user can further select 3 components to explore. They are (1) Income and Expense, (2) Patterns with Heatmap and (3) Participant Breakdown.
 
 **(1) Income and Expense** We wanted to start the user off with a bird's eye view of *Engagement's* income and expenses over time. To do so, we use a line graph over time and allow the user to pick from 4 settings, "total", "average", "maximum" and "minimum", that provide the data that their names suggest. We then allow the user to explore different participants individually to provide them with a degree of granularity. Both charts are placed side by side to make it easier for the user to compare the information. Fearing that the line graph was insufficient, we placed violin plots below both line graphs so that the users can understand the distribution and key statistical parts, such as average and spread, of both line graphs in an instance.
-
 ![Income and Expense Dashboard](images/paste-6D0A9D77.png){width="90%"}
 
 **(2) Patterns with Heatmap** A person's balance determines his or her financial health, and that is what we use as our base data set. The easiest way to find a pattern would be use a clustering algorithm on that data set, as demonstrated by the *Clustered Heatmap of Residents in Engagement.* However, it lacks in instant explanability. Instead, we provide the user with an opportunity to see if there are patterns when the participants are ranked based on their income, expense and balance, in hope of finding some low-hanging fruit in our analysis.
-
 ![Patterns with Heatmap Dashboard](images/paste-8A6DCACC.png){width="90%"}
 
 **(3) Participant Breakdown** We provide the user with a quick overview of the personal information of participants he or she chooses either from the *Patterns with Heatmap* tab or by manually inputting up to 10 participant ids to help explain the patterns observed.
-
 ![Participant Breakdown Dashboard](images/paste-5E698E7C.png){width="90%"}
 
 ## Tab 3 - 'Employers'
@@ -86,15 +80,13 @@ Upon clicking on the 'Employees' tab, the user can further select 3 components t
 Upon clicking on the 'Employers' tab, the user can further select 2 components to explore. They are (1) Map View and (2) Turnover Rate.
 
 **(1) Overview of Employers' Health** Users can study the employment numbers throughout different time period of all the employers in the city via the map and datatable. The map shows the locations of each employer and number of employees they employed. The statistical plot aims to show the distribution of the number of employees with the user selected variable.
-
 ![Employer-Employee Tab Visualisation Chart](images/Q3mapplot72.png){width="90%"}
 
 **(2) Turnover Rate** This tab zoomed down to employees that have changed jobs and employers that have changed employees during the 15 month data collection period. The charts separate the employees into different education levels and whether they have kids. The statistical plots aims to allow users to generate insights on relations of other factors to turnover rate.
-
 ![Employer-Employee Tab Visualisation Chart](images/Q3turnright72.png){width="90%"}
 
 # Future Work and Conclusion
 
-Given more data, we could have minimised the need to hypothesize and triangulate. For example, business expenses information would allow us to more accurately determine the growth of a business by comparing the profits and losses over time. Also, while the user guide and poster are useful, it would be best if we could present and demonstrate our solution in person as the former methods do not allow us to cater for and explain all the edge cases.
+Given more data, we could have minimized the need to hypothesize and triangulate. For example, business expenses information would allow us to more accurately determine the growth of a business by comparing the profits and losses over time. Also, while the user guide and poster are useful, it would be best if we could present and demonstrate our solution in person as the former methods do not allow us to cater for and explain all the edge cases.
 
 That being said, we believe that our solution paints a congruent enough information about the macro and granular details of the economy and its stakeholders, and would help the user understand the economy of Engagement.
