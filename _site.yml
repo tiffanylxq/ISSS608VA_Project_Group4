@@ -10,7 +10,7 @@ navbar:
     - text: "Introduction"
       href: introduction.html
     - text: "User Guide"
-      href: Proposal.html
+      href: UserGuide.html
     - text: "RShiny App"
       href: https://ilovevisualanalyticsverymuch.shinyapps.io/ISS608Group4/
     - text: "Poster" 
