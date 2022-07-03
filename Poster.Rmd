@@ -1,11 +1,11 @@
 ---
 title: <br> IEEE Vast Challenge 2022 
 author:
-  - name: <br> ISSS 608 Group 4 - Hulwana Binte Saifulzaman, <br>Lee Xiao Qi, Yeo Kim Siang
+  - name: ISSS 608 Group 4 - Hulwana Binte Saifulzaman, Lee Xiao Qi, Yeo Kim Siang
 affiliation: 
   - address: Advisor - Professor Kam Tin Seong 
 
-poster_height: "38in"
+poster_height: "33.11in"
 poster_width: "100%"
 
 output: 
@@ -17,8 +17,8 @@ body_textsize: "15pt"
 sectitle_textsize: "18pt"
 sectitle2_textsize: "16pt"
 image_textsize: "12pt"
-title_textsize: "40pt"
-author_textsize: "30pt"
+title_textsize: "30pt"
+author_textsize: "20pt"
 affiliation_textsize: "20pt"
 primary_colour: "#5a6b8a"
 accent_colour: "#343d52"
@@ -28,13 +28,41 @@ font_family:	Palatino
 titletext_fontfamily:	Palatino
 
 ---
+```{css, echo=FALSE}
+
+div.title_container{
+   height: 8%;
+}
+
+div.figure{
+   text-align: center;
+}
+
+img {
+    margin-top: 0;
+   margin-bottom: 0;
+   text-align: center;
+}
+
+p.caption{
+   margin-top: 0;
+   margin-bottom: 0;
+   text-align: center;
+}
+
+div.poster_body{
+   margin-top: 0;
+   margin-bottom: 0;
+}
+
+
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE,
                       warning = FALSE,
                       tidy = FALSE,
                       message = FALSE,
-                      fig.align = 'center',
                       out.width = "100%")
 ```
 
